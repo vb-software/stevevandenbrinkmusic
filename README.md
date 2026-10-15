@@ -1,4 +1,4 @@
-# Steve Vandenbrink · Piano
+# Steve VandenBrink · Keys & Piano
 
 Static promo site — plain HTML/CSS/JS, no build step.
 
