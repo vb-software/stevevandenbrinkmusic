@@ -68,7 +68,7 @@ section { padding: 6rem 1.5rem; max-width: var(--max); margin: 0 auto; }
 .btn:hover { text-decoration: none; }
 .btn-primary { background: var(--accent); color: var(--accent-ink); }
 .btn-primary:hover { background: #d8bb84; }
-.btn-ghost { border-color: var(--line); color: var(--text); }
+.btn-ghost { background: transparent; border-color: var(--line); color: var(--text); }
 .btn-ghost:hover { border-color: var(--muted); }
 
 /* ---------- hero ---------- */
@@ -129,24 +129,38 @@ section { padding: 6rem 1.5rem; max-width: var(--max); margin: 0 auto; }
 
 /* ---------- gigs ---------- */
 .gigs { border-top: 1px solid var(--line); }
-.gig-columns { display: grid; grid-template-columns: 1.3fr 1fr; gap: 4rem; }
+.gig-columns { display: grid; grid-template-columns: 1fr; gap: 3.5rem; }
 .gig-list { list-style: none; padding: 0; margin: 0; }
 .gig {
-  display: grid; grid-template-columns: 4.5rem 1fr; gap: 1.25rem;
+  display: grid; grid-template-columns: 4.5rem 1fr; gap: 1.25rem; align-items: center;
   padding: 1.25rem 0; border-bottom: 1px solid var(--line);
 }
+#gigs-upcoming .gig { border: 1px solid var(--line); background: var(--bg-2); padding: 1.5rem; max-width: 640px; margin-bottom: 1rem; }
 .gig-date { text-align: center; line-height: 1.1; }
 .gig-date .m { display: block; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
 .gig-date .d { display: block; font-family: var(--sans); font-size: 1.9rem; font-weight: 600; line-height: 1.15; font-variant-numeric: lining-nums tabular-nums; margin: .15rem 0; }
-.gig-date .y { display: block; font-size: .72rem; color: var(--muted); }
-.gig-info strong { display: block; font-size: 1.05rem; }
-.gig-info span { color: var(--muted); font-size: .9rem; }
-.gig-info a { font-size: .85rem; }
-.past .gig { grid-template-columns: 1fr; gap: .15rem; padding: .9rem 0; }
-.past .gig-date { text-align: left; color: var(--muted); font-size: .8rem; }
-.past .gig-date .m, .past .gig-date .d, .past .gig-date .y { display: inline; font-size: .82rem; font-family: var(--sans); color: var(--muted); letter-spacing: .03em; font-weight: 400; text-transform: none; margin: 0; }
-.past .gig-date .d::after { content: ","; }
-.past .gig-info strong { font-size: .98rem; font-weight: 500; }
+.gig-date .y { display: block; font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.gig-info strong { font-size: 1.15rem; }
+.gig-info span { display: block; color: var(--muted); font-size: .9rem; }
+.gig-links { margin: .35rem 0 0; font-size: .85rem; }
+.gig-tag {
+  display: inline-block; margin-left: .6rem; vertical-align: 2px;
+  font-style: normal; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent); border: 1px solid rgba(201,169,110,.45); padding: .1rem .45rem; border-radius: 2px;
+}
+
+/* past shows: compact rows grouped by year */
+.past .gig { grid-template-columns: 4.5rem 1fr auto; gap: 1rem; padding: .7rem 0; font-size: .93rem; }
+.past .pd { color: var(--muted); font-variant-numeric: tabular-nums; }
+.past .pv strong { font-weight: 500; }
+.past .pc { color: var(--muted); text-align: right; }
+.gig-year {
+  font-family: var(--serif); font-size: 1.35rem; color: var(--text);
+  padding: 1.5rem 0 .4rem; border-bottom: 1px solid var(--line);
+}
+.gig-year:first-child { padding-top: 0; }
+.is-hidden { display: none !important; }
+.show-more { margin-top: 1.5rem; }
 
 /* ---------- form ---------- */
 .book { border-top: 1px solid var(--line); max-width: 820px; }
@@ -195,7 +209,11 @@ section { padding: 6rem 1.5rem; max-width: var(--max); margin: 0 auto; }
 
   .about { grid-template-columns: 1fr; gap: 2rem; }
   .services { grid-template-columns: 1fr; }
-  .gig-columns { grid-template-columns: 1fr; gap: 3rem; }
+  .gig-columns { gap: 3rem; }
+  .past .gig { grid-template-columns: 3.75rem 1fr; row-gap: .15rem; align-items: start; }
+  .past .pc { grid-column: 2; text-align: left; font-size: .85rem; }
+  .past .pv strong { display: block; }
+  .past .gig-tag { margin: .3rem 0 .1rem; }
   .inquiry .row { grid-template-columns: 1fr; }
   .video-grid { grid-template-columns: 1fr; }
 }

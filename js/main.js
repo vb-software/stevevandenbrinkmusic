@@ -56,22 +56,56 @@
   const upcoming = gigs.filter((g) => g._d >= today).sort((a, b) => a._d - b._d);
   const past = gigs.filter((g) => g._d < today).sort((a, b) => b._d - a._d);
 
-  function gigItem(g) {
-    const m = g._d.toLocaleString("en-US", { month: "short" });
-    const where = g.private ? "Private event" : [g.venue, g.city].filter(Boolean).map(esc).join(" · ");
-    const time = g.time && !g.private ? ` · ${esc(g.time)}` : "";
-    const link = g.link && !g.private ? `<br><a href="${esc(g.link)}" target="_blank" rel="noopener">Details →</a>` : "";
-    return `<li class="gig">
-      <div class="gig-date"><span class="m">${m}</span> <span class="d">${g._d.getDate()}</span> <span class="y">${g._d.getFullYear()}</span></div>
-      <div class="gig-info"><strong>${esc(g.title)}</strong><span>${where}${time}</span>${link}</div>
+  const mon = (d) => d.toLocaleString("en-US", { month: "short" });
+  const dow = (d) => d.toLocaleString("en-US", { weekday: "short" });
+  const tag = (g) => (g.note ? `<em class="gig-tag">${esc(g.note)}</em>` : "");
+
+  function upcomingItem(g) {
+    const date = `<div class="gig-date"><span class="m">${mon(g._d)}</span><span class="d">${g._d.getDate()}</span><span class="y">${dow(g._d)}</span></div>`;
+    if (g.private) return `<li class="gig">${date}<div class="gig-info"><strong>Private event</strong></div></li>`;
+    const meta = [g.city, g.time].filter(Boolean).map(esc).join(" · ");
+    const links = [];
+    if (g.address) {
+      const q = encodeURIComponent(`${g.venue}, ${g.address}, ${g.city || ""}`);
+      links.push(`<a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">Directions</a>`);
+    }
+    if (g.link) links.push(`<a href="${esc(g.link)}" target="_blank" rel="noopener">Details</a>`);
+    return `<li class="gig">${date}
+      <div class="gig-info"><strong>${esc(g.venue)}</strong>${tag(g)}
+        <span>${meta}</span>${links.length ? `<p class="gig-links">${links.join(" · ")}</p>` : ""}</div>
     </li>`;
   }
+
+  function pastItem(g) {
+    const name = g.private ? "Private event" : esc(g.venue);
+    const meta = g.private ? "" : esc(g.city || "");
+    return `<li class="gig"><span class="pd">${mon(g._d)} ${g._d.getDate()}</span>
+      <span class="pv"><strong>${name}</strong>${tag(g)}</span><span class="pc">${meta}</span></li>`;
+  }
+
   $("#gigs-upcoming").innerHTML = upcoming.length
-    ? upcoming.map(gigItem).join("")
+    ? upcoming.map(upcomingItem).join("")
     : '<li class="empty">Nothing on the calendar right now — <a href="#book">book a date</a>.</li>';
-  $("#gigs-past").innerHTML = past.length
-    ? past.slice(0, 12).map(gigItem).join("")
+
+  // past: grouped by year, first PAST_LIMIT shown, rest behind a toggle
+  const PAST_LIMIT = 8;
+  const pastEl = $("#gigs-past");
+  let year = null;
+  pastEl.innerHTML = past.length
+    ? past.map((g, i) => {
+        const y = g._d.getFullYear();
+        const hidden = i >= PAST_LIMIT ? " is-hidden" : "";
+        const head = y !== year ? `<li class="gig-year${hidden}">${(year = y)}</li>` : "";
+        return head + pastItem(g).replace('class="gig"', `class="gig${hidden}"`);
+      }).join("")
     : '<li class="empty">—</li>';
+  if (past.length > PAST_LIMIT) {
+    const btn = document.createElement("button");
+    btn.className = "btn btn-ghost show-more";
+    btn.textContent = `Show all ${past.length} past shows`;
+    btn.onclick = () => { pastEl.querySelectorAll(".is-hidden").forEach((el) => el.classList.remove("is-hidden")); btn.remove(); };
+    pastEl.after(btn);
+  }
 
   /* ---------- inquiry form (Formspree, submitted via fetch so visitors stay on the page) ---------- */
   const form = $("#inquiry"), status = $("#form-status");
