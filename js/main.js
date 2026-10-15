@@ -59,6 +59,7 @@
   const mon = (d) => d.toLocaleString("en-US", { month: "short" });
   const dow = (d) => d.toLocaleString("en-US", { weekday: "short" });
   const tag = (g) => (g.note ? `<em class="gig-tag">${esc(g.note)}</em>` : "");
+  const withAct = (g) => (g.act ? `with <b>${esc(g.act)}</b>` : "Solo");
 
   function upcomingItem(g) {
     const date = `<div class="gig-date"><span class="m">${mon(g._d)}</span><span class="d">${g._d.getDate()}</span><span class="y">${dow(g._d)}</span></div>`;
@@ -72,6 +73,7 @@
     if (g.link) links.push(`<a href="${esc(g.link)}" target="_blank" rel="noopener">Details</a>`);
     return `<li class="gig">${date}
       <div class="gig-info"><strong>${esc(g.venue)}</strong>${tag(g)}
+        <span class="gig-act">${withAct(g)}</span>
         <span>${meta}</span>${links.length ? `<p class="gig-links">${links.join(" · ")}</p>` : ""}</div>
     </li>`;
   }
@@ -80,7 +82,8 @@
     const name = g.private ? "Private event" : esc(g.venue);
     const meta = g.private ? "" : esc(g.city || "");
     return `<li class="gig"><span class="pd">${mon(g._d)} ${g._d.getDate()}</span>
-      <span class="pv"><strong>${name}</strong>${tag(g)}</span><span class="pc">${meta}</span></li>`;
+      <span class="pv"><strong>${name}</strong>${tag(g)}</span>
+      <span class="pa">${withAct(g)}</span><span class="pc">${meta}</span></li>`;
   }
 
   $("#gigs-upcoming").innerHTML = upcoming.length

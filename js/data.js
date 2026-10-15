@@ -5,6 +5,9 @@
   ============================================================
 */
 
+// Tags a group of gigs with the act you played with: ...act("Band Name", [ {...}, {...} ])
+const act = (name, list) => list.map((g) => ({ act: name, ...g }));
+
 window.SITE = {
   // Your YouTube channel URL (used for "More on YouTube" + footer)
   youtubeChannel: "https://www.youtube.com/@YOUR_CHANNEL",
@@ -30,8 +33,11 @@ window.SITE = {
     note:    short tag, e.g. "Rolling Stones Tribute"
     link:    event page URL (optional)
     private: true  -> shows as "Private event", hides everything else
+    Wrap each artist's shows in act("Name", [ ... ]) — shows "with Name" on the site.
+    Gigs outside any act() block show as solo.
   */
   gigs: [
+   ...act("Hazy Past", [
     // ---- 2026 ----
     { date: "2026-11-13", time: "9 PM – 1 AM",     venue: "Billy's Lounge",          address: "1437 Wealthy St. SE",   city: "Grand Rapids, MI", note: "Rolling Stones Tribute" },
     { date: "2026-09-26", time: "8 – 11 PM",       venue: "Rockford Brewing Co.",    address: "12 E. Bridge St.",      city: "Rockford, MI",     note: "Rolling Stones Tribute" },
@@ -65,5 +71,10 @@ window.SITE = {
     { date: "2024-06-20", time: "6 – 10 PM",       venue: "The Score",               address: "5301 Northland Dr.",    city: "Grand Rapids, MI" },
     { date: "2024-06-15", time: "8 – 11 PM",       venue: "Rockford Brewing Co.",    address: "12 E. Bridge St.",      city: "Rockford, MI",     note: "Pink Floyd Tribute" },
     { date: "2024-06-14", time: "7 – 10:30 PM",    venue: "Garage Bar & Grill",      address: "819 Ottawa Ave NW",     city: "Grand Rapids, MI", note: "Bike Night" },
+   ]),
+
+   // ...act("Other Artist", [
+   //   { date: "2025-05-01", time: "7 – 10 PM", venue: "Venue", address: "123 Main St.", city: "Grand Rapids, MI" },
+   // ]),
   ],
 };
