@@ -33,11 +33,11 @@
     grid.innerHTML = vids.map((v) => {
       const id = esc(ytId(v.id));
       return `<article class="video">
-        <div class="video-frame" data-id="${id}" role="button" tabindex="0" aria-label="Play ${esc(v.title)}">
+        <div class="video-frame" data-id="${id}" role="button" tabindex="0" aria-label="Play ${esc(v.title || "video")}">
           <img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt="" loading="lazy">
           <span class="play">▶</span>
         </div>
-        <div class="video-meta"><h3>${esc(v.title)}</h3>${v.note ? `<p>${esc(v.note)}</p>` : ""}</div>
+        ${v.title || v.note ? `<div class="video-meta">${v.title ? `<h3>${esc(v.title)}</h3>` : ""}${v.note ? `<p>${esc(v.note)}</p>` : ""}</div>` : ""}
       </article>`;
     }).join("");
     grid.addEventListener("click", play);
