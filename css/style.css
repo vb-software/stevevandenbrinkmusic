@@ -137,14 +137,15 @@ section { padding: 6rem 1.5rem; max-width: var(--max); margin: 0 auto; }
 }
 .gig-date { text-align: center; line-height: 1.1; }
 .gig-date .m { display: block; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
-.gig-date .d { display: block; font-family: var(--serif); font-size: 2.2rem; font-weight: 600; }
+.gig-date .d { display: block; font-family: var(--sans); font-size: 1.9rem; font-weight: 600; line-height: 1.15; font-variant-numeric: lining-nums tabular-nums; margin: .15rem 0; }
 .gig-date .y { display: block; font-size: .72rem; color: var(--muted); }
 .gig-info strong { display: block; font-size: 1.05rem; }
 .gig-info span { color: var(--muted); font-size: .9rem; }
 .gig-info a { font-size: .85rem; }
-.past .gig { grid-template-columns: 1fr; padding: .8rem 0; }
+.past .gig { grid-template-columns: 1fr; gap: .15rem; padding: .9rem 0; }
 .past .gig-date { text-align: left; color: var(--muted); font-size: .8rem; }
-.past .gig-date .m, .past .gig-date .d, .past .gig-date .y { display: inline; font-size: .8rem; font-family: var(--sans); color: var(--muted); letter-spacing: .05em; font-weight: 400; }
+.past .gig-date .m, .past .gig-date .d, .past .gig-date .y { display: inline; font-size: .82rem; font-family: var(--sans); color: var(--muted); letter-spacing: .03em; font-weight: 400; text-transform: none; margin: 0; }
+.past .gig-date .d::after { content: ","; }
 .past .gig-info strong { font-size: .98rem; font-weight: 500; }
 
 /* ---------- form ---------- */
