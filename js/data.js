@@ -19,7 +19,7 @@ window.SITE = {
          (youtu.be/XXXX and /shorts/XXXX links work too — paste the whole URL if easier)
   */
   videos: [
-    { id: "_DI37Zagxas", title: "City Built Gig" },
+    { id: "_DI37Zagxas", title: "City Built Gig", note: "Monday Night Live · with Nathan Walton" },
     { id: "S0-T1tjBRRA", title: "Erin Monroe @ The Stray" },
     { id: "x9PqJPz2T_M", title: "Stop Making Sense", note: "Hazy Past · Talking Heads Tribute · Video by Brian Haik" },
     // { id: "PASTE_ID_OR_URL", title: "Clair de Lune", note: "Solo piano · home studio" },
