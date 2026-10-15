@@ -65,7 +65,7 @@
   function upcomingItem(g) {
     const date = `<div class="gig-date"><span class="m">${mon(g._d)}</span><span class="d">${g._d.getDate()}</span><span class="y">${dow(g._d)}</span></div>`;
     if (g.private) return `<li class="gig">${date}<div class="gig-info"><strong>Private event</strong></div></li>`;
-    const meta = [g.city, g.time].filter(Boolean).map(esc).join(" · ");
+    const meta = [g.city && esc(g.city), g.time && `<span class="nowrap">${esc(g.time)}</span>`].filter(Boolean).join(" · ");
     const links = [];
     if (g.address) {
       const q = encodeURIComponent(`${g.venue}, ${g.address}, ${g.city || ""}`);
