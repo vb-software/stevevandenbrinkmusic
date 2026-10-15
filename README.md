@@ -36,3 +36,7 @@ then open http://localhost:8000
 ## Hosting
 
 Since the repo is private, the simplest free options are **Cloudflare Pages** or **Netlify** — connect the repo, no build command, publish directory `/`. Every push to `main` redeploys. (GitHub Pages also works, but on a private repo it requires a paid GitHub plan.) Point a custom domain at whichever you choose.
+
+## Cache busting
+
+`index.html` loads CSS/JS with `?v=N`. After changing `css/style.css`, `js/main.js` or `js/data.js`, bump the number so browsers pick up the new file instead of a cached copy.
