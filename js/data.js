@@ -81,6 +81,11 @@ window.SITE = {
     { date: "2026-03-21", time: "8 PM",            venue: "Tip Top Deluxe",          address: "760 Butterworth St. SW", city: "Grand Rapids, MI", note: "Linda Ronstadt Tribute" },
    ]),
 
+   // ---- Solo ----
+   { date: "2026-08-15", time: "5 – 7 PM",         venue: "St. Julian Winery",                                          city: "Rockford, MI",     note: "Music on the Patio" },
+   { date: "2026-07-11", time: "5 – 7 PM",         venue: "St. Julian Winery",                                          city: "Rockford, MI",     note: "Music on the Patio" },
+   { date: "2026-06-06", time: "5 – 7 PM",         venue: "St. Julian Winery",                                          city: "Rockford, MI",     note: "Music on the Patio" },
+
    ...act("Nathan Walton", [
     { date: "2026-03-16", time: "5 – 7 PM",        venue: "City Built Brewing Co.",                                     city: "Grand Rapids, MI", note: "Monday Night Live" },
    ]),
