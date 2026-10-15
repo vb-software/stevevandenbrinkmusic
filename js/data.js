@@ -81,6 +81,10 @@ window.SITE = {
     { date: "2026-03-21", time: "8 PM",            venue: "Tip Top Deluxe",          address: "760 Butterworth St. SW", city: "Grand Rapids, MI", note: "Linda Ronstadt Tribute" },
    ]),
 
+   ...act("Nathan Walton", [
+    { date: "2026-03-16", time: "5 – 7 PM",        venue: "City Built Brewing Co.",                                     city: "Grand Rapids, MI", note: "Monday Night Live" },
+   ]),
+
    // ...act("Other Artist", [
    //   { date: "2025-05-01", time: "7 – 10 PM", venue: "Venue", address: "123 Main St.", city: "Grand Rapids, MI" },
    // ]),
