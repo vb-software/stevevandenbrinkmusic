@@ -103,11 +103,16 @@ section { padding: 6rem 1.5rem; max-width: var(--max); margin: 0 auto; }
   filter: contrast(1.05) brightness(.92);
 }
 .about-text p { color: #c8c5bf; }
-.services { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0; }
+.services { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .services li {
-  font-family: var(--serif); font-size: 1.6rem; color: var(--text);
-  padding: .75rem 0 .75rem 1.1rem; border-left: 2px solid var(--accent); margin-bottom: .6rem;
+  background: var(--bg-2); border: 1px solid var(--line); padding: 1.4rem 1.25rem;
+  display: grid; gap: .8rem; align-content: start; transition: border-color .2s;
 }
+.services li:hover { border-color: var(--accent); }
+.services svg { width: 38px; height: 38px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.services span { font-family: var(--serif); font-size: 1.4rem; color: var(--text); line-height: 1.2; }
+/* odd count: last card spans the full row */
+.services li:last-child:nth-child(odd) { grid-column: 1 / -1; grid-template-columns: auto 1fr; align-items: center; gap: 1rem; }
 
 /* ---------- videos ---------- */
 .watch { border-top: 1px solid var(--line); }
@@ -216,7 +221,9 @@ section { padding: 6rem 1.5rem; max-width: var(--max); margin: 0 auto; }
   .hero-photo::after { background: linear-gradient(to top, var(--bg) 0%, transparent 35%); }
 
   .about { grid-template-columns: 1fr; gap: 2rem; }
-  .services { grid-template-columns: 1fr; }
+  .services { grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .services li { padding: 1.1rem 1rem; }
+  .services span { font-size: 1.2rem; }
   .gig-columns { gap: 3rem; }
   .past .gig { grid-template-columns: 3.75rem 1fr; row-gap: .15rem; align-items: start; }
   .past .pa, .past .pc { grid-column: 2; text-align: left; font-size: .85rem; }
