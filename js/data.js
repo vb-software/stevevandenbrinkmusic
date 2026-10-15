@@ -73,6 +73,10 @@ window.SITE = {
     { date: "2024-06-14", time: "7 – 10:30 PM",    venue: "Garage Bar & Grill",      address: "819 Ottawa Ave NW",     city: "Grand Rapids, MI", note: "Bike Night" },
    ]),
 
+   ...act("Erin Monroe", [
+    { date: "2026-03-21", time: "8 PM",            venue: "Tip Top Deluxe",          address: "760 Butterworth St. SW", city: "Grand Rapids, MI", note: "Linda Ronstadt Tribute" },
+   ]),
+
    // ...act("Other Artist", [
    //   { date: "2025-05-01", time: "7 – 10 PM", venue: "Venue", address: "123 Main St.", city: "Grand Rapids, MI" },
    // ]),
