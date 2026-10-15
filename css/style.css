@@ -224,3 +224,4 @@ section { padding: 6rem 1.5rem; max-width: var(--max); margin: 0 auto; }
   .video-grid { grid-template-columns: 1fr; }
 }
 .services-cta { margin-top: 1.5rem; }
+.video-grid.single { grid-template-columns: minmax(0, 820px); }

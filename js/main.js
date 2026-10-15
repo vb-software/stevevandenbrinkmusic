@@ -29,6 +29,7 @@
   if (!vids.length) {
     grid.innerHTML = '<p class="empty">Videos coming soon.</p>';
   } else {
+    grid.classList.toggle("single", vids.length === 1);
     grid.innerHTML = vids.map((v) => {
       const id = esc(ytId(v.id));
       return `<article class="video">

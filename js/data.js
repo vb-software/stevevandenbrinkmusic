@@ -10,7 +10,7 @@ const act = (name, list) => list.map((g) => ({ act: name, ...g }));
 
 window.SITE = {
   // Your YouTube channel URL (used for "More on YouTube" + footer)
-  youtubeChannel: "https://www.youtube.com/@YOUR_CHANNEL",
+  youtubeChannel: "https://www.youtube.com/@SteveVandenBrinkMusic",
 
   /*
     VIDEOS
@@ -19,6 +19,7 @@ window.SITE = {
          (youtu.be/XXXX and /shorts/XXXX links work too — paste the whole URL if easier)
   */
   videos: [
+    { id: "_DI37Zagxas", title: "City Built Gig" },
     // { id: "PASTE_ID_OR_URL", title: "Clair de Lune", note: "Solo piano · home studio" },
     // { id: "PASTE_ID_OR_URL", title: "Live at Rosa Parks Circle", note: "With The Band Name · 2026" },
   ],
@@ -74,7 +75,7 @@ window.SITE = {
    ]),
 
    ...act("Erin Monroe", [
-    { date: "2026-09-11",                          venue: "The Lucky Wolf",          address: "404 E. Michigan Ave.",  city: "Paw Paw, MI" },
+    { date: "2026-09-11", time: "12 – 3 PM",       venue: "The Lucky Wolf",          address: "404 E. Michigan Ave.",  city: "Paw Paw, MI" },
     { date: "2026-03-21", time: "8 PM",            venue: "Tip Top Deluxe",          address: "760 Butterworth St. SW", city: "Grand Rapids, MI", note: "Linda Ronstadt Tribute" },
    ]),
 
