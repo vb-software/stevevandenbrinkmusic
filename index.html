@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Steve Vandenbrink · Piano</title>
+  <meta name="description" content="Piano for weddings, funerals, events and live bands in West Michigan.">
+  <meta property="og:title" content="Steve Vandenbrink · Piano">
+  <meta property="og:description" content="Piano for weddings, funerals, events and live bands.">
+  <meta property="og:image" content="images/piano.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="nav">
+    <a class="brand" href="#top">Steve Vandenbrink</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#watch">Watch</a>
+      <a href="#gigs">Gigs</a>
+      <a href="#book" class="nav-cta">Book</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO: piano portrait -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">Pianist · West Michigan</p>
+        <h1>Music for the<br><em>moments that matter.</em></h1>
+        <p class="lede">Solo piano for weddings, memorials and private events — and keys for local bands when the stage calls for it.</p>
+        <div class="hero-actions">
+          <a href="#book" class="btn btn-primary">Inquire about a date</a>
+          <a href="#watch" class="btn btn-ghost">Watch &amp; listen</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="images/piano.jpg" alt="Steve smiling while playing a grand piano" width="1182" height="1686">
+      </div>
+    </section>
+
+    <!-- ABOUT: live band photo -->
+    <section id="about" class="about">
+      <div class="about-photo">
+        <img src="images/live.jpg" alt="Steve playing keyboards on stage with a band" width="996" height="1229" loading="lazy">
+      </div>
+      <div class="about-text">
+        <p class="eyebrow">About</p>
+        <h2>From the living room to the stage.</h2>
+        <p>I've spent years at the piano bench — playing solo sets, sitting in on keys with local bands, and providing music for weddings and funerals where getting it right really counts.</p>
+        <p>Whether you need a gentle prelude for a ceremony, a thoughtful set for a memorial, or a keyboard player who shows up prepared, I'll work with you on the music that fits the day.</p>
+        <ul class="services">
+          <li><span>Weddings</span>Prelude, processional, ceremony &amp; reception</li>
+          <li><span>Funerals &amp; memorials</span>Hymns, requests &amp; reflective music</li>
+          <li><span>Events &amp; venues</span>Solo piano sets, background or featured</li>
+          <li><span>Bands</span>Keys &amp; backing tracks for live shows</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- VIDEOS: rendered from js/data.js -->
+    <section id="watch" class="watch">
+      <div class="section-head">
+        <p class="eyebrow">Watch</p>
+        <h2>Recent performances</h2>
+      </div>
+      <div id="video-grid" class="video-grid"></div>
+      <p class="more"><a id="youtube-link" href="#" target="_blank" rel="noopener">More on YouTube →</a></p>
+    </section>
+
+    <!-- GIGS: rendered from js/data.js -->
+    <section id="gigs" class="gigs">
+      <div class="section-head">
+        <p class="eyebrow">Gigs</p>
+        <h2>Where I'm playing</h2>
+      </div>
+      <div class="gig-columns">
+        <div>
+          <h3>Upcoming</h3>
+          <ul id="gigs-upcoming" class="gig-list"></ul>
+        </div>
+        <div>
+          <h3>Past</h3>
+          <ul id="gigs-past" class="gig-list past"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- INQUIRY FORM -->
+    <section id="book" class="book">
+      <div class="section-head">
+        <p class="eyebrow">Book</p>
+        <h2>Tell me about your event</h2>
+        <p class="sub">I'll get back to you within a couple of days.</p>
+      </div>
+      <!-- Replace YOUR_FORM_ID with your Formspree form ID (see README) -->
+      <form id="inquiry" class="inquiry" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="row">
+          <label>Name<input name="name" required autocomplete="name"></label>
+          <label>Email<input type="email" name="email" required autocomplete="email"></label>
+        </div>
+        <div class="row">
+          <label><span>Phone <small>(optional)</small></span><input type="tel" name="phone" autocomplete="tel"></label>
+          <label>Event date<input type="date" name="event_date"></label>
+        </div>
+        <div class="row">
+          <label>Type of event
+            <select name="event_type" required>
+              <option value="" disabled selected>Choose one…</option>
+              <option>Wedding</option>
+              <option>Funeral / memorial</option>
+              <option>Private event</option>
+              <option>Venue / restaurant</option>
+              <option>Band / sub work</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>Location / venue<input name="venue"></label>
+        </div>
+        <label>Details<textarea name="message" rows="5" required placeholder="Times, piano on site?, song requests, anything else…"></textarea></label>
+        <!-- honeypot: bots fill it, people don't see it -->
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
+        <button type="submit" class="btn btn-primary">Send inquiry</button>
+        <p id="form-status" class="form-status" role="status"></p>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Steve Vandenbrink</p>
+    <p><a id="footer-youtube" href="#" target="_blank" rel="noopener">YouTube</a></p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
