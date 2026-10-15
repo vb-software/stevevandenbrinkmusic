@@ -42,7 +42,7 @@ window.SITE = {
   gigs: [
    ...act("Hazy Past", [
     // ---- 2026 ----
-    { date: "2026-11-13", time: "9 PM – 1 AM",     venue: "Billy's Lounge",          address: "1437 Wealthy St. SE",   city: "Grand Rapids, MI", note: "Rolling Stones Tribute" },
+    { date: "2026-11-13", time: "8 PM – 12 AM",    venue: "Billy's Lounge",          address: "1437 Wealthy St. SE",   city: "Grand Rapids, MI", note: "Rolling Stones Tribute" },
     { date: "2026-09-26", time: "8 – 11 PM",       venue: "Rockford Brewing Co.",    address: "12 E. Bridge St.",      city: "Rockford, MI",     note: "Rolling Stones Tribute" },
     { date: "2026-08-06", time: "6 – 10 PM",       venue: "The Score",               address: "5301 Northland Dr.",    city: "Grand Rapids, MI" },
     { date: "2026-07-25", time: "8 – 11 PM",       venue: "Rockford Brewing Co.",    address: "12 E. Bridge St.",      city: "Rockford, MI" },
