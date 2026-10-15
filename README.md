@@ -24,7 +24,7 @@ The form posts to [Formspree](https://formspree.io) (free tier is plenty for a b
 
 1. Create a form at formspree.io with the email you want inquiries sent to.
 2. Copy the form ID (the `xxxxxxx` in `https://formspree.io/f/xxxxxxx`).
-3. Replace `YOUR_FORM_ID` in `index.html`.
+3. Put it in the form's `action` in `index.html` (currently `mwlvaooo`).
 
 ## Preview locally
 
