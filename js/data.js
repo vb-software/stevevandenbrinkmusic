@@ -19,8 +19,8 @@ window.SITE = {
          (youtu.be/XXXX and /shorts/XXXX links work too — paste the whole URL if easier)
   */
   videos: [
-    { id: "x9PqJPz2T_M", title: "Stop Making Sense", note: "Hazy Past · Talking Heads Tribute · Video by Brian Haik" },
     { id: "_DI37Zagxas", title: "City Built Gig" },
+    { id: "x9PqJPz2T_M", title: "Stop Making Sense", note: "Hazy Past · Talking Heads Tribute · Video by Brian Haik" },
     // { id: "PASTE_ID_OR_URL", title: "Clair de Lune", note: "Solo piano · home studio" },
     // { id: "PASTE_ID_OR_URL", title: "Live at Rosa Parks Circle", note: "With The Band Name · 2026" },
   ],
