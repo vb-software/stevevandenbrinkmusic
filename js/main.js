@@ -46,7 +46,7 @@
   function play(e) {
     const f = e.target.closest(".video-frame");
     if (!f || f.querySelector("iframe")) return;
-    f.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${f.dataset.id}?autoplay=1&rel=0"
+    f.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${f.dataset.id}?autoplay=1&rel=0&cc_load_policy=0"
       title="YouTube video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
   }
 
