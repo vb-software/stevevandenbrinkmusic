@@ -74,6 +74,23 @@ window.SITE = {
     { date: "2024-06-20", time: "6 – 10 PM",       venue: "The Score",               address: "5301 Northland Dr.",    city: "Grand Rapids, MI" },
     { date: "2024-06-15", time: "8 – 11 PM",       venue: "Rockford Brewing Co.",    address: "12 E. Bridge St.",      city: "Rockford, MI",     note: "Pink Floyd Tribute" },
     { date: "2024-06-14", time: "7 – 10:30 PM",    venue: "Garage Bar & Grill",      address: "819 Ottawa Ave NW",     city: "Grand Rapids, MI", note: "Bike Night" },
+
+    // ---- 2023 ----
+    { date: "2023-12-02", time: "8 – 9 PM",        venue: "Billy's Lounge",          address: "1437 Wealthy St. SE",   city: "Grand Rapids, MI", note: "Opening for The Insane Theatre" },
+    { date: "2023-10-28", time: "8 – 11 PM",       venue: "Founders Brewing Co.",    address: "235 Cesar E. Chavez Ave SW", city: "Grand Rapids, MI", note: "Halloween Show" },
+    { date: "2023-10-14", private: true },
+    { date: "2023-10-07", time: "8 – 11 PM",       venue: "Rockford Brewing Co.",    address: "12 E. Bridge St.",      city: "Rockford, MI",     note: "Hazy IPA Release" },
+    { date: "2023-09-29", time: "6 – 11 PM",       venue: "The Score",               address: "5301 Northland Dr.",    city: "Grand Rapids, MI" },
+    { date: "2023-08-26", time: "5 – 9 PM",        venue: "Bikes on the Blue Bridge",                                   city: "Grand Rapids, MI" },
+    { date: "2023-08-22", time: "6 – 10 PM",       venue: "The Score",               address: "5301 Northland Dr.",    city: "Grand Rapids, MI" },
+    { date: "2023-07-29", private: true },
+    { date: "2023-07-27", time: "6 – 10 PM",       venue: "The Score",               address: "5301 Northland Dr.",    city: "Grand Rapids, MI" },
+    { date: "2023-06-30", time: "7:30 – 8:45 PM",  venue: "Hastings Live!",          address: "Thornapple Plaza",      city: "Hastings, MI" },
+    { date: "2023-06-29", time: "6 – 10 PM",       venue: "The Score",               address: "5301 Northland Dr.",    city: "Grand Rapids, MI" },
+    { date: "2023-06-23", time: "7 – 9 PM",        venue: "Third Nature Brewing Co.", address: "7733 Childsdale Ave NE", city: "Rockford, MI" },
+    { date: "2023-05-30", time: "6 – 10 PM",       venue: "The Score",               address: "5301 Northland Dr.",    city: "Grand Rapids, MI" },
+    { date: "2023-03-11", time: "6 – 9 PM",        venue: "Garage Bar & Grill",      address: "819 Ottawa Ave NW",     city: "Grand Rapids, MI" },
+    { date: "2023-02-08", time: "8 – 10:30 PM",    venue: "SpeakEZ Lounge",          address: "600 Monroe Ave NW",     city: "Grand Rapids, MI", note: "David Bowie Tribute" },
    ]),
 
    ...act("Erin Monroe", [
