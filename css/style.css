@@ -39,6 +39,7 @@ h3 { font-size: 1.5rem; color: var(--muted); font-weight: 500; }
 }
 
 section { padding: 6rem 1.5rem; max-width: var(--max); margin: 0 auto; }
+section[id] { scroll-margin-top: 64px; }
 .section-head { margin-bottom: 2.5rem; }
 .sub { color: var(--muted); margin: 0; }
 
@@ -99,7 +100,7 @@ section { padding: 6rem 1.5rem; max-width: var(--max); margin: 0 auto; }
   border-top: 1px solid var(--line);
 }
 .about-photo img {
-  width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: 40% center;
+  width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; object-position: 40% center;
   filter: contrast(1.05) brightness(.92);
 }
 .about-text p { color: #c8c5bf; }
@@ -222,6 +223,7 @@ section { padding: 6rem 1.5rem; max-width: var(--max); margin: 0 auto; }
   .hero-photo::after { background: linear-gradient(to top, var(--bg) 0%, transparent 35%); }
 
   .about { grid-template-columns: 1fr; gap: 2rem; }
+  .about-photo img { aspect-ratio: 4/3; object-position: 60% 30%; }
   .services { grid-template-columns: 1fr 1fr; gap: .75rem; }
   .services li { padding: 1.1rem 1rem; }
   .services span { font-size: 1.2rem; }
