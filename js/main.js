@@ -51,11 +51,29 @@
   }
 
   /* ---------- gigs ---------- */
-  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const now = new Date();
   const parse = (d) => { const [y, m, day] = d.split("-").map(Number); return new Date(y, m - 1, day); };
-  const gigs = (SITE.gigs || []).map((g) => ({ ...g, _d: parse(g.date) }));
-  const upcoming = gigs.filter((g) => g._d >= today).sort((a, b) => a._d - b._d);
-  const past = gigs.filter((g) => g._d < today).sort((a, b) => b._d - a._d);
+  // When a gig is over: its end time ("8 PM – 12 AM" -> midnight; past-midnight ends roll to next day).
+  // No time, or only a start time -> end of that day.
+  function endsAt(g) {
+    const end = new Date(g._d);
+    const parts = String(g.time || "").split(/[–-]/);
+    const last = parts[parts.length - 1];
+    const m = last && last.match(/(\d{1,2})(?::(\d{2}))?\s*([AP]M)?/i);
+    if (!m || parts.length < 2) { end.setHours(23, 59, 59, 999); return end; }
+    let h = Number(m[1]) % 12;
+    let ap = m[3] || (parts[0].match(/[AP]M/i) || [""])[0];
+    if (/pm/i.test(ap)) h += 12;
+    end.setHours(h, Number(m[2] || 0), 0, 0);
+    // ends at/after midnight (e.g. "9 PM – 1 AM"): next day
+    const startM = parts.length > 1 && parts[0].match(/(\d{1,2})(?::\d{2})?\s*([AP]M)?/i);
+    const startPM = startM && /pm/i.test(startM[2] || ap);
+    if (/am/i.test(ap) && startPM) end.setDate(end.getDate() + 1);
+    return end;
+  }
+  const gigs = (SITE.gigs || []).map((g) => { const x = { ...g, _d: parse(g.date) }; x._end = endsAt(x); return x; });
+  const upcoming = gigs.filter((g) => g._end > now).sort((a, b) => a._d - b._d);
+  const past = gigs.filter((g) => g._end <= now).sort((a, b) => b._d - a._d);
 
   const mon = (d) => d.toLocaleString("en-US", { month: "short" });
   const dow = (d) => d.toLocaleString("en-US", { weekday: "short" });
