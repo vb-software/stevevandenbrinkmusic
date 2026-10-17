@@ -99,6 +99,7 @@ window.SITE = {
    ]),
 
    // ---- Solo ----
+   { date: "2026-10-17", time: "10 AM – 12 PM",    venue: "Lulu's Cafe",                                                note: "Open Mic" },
    { date: "2026-08-15", time: "5 – 7 PM",         venue: "St. Julian Winery",                                          city: "Rockford, MI",     note: "Music on the Patio" },
    { date: "2026-07-11", time: "5 – 7 PM",         venue: "St. Julian Winery",                                          city: "Rockford, MI",     note: "Music on the Patio" },
    { date: "2026-06-06", time: "5 – 7 PM",         venue: "St. Julian Winery",                                          city: "Rockford, MI",     note: "Music on the Patio" },
