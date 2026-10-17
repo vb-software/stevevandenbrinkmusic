@@ -99,7 +99,7 @@ window.SITE = {
    ]),
 
    // ---- Solo ----
-   { date: "2026-10-17", time: "10 AM – 12 PM",    venue: "Loulou's Cafe", city: "Belmont, MI", note: "Open Mic" },
+   { date: "2026-10-17", time: "10 AM – 12 PM",    venue: "Lou Lou's Coffee Bar", address: "1259 Post Dr NE, Ste A", city: "Belmont, MI", note: "Open Mic" },
    { date: "2026-08-15", time: "5 – 7 PM",         venue: "St. Julian Winery",                                          city: "Rockford, MI",     note: "Music on the Patio" },
    { date: "2026-07-11", time: "5 – 7 PM",         venue: "St. Julian Winery",                                          city: "Rockford, MI",     note: "Music on the Patio" },
    { date: "2026-06-06", time: "5 – 7 PM",         venue: "St. Julian Winery",                                          city: "Rockford, MI",     note: "Music on the Patio" },
