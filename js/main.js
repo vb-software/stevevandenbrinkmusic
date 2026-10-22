@@ -50,6 +50,63 @@
       title="YouTube video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
   }
 
+  /* ---------- audio ---------- */
+  (function () {
+    const list = $("#tracklist"), audio = $("#player");
+    const tracks = SITE.tracks || [];
+    if (!tracks.length) { $("#listen").style.display = "none"; document.querySelector('a[href="#listen"]')?.remove(); return; }
+    if (SITE.audioAlbum) $("#audio-album").textContent = SITE.audioAlbum;
+    const fmt = (t) => { t = Math.max(0, Math.round(t || 0)); return Math.floor(t / 60) + ":" + String(t % 60).padStart(2, "0"); };
+    const PLAY = '<svg viewBox="0 0 14 14"><path d="M3 1.5v11l9.5-5.5z"/></svg>';
+    const PAUSE = '<svg viewBox="0 0 14 14"><path d="M2.5 1.5h3.2v11H2.5zM8.3 1.5h3.2v11H8.3z"/></svg>';
+    list.innerHTML = tracks.map((t, i) => `<li class="track" data-i="${i}">
+        <button class="track-btn" aria-label="Play ${esc(t.title)}">${PLAY}</button>
+        <div class="track-main"><div class="track-title">${esc(t.title)}</div>
+          ${t.by ? `<div class="track-by">${esc(t.by)} cover</div>` : ""}
+          <div class="track-bar" role="slider" aria-label="Seek"><i></i></div></div>
+        <span class="track-time">${fmt(t.secs)}</span></li>`).join("");
+    let cur = -1;
+    const rows = [...list.children];
+    function setUI() {
+      rows.forEach((r, i) => {
+        const on = i === cur, playing = on && !audio.paused;
+        r.classList.toggle("active", on); r.classList.toggle("playing", playing);
+        const b = r.querySelector(".track-btn");
+        b.innerHTML = playing ? PAUSE : PLAY;
+        b.setAttribute("aria-label", (playing ? "Pause " : "Play ") + tracks[i].title);
+        if (!on) { r.querySelector(".track-bar i").style.width = "0"; r.querySelector(".track-time").textContent = fmt(tracks[i].secs); }
+      });
+    }
+    function play(i) {
+      if (i === cur) { audio.paused ? audio.play() : audio.pause(); return; }
+      cur = i; audio.src = tracks[i].file; audio.play().catch(() => {}); setUI();
+      if ("mediaSession" in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({ title: tracks[i].title, artist: "Steve VandenBrink", album: SITE.audioAlbum || "",
+          artwork: [{ src: "apple-touch-icon.png", sizes: "180x180", type: "image/png" }] });
+        navigator.mediaSession.setActionHandler("previoustrack", () => play(Math.max(0, cur - 1)));
+        navigator.mediaSession.setActionHandler("nexttrack", () => cur < tracks.length - 1 && play(cur + 1));
+      }
+    }
+    list.addEventListener("click", (e) => { const b = e.target.closest(".track-btn"); if (b) play(+b.closest(".track").dataset.i); });
+    audio.addEventListener("play", setUI); audio.addEventListener("pause", setUI);
+    audio.addEventListener("timeupdate", () => {
+      if (cur < 0) return; const r = rows[cur], d = audio.duration || tracks[cur].secs;
+      r.querySelector(".track-bar i").style.width = (100 * audio.currentTime / d) + "%";
+      r.querySelector(".track-time").textContent = fmt(audio.currentTime) + " / " + fmt(d);
+    });
+    audio.addEventListener("ended", () => { cur < tracks.length - 1 ? play(cur + 1) : (cur = -1, setUI()); });
+    // pause audio when a video starts
+    document.addEventListener("click", (e) => { if (e.target.closest(".video-frame")) audio.pause(); }, true);
+    // seek: tap or drag the bar
+    list.addEventListener("pointerdown", (e) => {
+      const bar = e.target.closest(".track-bar"); if (!bar || cur < 0) return;
+      const seek = (ev) => { const r = bar.getBoundingClientRect(); const d = audio.duration || tracks[cur].secs;
+        audio.currentTime = Math.min(1, Math.max(0, (ev.clientX - r.left) / r.width)) * d; };
+      seek(e); bar.setPointerCapture(e.pointerId);
+      bar.onpointermove = seek; bar.onpointerup = () => { bar.onpointermove = null; };
+    });
+  })();
+
   /* ---------- gigs ---------- */
   const now = new Date();
   const parse = (d) => { const [y, m, day] = d.split("-").map(Number); return new Date(y, m - 1, day); };

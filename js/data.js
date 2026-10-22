@@ -27,6 +27,26 @@ window.SITE = {
   ],
 
   /*
+    AUDIO — files live in /audio. title shown; "by" = original artist (credited as a cover).
+    secs = length, shown before the file loads.
+  */
+  audioAlbum: "Live at City Built Brewing",
+  tracks: [
+    { file: "audio/01-while-my-guitar-gently-weeps.mp3", title: "While My Guitar Gently Weeps", by: "The Beatles", secs: 217 },
+    { file: "audio/02-blackbird.mp3", title: "Blackbird", by: "The Beatles", secs: 164 },
+    { file: "audio/03-god-only-knows.mp3", title: "God Only Knows", by: "The Beach Boys", secs: 198 },
+    { file: "audio/04-fix-you.mp3", title: "Fix You", by: "Coldplay", secs: 350 },
+    { file: "audio/05-iris.mp3", title: "Iris", by: "Goo Goo Dolls", secs: 205 },
+    { file: "audio/06-dont-stop-me-now.mp3", title: "Don't Stop Me Now", by: "Queen", secs: 271 },
+    { file: "audio/07-virtual-insanity.mp3", title: "Virtual Insanity", by: "Jamiroquai", secs: 163 },
+    { file: "audio/08-human-nature.mp3", title: "Human Nature", by: "Michael Jackson", secs: 186 },
+    { file: "audio/09-goodbye-yellow-brick-road.mp3", title: "Goodbye Yellow Brick Road", by: "Elton John", secs: 202 },
+    { file: "audio/10-paranoid-android.mp3", title: "Paranoid Android", by: "Radiohead", secs: 346 },
+    { file: "audio/11-running-up-that-hill.mp3", title: "Running Up That Hill", by: "Kate Bush", secs: 326 },
+    { file: "audio/12-im-still-standing.mp3", title: "I'm Still Standing", by: "Elton John", secs: 169 },
+  ],
+
+  /*
     GIGS — order doesn't matter; upcoming vs. past sorts itself by today's date.
     date:    "YYYY-MM-DD"            (required)
     venue:   "Billy's Lounge"        (required unless private)
