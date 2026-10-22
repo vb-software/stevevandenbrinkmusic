@@ -56,6 +56,7 @@
     const tracks = SITE.tracks || [];
     if (!tracks.length) { $("#listen").style.display = "none"; document.querySelector('a[href="#listen"]')?.remove(); return; }
     if (SITE.audioAlbum) $("#audio-album").textContent = SITE.audioAlbum;
+    if (SITE.audioNote) $("#audio-note").textContent = SITE.audioNote; else $("#audio-note").remove();
     const fmt = (t) => { t = Math.max(0, Math.round(t || 0)); return Math.floor(t / 60) + ":" + String(t % 60).padStart(2, "0"); };
     const PLAY = '<svg viewBox="0 0 14 14"><path d="M3 1.5v11l9.5-5.5z"/></svg>';
     const PAUSE = '<svg viewBox="0 0 14 14"><path d="M2.5 1.5h3.2v11H2.5zM8.3 1.5h3.2v11H8.3z"/></svg>';

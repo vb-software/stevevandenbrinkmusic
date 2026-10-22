@@ -31,6 +31,7 @@ window.SITE = {
     secs = length, shown before the file loads.
   */
   audioAlbum: "Live at City Built Brewing",
+  audioNote: "Monday Night Live · with Nathan Walton · March 16, 2026",
   tracks: [
     { file: "audio/01-while-my-guitar-gently-weeps.mp3", title: "While My Guitar Gently Weeps", by: "The Beatles", secs: 217 },
     { file: "audio/02-blackbird.mp3", title: "Blackbird", by: "The Beatles", secs: 164 },
