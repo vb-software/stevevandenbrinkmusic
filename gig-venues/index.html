@@ -73,7 +73,7 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
   <header>
     <div class="keys" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
     <h1>Solo-friendly venues within 75 miles of Grand Rapids</h1>
-    <p class="lede">Bars, coffee shops, breweries and restaurants that have booked solo performers, open mics or solo piano. Sorted by town, nearest first. Green check marks show a dated booking found in a public calendar.</p>
+    <p class="lede">Bars, coffee shops, breweries and restaurants that have booked solo performers, open mics or solo piano. Sorted by town, nearest first. Green check marks show a dated booking found on Facebook or another public calendar.</p>
   </header>
 
   <section class="note" aria-label="About PRO licensing">
@@ -104,21 +104,21 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
   <div class="count" id="count" aria-live="polite"></div>
   <main id="list"></main>
 
-  <footer>Miles are approximate driving distances from downtown Grand Rapids. "Seen" is the most recent year a source showed music there. Gathered October 2026 from Local Spins, Lansing City Pulse, Bandsintown, Songkick, visitor bureaus and venue listings. Facebook event pages block automated access, so they could not be checked directly.</footer>
+  <footer>Miles are approximate driving distances from downtown Grand Rapids. "Seen" is the most recent year a source showed music there. Gathered October 2026 from Local Spins, Lansing City Pulse, Bandsintown, Songkick, visitor bureaus and venue listings. Facebook events were checked by hand on October 27, 2026. Venues that post schedules only as images or not at all may still book music.</footer>
 </div>
 
 <script>
 const T={b:"Bar",r:"Restaurant",c:"Coffee shop",w:"Brewery / distillery",v:"Winery",l:"Listening room",h:"Hotel bar"};
 const V=[
 // Grand Rapids
-["Grand Rapids",0,"Tip Top Deluxe Bar & Grill","b","Concert-first West Side club; solo singer-songwriters, jazz vocalists, and a Monday piano bar night in 2021.","likely",2026,1,"760 Butterworth St SW","https://localspins.com/tip-top-deluxe-marks-10-year-anniversary-of-musical-magic-local-spins/"],
-["Grand Rapids",0,"SpeakEZ Lounge","r","Downtown restaurant; Local Spins concert series books Michigan bands and solo artists, plus Sunday jazz.","likely",2026,0,"Downtown","https://localspins.com/speakez-lounge-pushes-beyond-west-michigans-best-kept-secret-with-live-music-and-more-local-spins/"],
+["Grand Rapids", 0, "Tip Top Deluxe Bar & Grill", "b", "Concert-first West Side club; solo singer-songwriters, jazz vocalists, and a Monday piano bar night in 2021.", "likely", 2026, 1, "760 Butterworth St SW", "https://www.facebook.com/search/events/?q=Tip%20Top%20Deluxe%20Bar%20&%20Grill", "Facebook: shows booked into Jan 2027, mostly bands"],
+["Grand Rapids", 0, "SpeakEZ Lounge", "r", "Downtown restaurant; Local Spins concert series books Michigan bands and solo artists, plus Sunday jazz.", "likely", 2026, 0, "Downtown", "https://www.facebook.com/search/events/?q=SpeakEZ%20Lounge%20Grand%20Rapids", "Facebook: Local Spins Wednesdays and weekly Sundays, Nov 2026"],
 ["Grand Rapids",0,"Lumber Baron Bar (Amway Grand Plaza)","h","Weekly solo jazz piano on a real acoustic piano (Robin Connell, Thursdays).","likely",2019,1,"187 Monroe Ave NW","https://localspins.com/pop-evil-soars-to-no-1-robin-connell-launches-first-ever-jazz-night-at-lumber-baron-bar-wlav-turns-40-with-loverboymark-farner-concert/"],
-["Grand Rapids",0,"Billy's Lounge","b","Live music nightly, from open mic to jazz, folk and blues weekends.","likely",2025,0,"1437 Wealthy St SE","https://www.jazznearyou.com/grandrapids/venue/billys-lounge"],
+["Grand Rapids", 0, "Billy's Lounge", "b", "Live music nightly, from open mic to jazz, folk and blues weekends.", "likely", 2026, 0, "1437 Wealthy St SE", "https://www.facebook.com/search/events/?q=Billy%27s%20Lounge%20Grand%20Rapids", "Facebook: active calendar, mostly bands and DJs"],
 ["Grand Rapids",0,"Rocky's Bar & Grill","b","90-capacity bar; bands and solo acts, Tuesday open mic, Thursday live music.","likely",2024,0,"633 Ottawa Ave NW","https://www.reverbnation.com/venue/rockysbarandgrill"],
-["Grand Rapids",0,"The Stray","c","Café, gallery and listening room; touring acoustic acts and open mics.","likely",2026,0,"Grand Rapids","https://undiscovered.music/places/fennville_mi"],
+["Grand Rapids", 0, "The Stray", "c", "Café, gallery and listening room; touring acoustic acts and open mics.", "likely", 2026, 0, "Grand Rapids", "https://www.facebook.com/search/events/?q=The%20Stray%20Grand%20Rapids", "Facebook: shows Oct 30 and Nov 7"],
 ["Grand Rapids",0,"Founders Brewing Co.","w","Tuesday open mic plus free taproom music nights.","likely",2025,0,"235 Grandville Ave SW","https://localspins.com/open-mic-nights-in-grand-rapids-rare-creative-rambunctious/"],
-["Grand Rapids",0,"Long Road Distillers","w","West Side distillery that began showcasing live music.","likely",2024,0,"West Side","https://localspins.com/resurgence-of-grand-rapids-west-side-spawns-new-live-music-venues-from-harmony-hall-and-long-road-distillers-to-ferris-coffee/"],
+["Grand Rapids", 0, "Long Road Distillers", "w", "West Side distillery that began showcasing live music.", "confirm", 2026, 0, "West Side", "https://www.facebook.com/search/events/?q=Long%20Road%20Distillers", "Facebook: only trivia and classes listed now"],
 ["Grand Rapids",0,"Harmony Hall","w","West Side brewpub hosting live music.","likely",2024,0,"West Side","https://localspins.com/resurgence-of-grand-rapids-west-side-spawns-new-live-music-venues-from-harmony-hall-and-long-road-distillers-to-ferris-coffee/"],
 ["Grand Rapids",0,"Ferris Coffee & Nut","c","Coffee shop that started hosting evening shows and a one-day festival.","confirm",2024,0,"West Side","https://localspins.com/resurgence-of-grand-rapids-west-side-spawns-new-live-music-venues-from-harmony-hall-and-long-road-distillers-to-ferris-coffee/"],
 ["Grand Rapids",0,"Grand Rapids Garage Bar & Grill","b","Friday summer block-party shows.","likely",2024,0,"819 Ottawa Ave NW","https://localspins.com/summer-concert-cascade-michigan-venues-flaunt-outdoor-shows-gr-to-cadillac-to-boyne-local-spins/"],
@@ -127,7 +127,7 @@ const V=[
 ["Grand Rapids",0,"Switchback Gear Exchange","b","Thursday acoustic open mic, 7–10 p.m.","confirm",2025,0,"Grand Rapids","https://peoplefirsteconomy.org/?p=10001985"],
 ["Grand Rapids",0,"Mayan Buzz Cafe","c","Thursday open mic, 8–10 p.m.","confirm",2019,0,"Grandville Ave","https://lanthorn.com/?p=72676"],
 ["Grand Rapids",0,"Lightfast Coffee + Art","c","Thursday open mic nights.","confirm",2023,0,"Grand Rapids","https://metroparent.com/?p=119381"],
-["Grand Rapids",0,"Mulligan's Pub","b","Eastown pub on local live-music lists.","confirm",2015,0,"1518 Wealthy St SE","https://tr.foursquare.com/whatjohnsdoing/list/top-10-live-music-spots-in-grand-rapids"],
+["Grand Rapids", 0, "Mulligan's Pub", "b", "Eastown pub on local live-music lists.", "likely", 2026, 0, "1518 Wealthy St SE", "https://www.facebook.com/search/events/?q=Mulligan%27s%20Pub%20Grand%20Rapids", "Facebook: weekend bands through Nov 2026"],
 ["Grand Rapids",0,"Stella's Drunken Retort","b","Long-running Monday open mic.","confirm",2016,0,"Grand Rapids","https://localspins.com/open-mic-nights-in-grand-rapids-rare-creative-rambunctious/"],
 ["Grand Rapids",0,"Quinn & Tuite's Irish Pub","b","Open mic night.","dated",2016,0,"Grand Rapids","https://localspins.com/open-mic-nights-in-grand-rapids-rare-creative-rambunctious/"],
 ["Grand Rapids",0,"Mangiamo","r","Live piano jazz Wednesday through Saturday.","dated",2014,1,"1033 Lake Dr SE","https://www.organissimo.org/forum/topic/75632-5-20-14-west-mi-jazz-datebook"],
@@ -138,7 +138,7 @@ const V=[
 ["Grand Rapids",0,"Iron Well","b","West Side bar named in an ASCAP-backed federal infringement suit for refusing license offers.","sued",2025,0,"West Side","https://www.crainsgrandrapids.com/news/restaurants-1/music-publishers-target-grand-rapids-bar-in-nationwide-copyright-crackdown"],
 // Near suburbs
 ["Comstock Park",7,"The Beaver Lodge","b","Wednesday open mic.","dated",2020,0,"Comstock Park","https://localspins.com/not-so-big-list-concert-guide-west-michigan-rocks-the-tip-top-and-more-local-spins/"],
-["Rockford",13,"Rockford Brewing Co.","w","Small brewpub stage; past bills include Patrick Nolan, Eric Engblade and Hazy Past.","likely",2023,0,"12 E Bridge St","https://wgrd.com/rockford-brewing-company-celebrating-fifth-anniversary/","Last Songkick listing Nov 2024; site was down"],
+["Rockford", 13, "Rockford Brewing Co.", "w", "Small brewpub stage; past bills include Patrick Nolan, Eric Engblade and Hazy Past.", "likely", 2026, 0, "12 E Bridge St", "https://www.facebook.com/search/events/?q=Rockford%20Brewing%20Company", "Facebook: Thursday open mic; bands Nov 20 and Dec 12"],
 ["Rockford",13,"Rogue River Tavern","b","Live music Tuesdays.","confirm",2022,0,"Rockford","https://eastbrookhomes.com/blog/neighborhood-news/top-10-things-to-do-in-rockford/"],
 ["Hudsonville",13,"Pike 51 Brewery","w","Sunday jazz session, noon to 2 p.m.","confirm",2019,0,"3768 Chicago Dr","https://revuewm.com/music/complimentary-concerts-where-to-take-in-live-music-on-the-house"],
 ["Hudsonville",13,"317 Coffee","c","Coffee shop hosting ticketed solo concerts.","confirm",2025,0,"Hudsonville","https://www.eventbrite.com.au/d/mi--ada/live/"],
@@ -148,28 +148,42 @@ const V=[
 ["Holland",30,"Itty Bitty Bar","b","Friday and Saturday live music, no cover.","likely",2026,0,"1136 Ottawa Beach Rd","https://bandsintown.com/v/10082496-itty-bitty-bar","2025–26 calendar on Bandsintown"],
 ["Holland",30,"Hops at 84 East","r","Friday live music.","likely",2025,0,"84 E 8th St","https://revuewm.com/music/complimentary-concerts-where-to-take-in-live-music-on-the-house"],
 ["Holland",30,"Our Brewing","w","Cozy downtown taproom with a performance corner.","confirm",2022,0,"76 E 8th St","https://localspins.com/our-brewing-in-holland-west-michigan-venue-spotlight/"],
-["Holland",30,"Tulip City Bar & Grill","b","Weekend live music.","likely",2025,0,"430 W 17th St","https://assets.simpleviewinc.com/simpleview/image/upload/v1/clients/hollandmi/Weekly_Calendar_May_11_17_5934b46e-3d5a-47ca-a7b2-38e2f0d58fef.pdf"],
+["Holland", 30, "Tulip City Bar & Grill", "b", "Weekend live music.", "likely", 2026, 0, "430 W 17th St", "https://www.facebook.com/search/events/?q=Tulip%20City%20Bar%20&%20Grill%20Holland", "Facebook: Saturday acts booked through Dec"],
 ["Holland",30,"Kelly's Bar & Grill","b","Friday live music.","likely",2025,0,"977 Butternut Dr","https://assets.simpleviewinc.com/simpleview/image/upload/v1/clients/hollandmi/Weekly_Calendar_May_11_17_5934b46e-3d5a-47ca-a7b2-38e2f0d58fef.pdf"],
 ["Holland",30,"LoLo's Bar & Grill","b","Waterfront bar with weekend live music.","confirm",2023,0,"Holland","https://www.reverbnation.com/piecesofwork/events"],
-["Holland",30,"Tanglewood Winery","v","Saturday live music.","confirm",2025,0,"15811 Riley St","https://assets.simpleviewinc.com/simpleview/image/upload/v1/clients/hollandmi/Weekly_Calendar_May_11_17_5934b46e-3d5a-47ca-a7b2-38e2f0d58fef.pdf"],
+["Holland", 30, "Tanglewood Winery", "v", "Saturday live music.", "likely", 2026, 0, "15811 Riley St", "https://www.facebook.com/search/events/?q=Tanglewood%20Winery%20Holland", "Facebook: solo Friday sets booked for the 2027 season"],
 ["Spring Lake",30,"Seven Steps Up","l","Live music and event venue.","likely",2021,0,"Spring Lake","https://www.reverbnation.com/piecesofwork/events"],
 ["Grand Haven",33,"Odd Side Ales","w","Weekly shows; Friday Night Live at the downtown taproom.","likely",2024,0,"Grand Haven","https://localspins.com/west-michigan-venue-spotlight-odd-side-ales-in-grand-haven/"],
-["Grand Haven",33,"Grand Armory Brewing","w","Regular live music on a full 2025–26 calendar.","likely",2026,0,"17 S 2nd St","https://bandsintown.com/v/10059477-grand-armory-brewing-company","2025–26 calendar on Bandsintown"],
+["Grand Haven", 33, "Grand Armory Brewing", "w", "Regular live music on a full 2025–26 calendar.", "likely", 2026, 0, "17 S 2nd St", "https://bandsintown.com/v/10059477-grand-armory-brewing-company", "Facebook: solo sets Nov 14 and Nov 19"],
 ["Grand Haven",33,"Lucy's","r","Jazz Wednesdays.","confirm",2026,0,"Columbus Ave","https://www.eventbrite.com.au/d/mi--muskegon/jazz/"],
-["Grand Haven",33,"Sporty's","b","Books local solo artists.","confirm",2026,0,"Grand Haven","https://allevents.in/grand-haven/performances"],
+["Grand Haven", 33, "Sporty's", "b", "Books local solo artists.", "likely", 2026, 0, "Grand Haven", "https://www.facebook.com/search/events/?q=Gabrial%20James", "Facebook: solo act Nov 24"],
 ["Grand Haven",33,"The Grand Seafood & Oyster Bar","r","Weekend jazz and Wednesday solo guitar.","dated",2007,0,"24 Washington St","https://www.organissimo.org/forum/topic/32058-blue-lakes-jazz-datebook"],
-["Muskegon",40,"The Block","l","Listening room for acoustic and touring acts.","likely",2025,0,"Muskegon","https://undiscovered.music/places/holland_mi"],
-["Muskegon",40,"Rake Beer Project","w","Brewery praised by local players as a favorite room.","confirm",2023,0,"Muskegon","https://localspins.com/wheatland-music-festival-tip-top-deluxe-top-readers-lists-of-favorite-festivals-venues/"],
+["Muskegon", 40, "The Block", "l", "Listening room for acoustic and touring acts.", "likely", 2026, 0, "Muskegon", "https://www.facebook.com/search/events/?q=The%20Block%20Muskegon", "Facebook: show Nov 6"],
+["Muskegon", 40, "Rake Beer Project", "w", "Brewery praised by local players as a favorite room.", "likely", 2026, 0, "Muskegon", "https://www.facebook.com/search/events/?q=Rake%20Beer%20Project", "Facebook: bands most weekends; solo Sunday brunch Nov 22"],
 ["Saugatuck / Douglas",40,"Saugatuck Brewing Co. (Douglas)","w","Barrel Room has a stage for live music.","confirm",2023,0,"Douglas","https://promotemichigan.com/?p=27557"],
-["Fennville",45,"Salt of the Earth","r","Farm-to-table restaurant with local and touring acoustic acts.","likely",2025,0,"Fennville","https://undiscovered.music/places/fennville_mi"],
+["Fennville", 45, "Salt of the Earth", "r", "Farm-to-table restaurant with local and touring acoustic acts.", "likely", 2026, 0, "Fennville", "https://www.facebook.com/search/events/?q=Salt%20of%20the%20Earth%20Fennville", "Facebook: trio show Nov 1"],
 ["Fennville",45,"Fenn Valley Vineyards","v","Music in the Vineyard, Thursday evenings in summer.","likely",2024,0,"Fennville","https://wickwoodinn.com/summer-music-venues/"],
-["Kalamazoo",50,"Old Dog Tavern","b","Regular shows including Local Spins showcases.","likely",2025,0,"Kalamazoo","https://www.wwmt.com/news/videos/interview-kalamazoos-local-spins-showcase"],
-["Kalamazoo",50,"The Clover Room","l","Listening room for singer-songwriters.","likely",2025,0,"Kalamazoo","https://localspins.com/molly-erin-monroe-zero-sun-abe-savas-serenade-october-photos-local-spins/"],
+["Kalamazoo", 50, "Old Dog Tavern", "b", "Regular shows including Local Spins showcases.", "likely", 2026, 0, "Kalamazoo", "https://www.facebook.com/search/events/?q=Old%20Dog%20Tavern%20Kalamazoo", "Facebook: show Nov 18"],
+["Kalamazoo", 50, "The Clover Room", "l", "Listening room for singer-songwriters.", "likely", 2026, 0, "Kalamazoo", "https://www.facebook.com/search/events/?q=Clover%20Room%20Kalamazoo", "Facebook: duo Oct 28 and a blues jam"],
 ["Kalamazoo",50,"SugarBowl Bar & Grille","b","Live music most weekends plus a weekly open mic.","confirm",2023,0,"Kalamazoo","https://localspins.com/musical-alcoves-kalamazoo-romps-at-shakespeares-dormouse-theatre-sugarbowl-local-spins/"],
 ["Kalamazoo",50,"Saugatuck Brewing (Kalamazoo pub)","w","Thursday live music, 6:30–8:30 p.m.","confirm",2023,0,"Downtown Kalamazoo","https://localspins.com/kalamazoos-saugatuck-brewing-one-of-w-michigans-newest-spots-for-beats-brews-local-spins/"],
-["Kalamazoo",50,"Shakespeare's Pub","b","Tuesday open mic plus local bands.","confirm",2023,0,"Kalamazoo","https://www.discoverkalamazoo.com/blog/post/9-places-with-live-music-in-kalamazoo-michigan/"],
+["Kalamazoo", 50, "Shakespeare's Pub", "b", "Tuesday open mic plus local bands.", "likely", 2026, 0, "Kalamazoo", "https://www.facebook.com/search/events/?q=Shakespeare%27s%20Pub%20Kalamazoo", "Facebook: several shows in Nov 2026"],
 ["Kalamazoo",50,"Louie's Trophy House","b","Intimate back room; Wednesday open mic.","dated",2017,0,"Kalamazoo","https://localspins.com/kalamazoo-open-mic-nights-offer-performers-test-stages-for-music-comedy/"],
 ["Kalamazoo",50,"Boatyard Brewing Co.","w","Monthly music jam and Sunday Irish session.","dated",2017,0,"Kalamazoo","https://localspins.com/kalamazoo-open-mic-nights-offer-performers-test-stages-for-music-comedy/"],
+// Found through Facebook events, Oct 2026
+["Grand Rapids", 0, "JT's Pizza & Spirits", "r", "Solo singer-songwriter booked tonight.", "confirm", 2026, 0, "Grand Rapids", "https://www.facebook.com/search/events/?q=Eli%20Roe", "Facebook: solo act Oct 27"],
+["Kentwood", 8, "Horrocks Market", "r", "Market with a taproom; books solo and duo sets.", "confirm", 2027, 0, "Kentwood", "https://www.facebook.com/search/events/?q=Midnight%20Vinyl", "Facebook: booked Jan 2027"],
+["Grandville", 8, "Michigan Moonshine Distillery", "w", "Evening solo sets.", "confirm", 2026, 0, "Grandville", "https://www.facebook.com/search/events/?q=Michigan%20Moonshine%20Distillery%20Grandville", "Facebook: solo act Nov 5"],
+["Belmont", 10, "Archival Brewing", "w", "Regular solo and duo sets, often 6 p.m. weekends.", "likely", 2026, 0, "6266 West River Dr NE", "https://www.facebook.com/search/events/?q=Archival%20Brewing%20Belmont", "Facebook: solo acts Nov 6 and Dec 12"],
+["Ada", 10, "Garage Bar Ada", "b", "Trivia nights plus solo music sets.", "confirm", 2026, 0, "Ada", "https://www.facebook.com/search/events/?q=Garage%20Bar%20Grand%20Rapids", "Facebook: solo act Dec 18"],
+["Rockford", 15, "Bostwick Lake Inn", "r", "Lake restaurant booking solo and looping acts.", "likely", 2026, 0, "Rockford", "https://www.facebook.com/search/events/?q=Chris%20Clayton%20live", "Facebook: solo acts Nov 15 and Jan 30"],
+["Coopersville", 18, "Coopersville Brewing Co.", "w", "Solo performers on Saturday evenings, booked months ahead.", "likely", 2026, 0, "1275 W Randall St", "https://www.facebook.com/search/events/?q=Coopersville%20Brewing", "Facebook: solo acts Nov 7 and Nov 28"],
+["Cedar Springs", 20, "Cedar Springs Brewing Co.", "w", "Evening live music.", "confirm", 2026, 0, "Cedar Springs", "https://www.facebook.com/search/events/?q=Rockford%20Brewing%20Company", "Facebook: booked Dec 3"],
+["Holland", 30, "Leigh's Brewing Co.", "w", "Evening solo and duo sets.", "confirm", 2026, 0, "Holland", "https://www.facebook.com/search/events/?q=Midnight%20Vinyl", "Facebook: booked Dec 19"],
+["Holland", 30, "Big Lake Brewing", "w", "Evening acoustic sets.", "confirm", 2027, 0, "Holland", "https://www.facebook.com/search/events/?q=Midnight%20Vinyl", "Facebook: booked Jun 2027"],
+["Grand Haven", 33, "Porto Bello", "r", "Live music at 6 p.m. most Fridays and Saturdays, mostly solo and duo.", "likely", 2026, 0, "Grand Haven", "https://www.facebook.com/search/events/?q=Porto%20Bello%20Grand%20Haven", "Facebook: solo and duo acts weekly, Nov–Dec"],
+["Grand Haven", 33, "Off The Chain Brewstillery", "w", "Solo and duo sets on a booked 2027 calendar.", "likely", 2027, 0, "Grand Haven", "https://www.facebook.com/search/events/?q=Midnight%20Vinyl", "Facebook: booked Jan–Jul 2027"],
+["Saugatuck / Douglas", 40, "Coral Gables", "b", "Waterfront complex with afternoon summer sets.", "likely", 2027, 0, "220 Water St", "https://www.facebook.com/search/events/?q=Midnight%20Vinyl", "Facebook: booked Jun and Aug 2027"],
 // Added in the 75-mile pass
 ["Hastings",35,"Walldorff Brewpub & Bistro","w","Recurring \"Walldorff Live\" evening music nights, 7–9 p.m.","confirm",2024,0,"105 E State St","https://www.hastingsmi.gov/event/waldorff-brewpub-bistro-live/2024-05-17"],
 ["Whitehall / Montague",55,"Sawyer's Brewing Co.","w","Booked a guitar duo; White Lake chamber lists it among live-music spots.","confirm",2023,0,"White Lake area","https://www.whitelake.org/event/david-martin-and-shawn-watkins-live-sawyers-brewing-company-2/"],
