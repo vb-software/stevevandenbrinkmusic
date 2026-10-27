@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>West Michigan Solo Gig Venues</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: gig-sheet — header with filters, then a list of venue rows grouped by town, sorted by miles from GR */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --fg:#1b2130; --muted:#5d6678; --line:#dde1e8;
+  --accent:#9a6a1f; --accent-soft:#f3e8d4;
+  --ok:#2f7a4b; --ok-bg:#e3f2e8; --warn:#8a6100; --warn-bg:#fbf0d2; --bad:#a3312b; --bad-bg:#f8e0de; --info:#38598f; --info-bg:#e2eaf7;
+  --display:"Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12151c; --surface:#1a1f29; --fg:#e6e9ef; --muted:#9aa3b4; --line:#2b3240;
+  --accent:#d8a453; --accent-soft:#3a2f1c;
+  --ok:#7fcf9c; --ok-bg:#1d3326; --warn:#e6c066; --warn-bg:#3a3018; --bad:#f09a92; --bad-bg:#40221f; --info:#9db8e6; --info-bg:#1f2b40;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151c; --surface:#1a1f29; --fg:#e6e9ef; --muted:#9aa3b4; --line:#2b3240;
+  --accent:#d8a453; --accent-soft:#3a2f1c;
+  --ok:#7fcf9c; --ok-bg:#1d3326; --warn:#e6c066; --warn-bg:#3a3018; --bad:#f09a92; --bad-bg:#40221f; --info:#9db8e6; --info-bg:#1f2b40;
+  color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:960px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:22px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,5vw,40px);line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.keys{display:flex;gap:2px;height:10px;width:120px;margin-bottom:12px}
+.keys span{flex:1;background:var(--fg);border-radius:0 0 2px 2px}
+.keys span:nth-child(3n){background:var(--line)}
+.lede{color:var(--muted);max-width:66ch;margin:8px 0 0}
+.note{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);padding:14px 16px;border-radius:6px;max-width:72ch}
+.note b{font-weight:600}
+.note p{margin:0 0 6px}.note p:last-child{margin:0}
+.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+.filters label{display:grid;gap:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);min-width:0;flex:1 1 150px}
+select,input{font:inherit;font-size:15px;text-transform:none;letter-spacing:0;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%}
+select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.count{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.town{display:grid;gap:8px}
+.town h2{font-family:var(--display);font-weight:600;font-size:20px;margin:6px 0 0;display:flex;gap:10px;align-items:baseline}
+.town h2 small{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--muted)}
+.v{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:4px 14px}
+.v .name{font-weight:600;font-size:16px;min-width:0}
+.v .type{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.v .what{grid-column:1/-1;min-width:0;color:var(--fg)}
+.v .meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:13px;color:var(--muted)}
+.v .meta a{color:var(--accent)}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.p-likely{background:var(--ok-bg);color:var(--ok)}
+.p-confirm{background:var(--info-bg);color:var(--info)}
+.p-dated{background:var(--warn-bg);color:var(--warn)}
+.p-sued{background:var(--bad-bg);color:var(--bad)}
+.piano{font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:999px}
+.year{font-family:var(--mono)}
+.ev{color:var(--ok);font-weight:500}
+.empty{color:var(--muted);padding:20px 0}
+footer{color:var(--muted);font-size:13px;max-width:72ch}
+@media (max-width:520px){.v{grid-template-columns:1fr}}
+</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="keys" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <h1>Solo-friendly venues within 75 miles of Grand Rapids</h1>
+    <p class="lede">Bars, coffee shops, breweries and restaurants that have booked solo performers, open mics or solo piano. Sorted by town, nearest first. Green check marks show a dated booking found in a public calendar.</p>
+  </header>
+
+  <section class="note" aria-label="About PRO licensing">
+    <p><b>About the licensing column.</b> ASCAP, BMI, SESAC and GMR don't publish who holds their licenses, so nobody can confirm it from the outside. The status is an estimate from how established the venue's music program is.</p>
+    <p>Before booking a covers set, ask the manager which PROs they license. Many hold ASCAP and BMI but skip SESAC or GMR, which changes what you can play. Original material sidesteps the issue.</p>
+  </section>
+
+  <div class="filters">
+    <label for="f-q">Search<input id="f-q" type="search" placeholder="Name or town"></label>
+    <label for="f-type">Type<select id="f-type"><option value="">All types</option></select></label>
+    <label for="f-status">Licensing<select id="f-status">
+      <option value="">Any status</option>
+      <option value="likely">Likely licensed</option>
+      <option value="confirm">Confirm with venue</option>
+      <option value="dated">Old listing, check it's still open</option>
+      <option value="sued">Named in PRO lawsuit</option>
+    </select></label>
+    <label for="f-range" style="flex:0 1 170px">Distance<select id="f-range"><option value="">Up to 75 mi</option><option value="50">Within 50 mi</option><option value="75">50–75 mi only</option></select></label>
+    <label for="f-piano" style="flex:0 1 170px">Piano<select id="f-piano"><option value="">All</option><option value="1">Piano history only</option></select></label>
+  </div>
+  <div class="legend">
+    <span class="pill p-likely">Likely licensed</span>
+    <span class="pill p-confirm">Confirm with venue</span>
+    <span class="pill p-dated">Old listing</span>
+    <span class="pill p-sued">Named in PRO lawsuit</span>
+    <span class="piano">Piano history</span>
+  </div>
+  <div class="count" id="count" aria-live="polite"></div>
+  <main id="list"></main>
+
+  <footer>Miles are approximate driving distances from downtown Grand Rapids. "Seen" is the most recent year a source showed music there. Gathered October 2026 from Local Spins, Lansing City Pulse, Bandsintown, Songkick, visitor bureaus and venue listings. Facebook event pages block automated access, so they could not be checked directly.</footer>
+</div>
+
+<script>
+const T={b:"Bar",r:"Restaurant",c:"Coffee shop",w:"Brewery / distillery",v:"Winery",l:"Listening room",h:"Hotel bar"};
+const V=[
+// Grand Rapids
+["Grand Rapids",0,"Tip Top Deluxe Bar & Grill","b","Concert-first West Side club; solo singer-songwriters, jazz vocalists, and a Monday piano bar night in 2021.","likely",2026,1,"760 Butterworth St SW","https://localspins.com/tip-top-deluxe-marks-10-year-anniversary-of-musical-magic-local-spins/"],
+["Grand Rapids",0,"SpeakEZ Lounge","r","Downtown restaurant; Local Spins concert series books Michigan bands and solo artists, plus Sunday jazz.","likely",2026,0,"Downtown","https://localspins.com/speakez-lounge-pushes-beyond-west-michigans-best-kept-secret-with-live-music-and-more-local-spins/"],
+["Grand Rapids",0,"Lumber Baron Bar (Amway Grand Plaza)","h","Weekly solo jazz piano on a real acoustic piano (Robin Connell, Thursdays).","likely",2019,1,"187 Monroe Ave NW","https://localspins.com/pop-evil-soars-to-no-1-robin-connell-launches-first-ever-jazz-night-at-lumber-baron-bar-wlav-turns-40-with-loverboymark-farner-concert/"],
+["Grand Rapids",0,"Billy's Lounge","b","Live music nightly, from open mic to jazz, folk and blues weekends.","likely",2025,0,"1437 Wealthy St SE","https://www.jazznearyou.com/grandrapids/venue/billys-lounge"],
+["Grand Rapids",0,"Rocky's Bar & Grill","b","90-capacity bar; bands and solo acts, Tuesday open mic, Thursday live music.","likely",2024,0,"633 Ottawa Ave NW","https://www.reverbnation.com/venue/rockysbarandgrill"],
+["Grand Rapids",0,"The Stray","c","Café, gallery and listening room; touring acoustic acts and open mics.","likely",2026,0,"Grand Rapids","https://undiscovered.music/places/fennville_mi"],
+["Grand Rapids",0,"Founders Brewing Co.","w","Tuesday open mic plus free taproom music nights.","likely",2025,0,"235 Grandville Ave SW","https://localspins.com/open-mic-nights-in-grand-rapids-rare-creative-rambunctious/"],
+["Grand Rapids",0,"Long Road Distillers","w","West Side distillery that began showcasing live music.","likely",2024,0,"West Side","https://localspins.com/resurgence-of-grand-rapids-west-side-spawns-new-live-music-venues-from-harmony-hall-and-long-road-distillers-to-ferris-coffee/"],
+["Grand Rapids",0,"Harmony Hall","w","West Side brewpub hosting live music.","likely",2024,0,"West Side","https://localspins.com/resurgence-of-grand-rapids-west-side-spawns-new-live-music-venues-from-harmony-hall-and-long-road-distillers-to-ferris-coffee/"],
+["Grand Rapids",0,"Ferris Coffee & Nut","c","Coffee shop that started hosting evening shows and a one-day festival.","confirm",2024,0,"West Side","https://localspins.com/resurgence-of-grand-rapids-west-side-spawns-new-live-music-venues-from-harmony-hall-and-long-road-distillers-to-ferris-coffee/"],
+["Grand Rapids",0,"Grand Rapids Garage Bar & Grill","b","Friday summer block-party shows.","likely",2024,0,"819 Ottawa Ave NW","https://localspins.com/summer-concert-cascade-michigan-venues-flaunt-outdoor-shows-gr-to-cadillac-to-boyne-local-spins/"],
+["Grand Rapids",0,"Zoko 822","r","Wednesday sangria and live music.","confirm",2019,0,"822 Ottawa Ave NW","https://revuewm.com/music/complimentary-concerts-where-to-take-in-live-music-on-the-house"],
+["Grand Rapids",0,"Metro Grand Rapids","b","Newer music bar; Tuesday open mic for musicians and comedians.","confirm",2025,0,"S. Division Ave","https://wgrd.com/new-g-r-music-venue-nightclub-opens-tonight/"],
+["Grand Rapids",0,"Switchback Gear Exchange","b","Thursday acoustic open mic, 7–10 p.m.","confirm",2025,0,"Grand Rapids","https://peoplefirsteconomy.org/?p=10001985"],
+["Grand Rapids",0,"Mayan Buzz Cafe","c","Thursday open mic, 8–10 p.m.","confirm",2019,0,"Grandville Ave","https://lanthorn.com/?p=72676"],
+["Grand Rapids",0,"Lightfast Coffee + Art","c","Thursday open mic nights.","confirm",2023,0,"Grand Rapids","https://metroparent.com/?p=119381"],
+["Grand Rapids",0,"Mulligan's Pub","b","Eastown pub on local live-music lists.","confirm",2015,0,"1518 Wealthy St SE","https://tr.foursquare.com/whatjohnsdoing/list/top-10-live-music-spots-in-grand-rapids"],
+["Grand Rapids",0,"Stella's Drunken Retort","b","Long-running Monday open mic.","confirm",2016,0,"Grand Rapids","https://localspins.com/open-mic-nights-in-grand-rapids-rare-creative-rambunctious/"],
+["Grand Rapids",0,"Quinn & Tuite's Irish Pub","b","Open mic night.","dated",2016,0,"Grand Rapids","https://localspins.com/open-mic-nights-in-grand-rapids-rare-creative-rambunctious/"],
+["Grand Rapids",0,"Mangiamo","r","Live piano jazz Wednesday through Saturday.","dated",2014,1,"1033 Lake Dr SE","https://www.organissimo.org/forum/topic/75632-5-20-14-west-mi-jazz-datebook"],
+["Grand Rapids",0,"Noto's Old World Italian Dining","r","Saturday piano trio; Wednesday vocalist with pianist.","dated",2014,1,"6600 28th St SE","https://www.organissimo.org/forum/topic/75632-5-20-14-west-mi-jazz-datebook"],
+["Grand Rapids",0,"Bar Divani","b","Tuesday vocalist-and-pianist nights.","dated",2015,1,"15 Ionia Ave","https://organissimo.org/forum/topic/77055-3-4-15-jazz-in-west-michigan"],
+["Grand Rapids",0,"JW Marriott Grand Rapids","h","Solo pianist Friday evenings and Sunday brunch.","dated",2012,1,"235 Louis St NW","https://www.organissimo.org/forum/topic/69835-6-18-12"],
+["Grand Rapids",0,"The B.O.B. (Gilly's / H.O.M.E.)","b","Weekly piano trio; H.O.M.E. stage hosts live music.","dated",2012,1,"20 Monroe Ave NW","https://www.organissimo.org/forum/topic/69835-6-18-12"],
+["Grand Rapids",0,"Iron Well","b","West Side bar named in an ASCAP-backed federal infringement suit for refusing license offers.","sued",2025,0,"West Side","https://www.crainsgrandrapids.com/news/restaurants-1/music-publishers-target-grand-rapids-bar-in-nationwide-copyright-crackdown"],
+// Near suburbs
+["Comstock Park",7,"The Beaver Lodge","b","Wednesday open mic.","dated",2020,0,"Comstock Park","https://localspins.com/not-so-big-list-concert-guide-west-michigan-rocks-the-tip-top-and-more-local-spins/"],
+["Rockford",13,"Rockford Brewing Co.","w","Small brewpub stage; past bills include Patrick Nolan, Eric Engblade and Hazy Past.","likely",2023,0,"12 E Bridge St","https://wgrd.com/rockford-brewing-company-celebrating-fifth-anniversary/","Last Songkick listing Nov 2024; site was down"],
+["Rockford",13,"Rogue River Tavern","b","Live music Tuesdays.","confirm",2022,0,"Rockford","https://eastbrookhomes.com/blog/neighborhood-news/top-10-things-to-do-in-rockford/"],
+["Hudsonville",13,"Pike 51 Brewery","w","Sunday jazz session, noon to 2 p.m.","confirm",2019,0,"3768 Chicago Dr","https://revuewm.com/music/complimentary-concerts-where-to-take-in-live-music-on-the-house"],
+["Hudsonville",13,"317 Coffee","c","Coffee shop hosting ticketed solo concerts.","confirm",2025,0,"Hudsonville","https://www.eventbrite.com.au/d/mi--ada/live/"],
+["Allendale",13,"Lantern Coffee Bar and Lounge","c","Thursday open mic and local artists.","confirm",2023,0,"10327 42nd Ave","https://metroparent.com/?p=119381"],
+// Lakeshore
+["West Olive",28,"Pipeline Smokehouse and Bar","r","Live music and dance nights.","confirm",2020,0,"9104 US-31","https://localspins.com/big-list-concert-guide-nov-2-8-live-music-options-for-election-week-local-spins/"],
+["Holland",30,"Itty Bitty Bar","b","Friday and Saturday live music, no cover.","likely",2026,0,"1136 Ottawa Beach Rd","https://bandsintown.com/v/10082496-itty-bitty-bar","2025–26 calendar on Bandsintown"],
+["Holland",30,"Hops at 84 East","r","Friday live music.","likely",2025,0,"84 E 8th St","https://revuewm.com/music/complimentary-concerts-where-to-take-in-live-music-on-the-house"],
+["Holland",30,"Our Brewing","w","Cozy downtown taproom with a performance corner.","confirm",2022,0,"76 E 8th St","https://localspins.com/our-brewing-in-holland-west-michigan-venue-spotlight/"],
+["Holland",30,"Tulip City Bar & Grill","b","Weekend live music.","likely",2025,0,"430 W 17th St","https://assets.simpleviewinc.com/simpleview/image/upload/v1/clients/hollandmi/Weekly_Calendar_May_11_17_5934b46e-3d5a-47ca-a7b2-38e2f0d58fef.pdf"],
+["Holland",30,"Kelly's Bar & Grill","b","Friday live music.","likely",2025,0,"977 Butternut Dr","https://assets.simpleviewinc.com/simpleview/image/upload/v1/clients/hollandmi/Weekly_Calendar_May_11_17_5934b46e-3d5a-47ca-a7b2-38e2f0d58fef.pdf"],
+["Holland",30,"LoLo's Bar & Grill","b","Waterfront bar with weekend live music.","confirm",2023,0,"Holland","https://www.reverbnation.com/piecesofwork/events"],
+["Holland",30,"Tanglewood Winery","v","Saturday live music.","confirm",2025,0,"15811 Riley St","https://assets.simpleviewinc.com/simpleview/image/upload/v1/clients/hollandmi/Weekly_Calendar_May_11_17_5934b46e-3d5a-47ca-a7b2-38e2f0d58fef.pdf"],
+["Spring Lake",30,"Seven Steps Up","l","Live music and event venue.","likely",2021,0,"Spring Lake","https://www.reverbnation.com/piecesofwork/events"],
+["Grand Haven",33,"Odd Side Ales","w","Weekly shows; Friday Night Live at the downtown taproom.","likely",2024,0,"Grand Haven","https://localspins.com/west-michigan-venue-spotlight-odd-side-ales-in-grand-haven/"],
+["Grand Haven",33,"Grand Armory Brewing","w","Regular live music on a full 2025–26 calendar.","likely",2026,0,"17 S 2nd St","https://bandsintown.com/v/10059477-grand-armory-brewing-company","2025–26 calendar on Bandsintown"],
+["Grand Haven",33,"Lucy's","r","Jazz Wednesdays.","confirm",2026,0,"Columbus Ave","https://www.eventbrite.com.au/d/mi--muskegon/jazz/"],
+["Grand Haven",33,"Sporty's","b","Books local solo artists.","confirm",2026,0,"Grand Haven","https://allevents.in/grand-haven/performances"],
+["Grand Haven",33,"The Grand Seafood & Oyster Bar","r","Weekend jazz and Wednesday solo guitar.","dated",2007,0,"24 Washington St","https://www.organissimo.org/forum/topic/32058-blue-lakes-jazz-datebook"],
+["Muskegon",40,"The Block","l","Listening room for acoustic and touring acts.","likely",2025,0,"Muskegon","https://undiscovered.music/places/holland_mi"],
+["Muskegon",40,"Rake Beer Project","w","Brewery praised by local players as a favorite room.","confirm",2023,0,"Muskegon","https://localspins.com/wheatland-music-festival-tip-top-deluxe-top-readers-lists-of-favorite-festivals-venues/"],
+["Saugatuck / Douglas",40,"Saugatuck Brewing Co. (Douglas)","w","Barrel Room has a stage for live music.","confirm",2023,0,"Douglas","https://promotemichigan.com/?p=27557"],
+["Fennville",45,"Salt of the Earth","r","Farm-to-table restaurant with local and touring acoustic acts.","likely",2025,0,"Fennville","https://undiscovered.music/places/fennville_mi"],
+["Fennville",45,"Fenn Valley Vineyards","v","Music in the Vineyard, Thursday evenings in summer.","likely",2024,0,"Fennville","https://wickwoodinn.com/summer-music-venues/"],
+["Kalamazoo",50,"Old Dog Tavern","b","Regular shows including Local Spins showcases.","likely",2025,0,"Kalamazoo","https://www.wwmt.com/news/videos/interview-kalamazoos-local-spins-showcase"],
+["Kalamazoo",50,"The Clover Room","l","Listening room for singer-songwriters.","likely",2025,0,"Kalamazoo","https://localspins.com/molly-erin-monroe-zero-sun-abe-savas-serenade-october-photos-local-spins/"],
+["Kalamazoo",50,"SugarBowl Bar & Grille","b","Live music most weekends plus a weekly open mic.","confirm",2023,0,"Kalamazoo","https://localspins.com/musical-alcoves-kalamazoo-romps-at-shakespeares-dormouse-theatre-sugarbowl-local-spins/"],
+["Kalamazoo",50,"Saugatuck Brewing (Kalamazoo pub)","w","Thursday live music, 6:30–8:30 p.m.","confirm",2023,0,"Downtown Kalamazoo","https://localspins.com/kalamazoos-saugatuck-brewing-one-of-w-michigans-newest-spots-for-beats-brews-local-spins/"],
+["Kalamazoo",50,"Shakespeare's Pub","b","Tuesday open mic plus local bands.","confirm",2023,0,"Kalamazoo","https://www.discoverkalamazoo.com/blog/post/9-places-with-live-music-in-kalamazoo-michigan/"],
+["Kalamazoo",50,"Louie's Trophy House","b","Intimate back room; Wednesday open mic.","dated",2017,0,"Kalamazoo","https://localspins.com/kalamazoo-open-mic-nights-offer-performers-test-stages-for-music-comedy/"],
+["Kalamazoo",50,"Boatyard Brewing Co.","w","Monthly music jam and Sunday Irish session.","dated",2017,0,"Kalamazoo","https://localspins.com/kalamazoo-open-mic-nights-offer-performers-test-stages-for-music-comedy/"],
+// Added in the 75-mile pass
+["Hastings",35,"Walldorff Brewpub & Bistro","w","Recurring \"Walldorff Live\" evening music nights, 7–9 p.m.","confirm",2024,0,"105 E State St","https://www.hastingsmi.gov/event/waldorff-brewpub-bistro-live/2024-05-17"],
+["Whitehall / Montague",55,"Sawyer's Brewing Co.","w","Booked a guitar duo; White Lake chamber lists it among live-music spots.","confirm",2023,0,"White Lake area","https://www.whitelake.org/event/david-martin-and-shawn-watkins-live-sawyers-brewing-company-2/"],
+["Grand Ledge",55,"BrickHaven Brewing Co.","w","Friday evening bookings.","likely",2026,0,"200 E Jefferson St","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Booked Aug 2026"],
+["Grand Ledge",55,"Homebrew Tabletop Game Lounge","b","Wednesday solo singer-songwriter nights, 7–9 p.m.","confirm",2026,0,"219½ N Bridge St","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo acts Aug 2026"],
+["Marshall",60,"Dark Horse Brewery","w","Brewery known for eclectic live acts.","likely",2026,0,"Marshall","https://choosemarshall.com/blog/why-marshall-is-michigans-next-big-live-music-hub/"],
+["Marshall",60,"The Stagecoach Inn","b","Live entertainment through the week plus Sunday karaoke.","confirm",2026,0,"Marshall","https://choosemarshall.com/blog/why-marshall-is-michigans-next-big-live-music-hub/"],
+["Marshall",60,"Sandhill Bar & Grill","b","Nightly live bands and trivia.","likely",2026,0,"Marshall","https://choosemarshall.com/blog/why-marshall-is-michigans-next-big-live-music-hub/"],
+["South Haven",60,"Harbor Light Brewery","w","Every Saturday 6–9 p.m., mostly solo performers on a published season calendar.","likely",2025,0,"516 Phoenix St","https://southhaven.org/events/live-music-at-harbor-light-brewery","Solo-heavy calendar"],
+["Dimondale",62,"Dimes Brewhouse","w","Friday and Saturday 7–9 p.m.; solo and duo acts.","likely",2026,0,"145 Bridge St","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["Lansing",65,"One North (Lansing)","r","Solo performers Thursday–Saturday; Monday open mic.","likely",2026,0,"5001 W Saginaw Hwy","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","3 solo acts in one week, Aug 2026"],
+["Lansing",65,"Lansing Brewing Co.","w","Friday early-evening solo sets.","likely",2026,0,"518 E Shiawassee St","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["Lansing",65,"Midtown Brewing Co.","w","Friday solo sets, Saturday bands, Monday open mic.","likely",2026,0,"402 S Washington Sq","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["Lansing",65,"Moriarty's Pub","b","Wednesday open mic, Tuesday jazz, weekend bands.","likely",2026,0,"802 E Michigan Ave","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Booked Aug 2026"],
+["Lansing",65,"Cleats Bar & Grille","b","Thursday solo sets, 6–9 p.m.","likely",2026,0,"5801 N Aurelius Rd","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["Lansing",65,"Stober's Bar","b","Late-night solo sets and weekend bands.","likely",2026,0,"812 E Michigan Ave","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["Lansing",65,"EagleMonk Pub and Brewery","w","Several small-group and duo sets a week.","likely",2026,0,"4906 W Mount Hope Hwy","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Booked Aug 2026"],
+["Lansing",65,"The Irish Pub","b","Thursday open mic, Friday bands.","confirm",2026,0,"1910 W Saginaw St","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Booked Aug 2026"],
+["Lansing",65,"Mac's Bar","b","Monday early open mic; mostly bands otherwise.","likely",2026,0,"2700 E Michigan Ave","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Booked Aug 2026"],
+["East Lansing",67,"Mash Bar","b","Solo performers Thursday through Saturday.","likely",2026,0,"212 Albert Ave","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","3 solo acts in one week, Aug 2026"],
+["East Lansing",67,"Dublin Square","b","Friday late solo sets.","likely",2026,0,"327 Abbot Rd","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["East Lansing",67,"The Peanut Barrel","b","Friday solo sets, Tuesday small groups.","likely",2026,0,"521 E Grand River Ave","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["East Lansing",67,"Sidebar","b","Thursday groups, Friday solo sets.","likely",2026,0,"246 E Saginaw St","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["East Lansing",67,"One North (East Lansing)","r","Weekend evening sets, solo and band.","likely",2026,0,"1310 Abbot Rd","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["East Lansing",67,"Pins & Pints","b","Thursday early-evening solo sets.","confirm",2026,0,"2120 E Saginaw St","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["East Lansing",67,"Red Cedar Spirits","w","Distillery with Friday music and Sunday jazz trio.","likely",2026,0,"2000 Merritt Rd","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Booked Aug 2026"],
+["Holt",68,"Summerlands Brewing Co.","w","Solo and duo sets most weekends; Tuesday open mic.","likely",2026,0,"1957 Cedar St","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["Eaton Rapids",70,"Eaton Rapids Craft Co.","w","Friday solo sets, Saturday bands, 6–9 p.m.","likely",2026,0,"204 N Main St","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["Haslett",72,"Blue Gill Grill","r","Thursday evening solo sets; Sunday afternoon bands.","likely",2026,0,"1591 Lake Lansing Rd","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
+["Mount Pleasant",75,"Hunter's Ale House","b","Weekend live music.","likely",2026,0,"Mount Pleasant","https://meetmtp.com/live-music-venues/"],
+["Mount Pleasant",75,"Rubble's Dive Bar","b","Bands Thursday–Saturday; mostly full bands.","confirm",2026,0,"Downtown Mount Pleasant","https://meetmtp.com/live-music-venues/"]
+].map(a=>({town:a[0],mi:a[1],name:a[2],type:a[3],what:a[4],st:a[5],yr:a[6],piano:a[7],addr:a[8],src:a[9],ev:a[10]||""}));
+
+const SL={likely:"Likely licensed",confirm:"Confirm with venue",dated:"Old listing",sued:"Named in PRO lawsuit"};
+const $=id=>document.getElementById(id);
+Object.entries(T).forEach(([k,v])=>{const o=document.createElement("option");o.value=k;o.textContent=v;$("f-type").appendChild(o)});
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function render(){
+  const rg=$("f-range").value,q=$("f-q").value.trim().toLowerCase(),t=$("f-type").value,s=$("f-status").value,p=$("f-piano").value;
+  const rows=V.filter(v=>(!q||(v.name+" "+v.town).toLowerCase().includes(q))&&(!t||v.type===t)&&(!s||v.st===s)&&(!p||v.piano)&&(!rg||(rg==="50"?v.mi<=50:v.mi>50)));
+  $("count").textContent=rows.length+" of "+V.length+" venues";
+  const groups={};rows.forEach(v=>{(groups[v.town]=groups[v.town]||[]).push(v)});
+  const towns=Object.keys(groups).sort((a,b)=>groups[a][0].mi-groups[b][0].mi||a.localeCompare(b));
+  $("list").innerHTML=towns.length?towns.map(tn=>`<section class="town"><h2>${esc(tn)} <small>${groups[tn][0].mi?"~"+groups[tn][0].mi+" mi":"in town"}</small></h2>${groups[tn].map(v=>`
+    <article class="v"><div class="name">${esc(v.name)}</div><div class="type">${T[v.type]}</div>
+    <div class="what">${esc(v.what)}</div>
+    <div class="meta"><span class="pill p-${v.st}">${SL[v.st]}</span>${v.piano?'<span class="piano">Piano history</span>':""}<span>${esc(v.addr)}</span><span>Seen <span class="year">${v.yr}</span></span>${v.ev?`<span class="ev">✓ ${esc(v.ev)}</span>`:""}<a href="${v.src}" target="_blank" rel="noopener">Source</a></div></article>`).join("")}</section>`).join(""):'<p class="empty">No venues match. Clear a filter to see more.</p>';
+}
+["f-q","f-type","f-status","f-piano","f-range"].forEach(id=>$(id).addEventListener("input",render));
+render();
+</script>
+
+</body>
+</html>
