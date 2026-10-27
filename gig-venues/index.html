@@ -60,6 +60,7 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .p-sued{background:var(--bad-bg);color:var(--bad)}
 .piano{font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:999px}
 .year{font-family:var(--mono)}
+.patio{font-size:12px;font-weight:600;color:var(--ok);background:var(--ok-bg);padding:2px 8px;border-radius:999px}
 .acou{font-size:12px;font-weight:600;color:var(--info);background:var(--info-bg);padding:2px 8px;border-radius:999px}
 .ev{color:var(--ok);font-weight:500}
 .empty{color:var(--muted);padding:20px 0}
@@ -95,6 +96,7 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
     <label for="f-range" style="flex:0 1 170px">Distance<select id="f-range"><option value="">Up to 75 mi</option><option value="50">Within 50 mi</option><option value="75">50–75 mi only</option></select></label>
     <label for="f-piano" style="flex:0 1 170px">Piano<select id="f-piano"><option value="">All</option><option value="1">Piano history only</option></select></label>
     <label for="f-ac" style="flex:0 1 190px">Booking style<select id="f-ac"><option value="">Any</option><option value="1">Mostly solo / acoustic</option></select></label>
+    <label for="f-pt" style="flex:0 1 170px">Setting<select id="f-pt"><option value="">Indoor or outdoor</option><option value="1">Patio / outdoor music</option></select></label>
   </div>
   <div class="legend">
     <span class="pill p-likely">Likely licensed</span>
@@ -103,6 +105,7 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
     <span class="pill p-sued">Named in PRO lawsuit</span>
     <span class="piano">Piano history</span>
     <span class="acou">Solo / acoustic</span>
+    <span class="patio">Patio / outdoor</span>
   </div>
   <div class="count" id="count" aria-live="polite"></div>
   <main id="list"></main>
@@ -111,7 +114,8 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
 </div>
 
 <script>
-const AC=new Set(["The Old Goat","GR Noir","The Republic","Bowerman's Farm & Market","Horn Creek Pub 2","Dabney","The Lucky Wolf","St. Julian Winery (Paw Paw tasting room)","Lumber Baron Bar (Amway Grand Plaza)", "The Stray", "Ferris Coffee & Nut", "Mayan Buzz Cafe", "Lightfast Coffee + Art", "Lantern Coffee Bar and Lounge", "317 Coffee", "Switchback Gear Exchange", "Tanglewood Winery", "Porto Bello", "Off The Chain Brewstillery", "Archival Brewing", "Coopersville Brewing Co.", "Bostwick Lake Inn", "Michigan Moonshine Distillery", "Garage Bar Ada", "JT's Pizza & Spirits", "Horrocks Market", "Leigh's Brewing Co.", "Big Lake Brewing", "Coral Gables", "Sporty's", "Salt of the Earth", "Fenn Valley Vineyards", "The Clover Room", "Harbor Light Brewery", "Homebrew Tabletop Game Lounge", "One North (Lansing)", "Mash Bar", "Lansing Brewing Co.", "Cleats Bar & Grille", "Dimes Brewhouse", "Dublin Square", "The Peanut Barrel", "Pins & Pints", "Blue Gill Grill", "Eaton Rapids Craft Co.", "Summerlands Brewing Co.", "Carolina Lowcountry Kitchen", "Lemonjello's", "Liquid Assets (Lumberman's Vault, Core Plaza)", "Full Moon Diner & Saloon", "Modales Wines", "Sit and Stay Winery", "O'Duffy's Pub", "Mangiamo", "Noto's Old World Italian Dining", "Bar Divani", "JW Marriott Grand Rapids", "Grand Armory Brewing", "Michigan Moonshine Distillery"]);
+const PT=new Set(["Downtown Market (Summer Sounds Under the Shed)", "FireRock Grille", "Cellar Brewing Co.", "Bay Pointe Inn", "Old Boys' Brewhouse", "The Deck (Pere Marquette Beach)", "The Butler", "Virtue Cider", "Cogdal Vineyards", "Bostwick Lake Inn", "Grand Rapids Garage Bar & Grill", "Tanglewood Winery", "Fenn Valley Vineyards", "Coral Gables", "St. Julian Winery (Paw Paw tasting room)", "Bowerman's Farm & Market"]);
+const AC=new Set(["Downtown Market (Summer Sounds Under the Shed)","FireRock Grille","Virtue Cider","Cogdal Vineyards","The Butler","The Old Goat","GR Noir","The Republic","Bowerman's Farm & Market","Horn Creek Pub 2","Dabney","The Lucky Wolf","St. Julian Winery (Paw Paw tasting room)","Lumber Baron Bar (Amway Grand Plaza)", "The Stray", "Ferris Coffee & Nut", "Mayan Buzz Cafe", "Lightfast Coffee + Art", "Lantern Coffee Bar and Lounge", "317 Coffee", "Switchback Gear Exchange", "Tanglewood Winery", "Porto Bello", "Off The Chain Brewstillery", "Archival Brewing", "Coopersville Brewing Co.", "Bostwick Lake Inn", "Michigan Moonshine Distillery", "Garage Bar Ada", "JT's Pizza & Spirits", "Horrocks Market", "Leigh's Brewing Co.", "Big Lake Brewing", "Coral Gables", "Sporty's", "Salt of the Earth", "Fenn Valley Vineyards", "The Clover Room", "Harbor Light Brewery", "Homebrew Tabletop Game Lounge", "One North (Lansing)", "Mash Bar", "Lansing Brewing Co.", "Cleats Bar & Grille", "Dimes Brewhouse", "Dublin Square", "The Peanut Barrel", "Pins & Pints", "Blue Gill Grill", "Eaton Rapids Craft Co.", "Summerlands Brewing Co.", "Carolina Lowcountry Kitchen", "Lemonjello's", "Liquid Assets (Lumberman's Vault, Core Plaza)", "Full Moon Diner & Saloon", "Modales Wines", "Sit and Stay Winery", "O'Duffy's Pub", "Mangiamo", "Noto's Old World Italian Dining", "Bar Divani", "JW Marriott Grand Rapids", "Grand Armory Brewing", "Michigan Moonshine Distillery"]);
 const T={b:"Bar",r:"Restaurant",c:"Coffee shop",w:"Brewery / distillery",v:"Winery",l:"Listening room",h:"Hotel bar"};
 const V=[
 // Grand Rapids
@@ -208,6 +212,16 @@ const V=[
 ["Grand Rapids", 0, "The Old Goat", "r", "Eastown restaurant with a piano in the room; has hosted Sunday brunch jazz.", "confirm", 2022, 1, "Eastown", "https://www.reverbnation.com/stevetalaga/events", "Has a piano; brunch jazz set Jan 2022"],
 ["Grand Rapids", 0, "GR Noir", "b", "Downtown jazz lounge that has booked jazz pianists and small groups.", "confirm", 2022, 1, "Downtown", "https://www.reverbnation.com/stevetalaga/events", "Jazz set Jan 2022"],
 ["Grand Rapids", 0, "The Republic", "b", "Downtown bar with a long-running jazz piano night in its front window.", "dated", 2022, 1, "45 S Division Ave", "https://www.organissimo.org/forum/topic/75632-5-20-14-west-mi-jazz-datebook", "Weekly pianist in 2014; jazz set Jan 2022"],
+// Patio and outdoor rooms
+["Grand Rapids", 0, "Downtown Market (Summer Sounds Under the Shed)", "r", "Free outdoor series under the Market Shed on select summer Saturdays, 5–8 p.m.; outdoor bar.", "likely", 2026, 0, "435 Ionia Ave SW", "https://www.downtownmarketgr.com/public-events/summer-sounds-under-the-shed", "Singer-songwriter booked June 13, 2026"],
+["Caledonia", 15, "FireRock Grille", "r", "Saturday patio music, 5:30–8:30 p.m.", "confirm", 2024, 0, "Caledonia", "https://peoplefirsteconomy.org/event/live-music-on-the-patio-3/2024-09-07/", "Patio series listed Sept 2024"],
+["Sparta", 15, "Cellar Brewing Co.", "w", "Downtown brewery with summer music nights.", "dated", 2017, 0, "Sparta", "https://www.wktvjournal.org/take-2-tastes-music-at-west-michigan-breweries-wineries/"],
+["Shelbyville (Gun Lake)", 28, "Bay Pointe Inn", "r", "Lakefront pavilion; Wednesday \"Gun Lake Live\" series Memorial Day–Labor Day (mostly bands), plus a Wednesday 5–9 p.m. series through Feb 24, 2027.", "likely", 2026, 0, "Gun Lake", "https://www.baypointeinn.com/?p=707", "2027 lineup announced in March"],
+["Spring Lake", 30, "Old Boys' Brewhouse", "w", "Brewpub with a deck and weekly live entertainment.", "confirm", 2023, 0, "Spring Lake", "https://westmichiganwoman.com/cityscene/1296-summertime-on-the-deck"],
+["Muskegon", 40, "The Deck (Pere Marquette Beach)", "b", "Beach bar, May to mid-September, with free summer concerts by local and regional bands.", "likely", 2025, 0, "Pere Marquette Park", "https://visitmuskegon.org/blog/drink-eat-and-beach-at-the-deck-in-muskegon-michigan/"],
+["Saugatuck / Douglas", 40, "The Butler", "r", "Waterfront restaurant with live music on the deck.", "confirm", 2023, 0, "Saugatuck", "https://westmichiganwoman.com/cityscene/1296-summertime-on-the-deck"],
+["Fennville", 45, "Virtue Cider", "w", "Cidery farm with an outdoor stage and lawn seating for summer music.", "confirm", 2017, 0, "Fennville", "https://www.wktvjournal.org/take-2-tastes-music-at-west-michigan-breweries-wineries/"],
+["South Haven", 60, "Cogdal Vineyards", "v", "Wednesday-night summer music series from 6 p.m.", "confirm", 2022, 0, "South Haven", "https://www.wmta.org/articles/post/theres-music-in-the-air/"],
 // Added in the 75-mile pass
 ["Hastings",35,"Walldorff Brewpub & Bistro","w","Recurring \"Walldorff Live\" evening music nights, 7–9 p.m.","confirm",2024,0,"105 E State St","https://www.hastingsmi.gov/event/waldorff-brewpub-bistro-live/2024-05-17"],
 ["Whitehall / Montague",55,"Sawyer's Brewing Co.","w","Booked a guitar duo; White Lake chamber lists it among live-music spots.","confirm",2023,0,"White Lake area","https://www.whitelake.org/event/david-martin-and-shawn-watkins-live-sawyers-brewing-company-2/"],
@@ -239,24 +253,24 @@ const V=[
 ["Haslett",72,"Blue Gill Grill","r","Thursday evening solo sets; Sunday afternoon bands.","likely",2026,0,"1591 Lake Lansing Rd","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Solo act Aug 2026"],
 ["Mount Pleasant",75,"Hunter's Ale House","b","Weekend live music.","likely",2026,0,"Mount Pleasant","https://meetmtp.com/live-music-venues/"],
 ["Mount Pleasant",75,"Rubble's Dive Bar","b","Bands Thursday–Saturday; mostly full bands.","confirm",2026,0,"Downtown Mount Pleasant","https://meetmtp.com/live-music-venues/"]
-].map(a=>({town:a[0],mi:a[1],name:a[2],type:a[3],what:a[4],st:a[5],yr:a[6],piano:a[7],addr:a[8],src:a[9],ev:a[10]||"",ac:0})).map(v=>(v.ac=AC.has(v.name)?1:0,v));
+].map(a=>({town:a[0],mi:a[1],name:a[2],type:a[3],what:a[4],st:a[5],yr:a[6],piano:a[7],addr:a[8],src:a[9],ev:a[10]||"",ac:0})).map(v=>(v.ac=AC.has(v.name)?1:0,v.pt=PT.has(v.name)?1:0,v));
 
 const SL={likely:"Likely licensed",confirm:"Confirm with venue",dated:"Old listing",sued:"Named in PRO lawsuit"};
 const $=id=>document.getElementById(id);
 Object.entries(T).forEach(([k,v])=>{const o=document.createElement("option");o.value=k;o.textContent=v;$("f-type").appendChild(o)});
 function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function render(){
-  const ac=$("f-ac").value,rg=$("f-range").value,q=$("f-q").value.trim().toLowerCase(),t=$("f-type").value,s=$("f-status").value,p=$("f-piano").value;
-  const rows=V.filter(v=>(!q||(v.name+" "+v.town).toLowerCase().includes(q))&&(!t||v.type===t)&&(!s||v.st===s)&&(!p||v.piano)&&(!ac||v.ac)&&(!rg||(rg==="50"?v.mi<=50:v.mi>50)));
+  const pt=$("f-pt").value,ac=$("f-ac").value,rg=$("f-range").value,q=$("f-q").value.trim().toLowerCase(),t=$("f-type").value,s=$("f-status").value,p=$("f-piano").value;
+  const rows=V.filter(v=>(!q||(v.name+" "+v.town).toLowerCase().includes(q))&&(!t||v.type===t)&&(!s||v.st===s)&&(!p||v.piano)&&(!ac||v.ac)&&(!pt||v.pt)&&(!rg||(rg==="50"?v.mi<=50:v.mi>50)));
   $("count").textContent=rows.length+" of "+V.length+" venues";
   const groups={};rows.forEach(v=>{(groups[v.town]=groups[v.town]||[]).push(v)});
   const towns=Object.keys(groups).sort((a,b)=>groups[a][0].mi-groups[b][0].mi||a.localeCompare(b));
   $("list").innerHTML=towns.length?towns.map(tn=>`<section class="town"><h2>${esc(tn)} <small>${groups[tn][0].mi?"~"+groups[tn][0].mi+" mi":"in town"}</small></h2>${groups[tn].map(v=>`
     <article class="v"><div class="name">${esc(v.name)}</div><div class="type">${T[v.type]}</div>
     <div class="what">${esc(v.what)}</div>
-    <div class="meta"><span class="pill p-${v.st}">${SL[v.st]}</span>${v.piano?'<span class="piano">Piano history</span>':""}${v.ac?'<span class="acou">Solo / acoustic</span>':""}<span>${esc(v.addr)}</span><span>Seen <span class="year">${v.yr}</span></span>${v.ev?`<span class="ev">✓ ${esc(v.ev)}</span>`:""}<a href="${v.src}" target="_blank" rel="noopener">Source</a></div></article>`).join("")}</section>`).join(""):'<p class="empty">No venues match. Clear a filter to see more.</p>';
+    <div class="meta"><span class="pill p-${v.st}">${SL[v.st]}</span>${v.piano?'<span class="piano">Piano history</span>':""}${v.ac?'<span class="acou">Solo / acoustic</span>':""}${v.pt?'<span class="patio">Patio / outdoor</span>':""}<span>${esc(v.addr)}</span><span>Seen <span class="year">${v.yr}</span></span>${v.ev?`<span class="ev">✓ ${esc(v.ev)}</span>`:""}<a href="${v.src}" target="_blank" rel="noopener">Source</a></div></article>`).join("")}</section>`).join(""):'<p class="empty">No venues match. Clear a filter to see more.</p>';
 }
-["f-q","f-type","f-status","f-piano","f-range","f-ac"].forEach(id=>$(id).addEventListener("input",render));
+["f-q","f-type","f-status","f-piano","f-range","f-ac","f-pt"].forEach(id=>$(id).addEventListener("input",render));
 render();
 </script>
 
