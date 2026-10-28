@@ -79,6 +79,19 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .dl-row{display:grid;grid-template-columns:5.5em 1fr;gap:4px 12px;align-items:baseline}
 .dl-row .mo{font-family:var(--mono);font-weight:500;color:var(--warn)}
 .dl-row small{display:block;color:var(--muted);font-size:12.5px}
+.talk-box{background:var(--ok-bg);border:1px solid var(--ok);border-left:6px solid var(--ok);border-radius:6px;padding:14px 16px;display:grid;gap:10px}
+.talk-box h3{margin:0;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ok);display:flex;align-items:center;gap:8px}
+.talk-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.talk-row b{font-family:var(--display);font-size:20px;font-weight:600;color:var(--fg)}
+.talk-row a{color:inherit;cursor:pointer;text-decoration:underline;text-decoration-color:var(--ok);text-underline-offset:4px}
+.talk-row small{color:var(--muted);font-size:13px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--ok);flex:none;box-shadow:0 0 0 0 var(--ok);animation:pulse 1.8s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 60%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+.o-col li.talk{background:var(--ok-bg);border-left:3px solid var(--ok);border-radius:4px;padding:4px 8px;margin:0 -8px}
+.talk-tag{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ok)}
+.talk-tag .dot{width:8px;height:8px}
+.op-talk{background:var(--ok);color:var(--bg);font-weight:700}
 .o-sub{color:var(--muted);font-size:12.5px;margin-top:-4px}
 .op-wiser{background:var(--surface);color:var(--fg);border:1px solid var(--line)}
 .hl-bar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
@@ -133,6 +146,7 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
   <section class="outreach" aria-labelledby="o-title">
     <h2 id="o-title">Outreach <small id="o-asof"></small></h2>
     <div class="o-sum" id="o-sum"></div>
+    <div class="talk-box" id="talk-box" hidden></div>
     <div class="dl-box" id="dl-box"></div>
     <div class="o-grid" id="o-grid"></div>
     <p class="o-tip">Names that are also in the venue list below are links. Tap one to jump to it.</p>
@@ -331,7 +345,6 @@ const OUT=[
 {n:"JT's Pizza & Spirits",town:"Grand Rapids",st:"email",v:"JT's Pizza & Spirits"},
 {n:"Horrocks Market",town:"Kentwood",st:"email",v:"Horrocks Market"},
 {n:"Coral Gables",town:"Saugatuck",st:"email",note:"Has a dedicated piano bar space.",v:"Coral Gables"},
-{n:"Third Nature Brewing",town:"Plainfield Twp",st:"email",note:"Reached out; in active communication."},
 {n:"Rapid River Stillhouse",town:"Grand Rapids",st:"card",v:"Rapid River Stillhouse"},
 {n:"The Old Goat",town:"Grand Rapids",st:"card",v:"The Old Goat"},
 {n:"Winter Inn",town:"Greenville",st:"card"},
@@ -342,6 +355,7 @@ const OUT=[
 {n:"Ed Dunneback & Girls Farm",town:"Grand Rapids",st:"card"},
 {n:"Lou Lou's Coffee Bar",town:"Belmont",st:"card"},
 {n:"Thornapple Brewing Co.",town:"Cascade",st:"card"},
+{n:"Third Nature Brewing",town:"Plainfield Twp",st:"card",talk:"Card dropped; now in active communication."},
 {n:"Chicago Beef Joint",town:"Grand Rapids",st:"todo"},
 {n:"Speciation Cellars",town:"Grand Rapids",st:"todo"},
 {n:"Rendezvous (Amway Grand Plaza)",town:"Grand Rapids",st:"todo"},
@@ -362,11 +376,13 @@ const OMAP={};OUT.forEach(o=>{if(o.v)OMAP[o.v]=o});
 function slug(x){return "v-"+x.toLowerCase().replace(/[^a-z0-9]+/g,"-")}
 function renderOut(){
   $("o-asof").textContent=O_ASOF;
+  const TK=OUT.filter(o=>o.talk),tb=$("talk-box");tb.hidden=!TK.length;
+  tb.innerHTML=`<h3><span class="dot"></span>In conversation now</h3>`+TK.map(o=>`<div class="talk-row">${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}<small>${esc(o.talk)}</small></div>`).join("");
   const D=OUT.filter(o=>o.dl).sort((a,b)=>a.dl.m-b.dl.m);
   $("dl-box").innerHTML=`<h3>Booking deadlines</h3>`+(D.length?D.map(o=>`<div class="dl-row"><span class="mo">${esc(o.dl.txt)}</span><div><b>${esc(o.n)}</b> · ${esc(o.dl.what)}${o.dl.rem?`<small>${esc(o.dl.rem)}</small>`:""}</div></div>`).join(""):'<p class="o-tip">No deadlines recorded yet.</p>');
   const order=["wiser","backup","email","card","todo"];
-  $("o-sum").innerHTML=order.map(k=>`<span class="op op-${k}">${OS[k]}: ${OUT.filter(o=>o.st===k).length}</span>`).join("");
-  $("o-grid").innerHTML=order.map(k=>{const L=OUT.filter(o=>o.st===k);return `<div class="o-col"><h3>${OS[k]} <span>${L.length}</span></h3>${k==="wiser"?`<small class="o-sub">You're on Wiser's list. They book these rooms, so these come through Wiser.</small>`:""}<ul>${L.map(o=>`<li>${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}${o.note?`<small>${esc(o.note)}</small>`:""}</li>`).join("")}</ul></div>`}).join("");
+  $("o-sum").innerHTML=order.map(k=>`<span class="op op-${k}">${OS[k]}: ${OUT.filter(o=>o.st===k).length}</span>`).join("")+(OUT.some(o=>o.talk)?`<span class="op op-talk">In conversation: ${OUT.filter(o=>o.talk).length}</span>`:"");
+  $("o-grid").innerHTML=order.map(k=>{const L=OUT.filter(o=>o.st===k);return `<div class="o-col"><h3>${OS[k]} <span>${L.length}</span></h3>${k==="wiser"?`<small class="o-sub">You're on Wiser's list. They book these rooms, so these come through Wiser.</small>`:""}<ul>${L.map(o=>`<li${o.talk?' class="talk"':""}>${o.talk?'<span class="talk-tag"><span class="dot"></span>In conversation</span>':""}${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}${o.note?`<small>${esc(o.note)}</small>`:""}</li>`).join("")}</ul></div>`}).join("");
 }
 document.addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!a)return;e.preventDefault();
   ["f-q","f-type","f-status","f-piano","f-range","f-ac","f-pt","f-out"].forEach(id=>$(id).value="");render();
