@@ -93,6 +93,11 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .v.dim{opacity:.38}
 .v.lit{border-color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}
 @media (prefers-reduced-motion:reduce){.v{transition:none}}
+.to-top{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:20;width:48px;height:48px;border-radius:50%;border:0;background:var(--fg);color:var(--bg);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.22);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .2s,transform .2s}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.to-top svg{width:22px;height:22px}
+@media (prefers-reduced-motion:reduce){.to-top{transition:none}}
 .o-tip{font-size:13px;color:var(--muted);margin:0}
 .op{font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
 .op-backup{background:var(--ok-bg);color:var(--ok)}
@@ -115,7 +120,7 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
 <div class="wrap">
   <header>
     <div class="keys" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    <h1>Solo-friendly venues within 75 miles of Grand Rapids</h1>
+    <h1 tabindex="-1">Solo-friendly venues within 75 miles of Grand Rapids</h1>
     <p class="lede">Bars, coffee shops, breweries and restaurants that have booked solo performers, open mics or solo piano. Sorted by town, nearest first. Green check marks show a dated booking found on Facebook or another public calendar.</p>
   </header>
 
@@ -167,6 +172,7 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
   </div>
   <main id="list"></main>
 
+  <button type="button" class="to-top" id="to-top" aria-label="Back to top" title="Back to top" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
   <footer>Miles are approximate driving distances from downtown Grand Rapids. "Seen" is the most recent year a source showed music there. Gathered October 2026 from Local Spins, Lansing City Pulse, Bandsintown, Songkick, visitor bureaus and venue listings. Facebook events were checked by hand on October 27, 2026. Venues that post schedules only as images or not at all may still book music.</footer>
 </div>
 
@@ -383,6 +389,11 @@ function setHL(h){HL=h;try{localStorage.setItem("gv-hl",h)}catch(e){}
 document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>setHL(b.dataset.hl)));
 renderOut();
 setHL(HL);
+(function(){const b=$("to-top");let on=false;
+  const upd=()=>{const s=window.scrollY>600;if(s!==on){on=s;b.classList.toggle("show",s);b.tabIndex=s?0:-1;}};
+  window.addEventListener("scroll",upd,{passive:true});upd();
+  b.addEventListener("click",()=>{window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});document.querySelector("h1").focus?.({preventScroll:true});});
+})();
 </script>
 
 </body>
