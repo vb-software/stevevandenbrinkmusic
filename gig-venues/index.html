@@ -60,6 +60,28 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .p-sued{background:var(--bad-bg);color:var(--bad)}
 .piano{font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:999px}
 .year{font-family:var(--mono)}
+.outreach{display:grid;gap:12px}
+.outreach h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.outreach h2 small{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--muted)}
+.o-sum{display:flex;flex-wrap:wrap;gap:8px}
+.o-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px;align-items:start}
+.o-col{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;display:grid;gap:8px;min-width:0}
+.o-col h3{margin:0;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.o-col h3 span{font-family:var(--mono);color:var(--fg)}
+.o-col ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.o-col li{display:grid;gap:1px;min-width:0}
+.o-col li b{font-weight:600}
+.o-col li small{color:var(--muted);font-size:12.5px}
+.o-col li a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;cursor:pointer}
+.o-col li a:hover{text-decoration-color:var(--accent)}
+.o-tip{font-size:13px;color:var(--muted);margin:0}
+.op{font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.op-backup{background:var(--ok-bg);color:var(--ok)}
+.op-email{background:var(--info-bg);color:var(--info)}
+.op-card{background:var(--accent-soft);color:var(--accent)}
+.op-todo{background:var(--warn-bg);color:var(--warn)}
+.v.hl{outline:2px solid var(--accent);outline-offset:2px}
+
 .patio{font-size:12px;font-weight:600;color:var(--ok);background:var(--ok-bg);padding:2px 8px;border-radius:999px}
 .acou{font-size:12px;font-weight:600;color:var(--info);background:var(--info-bg);padding:2px 8px;border-radius:999px}
 .ev{color:var(--ok);font-weight:500}
@@ -83,6 +105,14 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
     <p>Before booking a covers set, ask the manager which PROs they license. Many hold ASCAP and BMI but skip SESAC or GMR, which changes what you can play. Original material sidesteps the issue.</p>
   </section>
 
+
+  <section class="outreach" aria-labelledby="o-title">
+    <h2 id="o-title">Outreach <small id="o-asof"></small></h2>
+    <div class="o-sum" id="o-sum"></div>
+    <div class="o-grid" id="o-grid"></div>
+    <p class="o-tip">Names that are also in the venue list below are links. Tap one to jump to it.</p>
+  </section>
+
   <div class="filters">
     <label for="f-q">Search<input id="f-q" type="search" placeholder="Name or town"></label>
     <label for="f-type">Type<select id="f-type"><option value="">All types</option></select></label>
@@ -96,6 +126,7 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
     <label for="f-piano" style="flex:0 1 170px">Piano<select id="f-piano"><option value="">All</option><option value="1">Piano history only</option></select></label>
     <label for="f-ac" style="flex:0 1 190px">Booking style<select id="f-ac"><option value="">Any</option><option value="1">Mostly solo / acoustic</option></select></label>
     <label for="f-pt" style="flex:0 1 170px">Setting<select id="f-pt"><option value="">Indoor or outdoor</option><option value="1">Patio / outdoor music</option></select></label>
+    <label for="f-out" style="flex:0 1 170px">Outreach<select id="f-out"><option value="">Any</option><option value="yes">Already contacted</option><option value="no">Not contacted yet</option></select></label>
   </div>
   <div class="legend">
     <span class="pill p-likely">Likely licensed</span>
@@ -251,18 +282,57 @@ const SL={likely:"Likely licensed",confirm:"Confirm with venue",dated:"Old listi
 const $=id=>document.getElementById(id);
 Object.entries(T).forEach(([k,v])=>{const o=document.createElement("option");o.value=k;o.textContent=v;$("f-type").appendChild(o)});
 function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+const O_ASOF="Updated Oct 28, 2026";
+const OS={backup:"On backup list",email:"Emailed",card:"Card dropped",todo:"To contact"};
+const OUT=[
+{n:"Archival Brewing",town:"Belmont",st:"backup",note:"Didn't make their lineup; on the backup list. Contact them by August for the following year's events.",v:"Archival Brewing"},
+{n:"Modales Wines",town:"Fennville",st:"email",v:"Modales Wines"},
+{n:"Fenn Valley Vineyards",town:"Fennville",st:"email",v:"Fenn Valley Vineyards"},
+{n:"Salt of the Earth",town:"Fennville",st:"email",v:"Salt of the Earth"},
+{n:"Tanglewood Winery",town:"Holland",st:"email",v:"Tanglewood Winery"},
+{n:"Cogdal Vineyards",town:"South Haven",st:"email",v:"Cogdal Vineyards"},
+{n:"JT's Pizza & Spirits",town:"Grand Rapids",st:"email",v:"JT's Pizza & Spirits"},
+{n:"Rapid River Stillhouse",town:"Grand Rapids",st:"card",v:"Rapid River Stillhouse"},
+{n:"The Old Goat",town:"Grand Rapids",st:"card",v:"The Old Goat"},
+{n:"Winter Inn",town:"Greenville",st:"card"},
+{n:"Eastern Kille Distillery",town:"Grand Rapids area",st:"card"},
+{n:"Tuk Lake",town:"",st:"card"},
+{n:"Cheers",town:"",st:"card"},
+{n:"City Built Brewing",town:"Grand Rapids",st:"card"},
+{n:"Ed Dunneback & Girls Farm",town:"Grand Rapids",st:"card"},
+{n:"Lou Lou's Coffee Bar",town:"",st:"card"},
+{n:"Thornapple Brewing Co.",town:"Cascade",st:"card"},
+{n:"Chicago Beef Joint",town:"Grand Rapids",st:"todo"},
+{n:"Third Nature Brewing",town:"Plainfield Twp",st:"todo"},
+{n:"Speciation Cellars",town:"Grand Rapids",st:"todo"},
+{n:"Rendezvous (Amway Grand Plaza)",town:"Grand Rapids",st:"todo"}
+];
+const OMAP={};OUT.forEach(o=>{if(o.v)OMAP[o.v]=o});
+function slug(x){return "v-"+x.toLowerCase().replace(/[^a-z0-9]+/g,"-")}
+function renderOut(){
+  $("o-asof").textContent=O_ASOF;
+  const order=["backup","email","card","todo"];
+  $("o-sum").innerHTML=order.map(k=>`<span class="op op-${k}">${OS[k]}: ${OUT.filter(o=>o.st===k).length}</span>`).join("");
+  $("o-grid").innerHTML=order.map(k=>{const L=OUT.filter(o=>o.st===k);return `<div class="o-col"><h3>${OS[k]} <span>${L.length}</span></h3><ul>${L.map(o=>`<li>${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}${o.note?`<small>${esc(o.note)}</small>`:""}</li>`).join("")}</ul></div>`}).join("");
+}
+document.addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!a)return;e.preventDefault();
+  ["f-q","f-type","f-status","f-piano","f-range","f-ac","f-pt","f-out"].forEach(id=>$(id).value="");render();
+  const el=document.getElementById(a.dataset.go);if(!el)return;el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"});
+  el.classList.add("hl");setTimeout(()=>el.classList.remove("hl"),2400);});
 function render(){
-  const pt=$("f-pt").value,ac=$("f-ac").value,rg=$("f-range").value,q=$("f-q").value.trim().toLowerCase(),t=$("f-type").value,s=$("f-status").value,p=$("f-piano").value;
-  const rows=V.filter(v=>(!q||(v.name+" "+v.town).toLowerCase().includes(q))&&(!t||v.type===t)&&(!s||v.st===s)&&(!p||v.piano)&&(!ac||v.ac)&&(!pt||v.pt)&&(!rg||(rg==="50"?v.mi<=50:v.mi>50)));
+  const ou=$("f-out").value,pt=$("f-pt").value,ac=$("f-ac").value,rg=$("f-range").value,q=$("f-q").value.trim().toLowerCase(),t=$("f-type").value,s=$("f-status").value,p=$("f-piano").value;
+  const rows=V.filter(v=>(!q||(v.name+" "+v.town).toLowerCase().includes(q))&&(!t||v.type===t)&&(!s||v.st===s)&&(!p||v.piano)&&(!ac||v.ac)&&(!pt||v.pt)&&(!ou||(ou==="yes"?!!OMAP[v.name]:!OMAP[v.name]))&&(!rg||(rg==="50"?v.mi<=50:v.mi>50)));
   $("count").textContent=rows.length+" of "+V.length+" venues";
   const groups={};rows.forEach(v=>{(groups[v.town]=groups[v.town]||[]).push(v)});
   const towns=Object.keys(groups).sort((a,b)=>groups[a][0].mi-groups[b][0].mi||a.localeCompare(b));
   $("list").innerHTML=towns.length?towns.map(tn=>`<section class="town"><h2>${esc(tn)} <small>${groups[tn][0].mi?"~"+groups[tn][0].mi+" mi":"in town"}</small></h2>${groups[tn].map(v=>`
-    <article class="v"><div class="name">${esc(v.name)}</div><div class="type">${T[v.type]}</div>
+    <article class="v" id="${slug(v.name)}"><div class="name">${esc(v.name)}</div><div class="type">${T[v.type]}</div>
     <div class="what">${esc(v.what)}</div>
-    <div class="meta"><span class="pill p-${v.st}">${SL[v.st]}</span>${v.piano?'<span class="piano">Piano history</span>':""}${v.ac?'<span class="acou">Solo / acoustic</span>':""}${v.pt?'<span class="patio">Patio / outdoor</span>':""}<span>${esc(v.addr)}</span><span>Seen <span class="year">${v.yr}</span></span>${v.ev?`<span class="ev">✓ ${esc(v.ev)}</span>`:""}<a href="${v.src}" target="_blank" rel="noopener">Source</a></div></article>`).join("")}</section>`).join(""):'<p class="empty">No venues match. Clear a filter to see more.</p>';
+    <div class="meta"><span class="pill p-${v.st}">${SL[v.st]}</span>${OMAP[v.name]?`<span class="op op-${OMAP[v.name].st}">${OS[OMAP[v.name].st]}</span>`:""}${v.piano?'<span class="piano">Piano history</span>':""}${v.ac?'<span class="acou">Solo / acoustic</span>':""}${v.pt?'<span class="patio">Patio / outdoor</span>':""}<span>${esc(v.addr)}</span><span>Seen <span class="year">${v.yr}</span></span>${v.ev?`<span class="ev">✓ ${esc(v.ev)}</span>`:""}<a href="${v.src}" target="_blank" rel="noopener">Source</a></div></article>`).join("")}</section>`).join(""):'<p class="empty">No venues match. Clear a filter to see more.</p>';
 }
-["f-q","f-type","f-status","f-piano","f-range","f-ac","f-pt"].forEach(id=>$(id).addEventListener("input",render));
+["f-q","f-type","f-status","f-piano","f-range","f-ac","f-pt","f-out"].forEach(id=>$(id).addEventListener("input",render));
+renderOut();
 render();
 </script>
 
