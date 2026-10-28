@@ -74,6 +74,11 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .o-col li small{color:var(--muted);font-size:12.5px}
 .o-col li a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;cursor:pointer}
 .o-col li a:hover{text-decoration-color:var(--accent)}
+.dl-box{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:6px;padding:12px 14px;display:grid;gap:8px}
+.dl-box h3{margin:0;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.dl-row{display:grid;grid-template-columns:5.5em 1fr;gap:4px 12px;align-items:baseline}
+.dl-row .mo{font-family:var(--mono);font-weight:500;color:var(--warn)}
+.dl-row small{display:block;color:var(--muted);font-size:12.5px}
 .o-tip{font-size:13px;color:var(--muted);margin:0}
 .op{font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
 .op-backup{background:var(--ok-bg);color:var(--ok)}
@@ -109,6 +114,7 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
   <section class="outreach" aria-labelledby="o-title">
     <h2 id="o-title">Outreach <small id="o-asof"></small></h2>
     <div class="o-sum" id="o-sum"></div>
+    <div class="dl-box" id="dl-box"></div>
     <div class="o-grid" id="o-grid"></div>
     <p class="o-tip">Names that are also in the venue list below are links. Tap one to jump to it.</p>
   </section>
@@ -286,7 +292,7 @@ function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;
 const O_ASOF="Updated Oct 28, 2026";
 const OS={backup:"On backup list",email:"Emailed",card:"Card dropped",todo:"To contact"};
 const OUT=[
-{n:"Archival Brewing",town:"Belmont",st:"backup",note:"Didn't make their lineup; on the backup list. Contact them by August for the following year's events.",v:"Archival Brewing"},
+{n:"Archival Brewing",town:"Belmont",st:"backup",note:"Didn't make their lineup; on the backup list.",dl:{m:8,txt:"August",what:"Notice for the following year's events",rem:"Reminder set for Aug 2, 2027"},v:"Archival Brewing"},
 {n:"Modales Wines",town:"Fennville",st:"email",v:"Modales Wines"},
 {n:"Fenn Valley Vineyards",town:"Fennville",st:"email",v:"Fenn Valley Vineyards"},
 {n:"Salt of the Earth",town:"Fennville",st:"email",v:"Salt of the Earth"},
@@ -312,6 +318,8 @@ const OMAP={};OUT.forEach(o=>{if(o.v)OMAP[o.v]=o});
 function slug(x){return "v-"+x.toLowerCase().replace(/[^a-z0-9]+/g,"-")}
 function renderOut(){
   $("o-asof").textContent=O_ASOF;
+  const D=OUT.filter(o=>o.dl).sort((a,b)=>a.dl.m-b.dl.m);
+  $("dl-box").innerHTML=`<h3>Booking deadlines</h3>`+(D.length?D.map(o=>`<div class="dl-row"><span class="mo">${esc(o.dl.txt)}</span><div><b>${esc(o.n)}</b> · ${esc(o.dl.what)}${o.dl.rem?`<small>${esc(o.dl.rem)}</small>`:""}</div></div>`).join(""):'<p class="o-tip">No deadlines recorded yet.</p>');
   const order=["backup","email","card","todo"];
   $("o-sum").innerHTML=order.map(k=>`<span class="op op-${k}">${OS[k]}: ${OUT.filter(o=>o.st===k).length}</span>`).join("");
   $("o-grid").innerHTML=order.map(k=>{const L=OUT.filter(o=>o.st===k);return `<div class="o-col"><h3>${OS[k]} <span>${L.length}</span></h3><ul>${L.map(o=>`<li>${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}${o.note?`<small>${esc(o.note)}</small>`:""}</li>`).join("")}</ul></div>`}).join("");
