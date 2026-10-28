@@ -229,7 +229,7 @@ const V=[
 ["Holland", 30, "Tulip City Bar & Grill", "b", "Weekend live music.", "likely", 2026, 0, "430 W 17th St", "https://www.facebook.com/search/events/?q=Tulip%20City%20Bar%20&%20Grill%20Holland", "Facebook: Saturday acts booked through Dec"],
 ["Holland",30,"Kelly's Bar & Grill","b","Friday live music.","likely",2025,0,"977 Butternut Dr","https://assets.simpleviewinc.com/simpleview/image/upload/v1/clients/hollandmi/Weekly_Calendar_May_11_17_5934b46e-3d5a-47ca-a7b2-38e2f0d58fef.pdf"],
 ["Holland",30,"LoLo's Bar & Grill","b","Waterfront bar with weekend live music.","confirm",2023,0,"Holland","https://www.reverbnation.com/piecesofwork/events"],
-["Holland", 30, "Tanglewood Winery", "v", "Saturday live music.", "likely", 2026, 0, "15811 Riley St", "https://www.facebook.com/search/events/?q=Tanglewood%20Winery%20Holland", "Facebook: solo Friday sets booked for the 2027 season"],
+["Holland", 30, "Tanglewood Winery", "v", "Live music on Fridays and Saturdays, including a solo Friday series.", "likely", 2026, 0, "15811 Riley St", "https://www.facebook.com/search/events/?q=Tanglewood%20Winery%20Holland", "Facebook: solo Friday sets booked for the 2027 season"],
 ["Spring Lake",30,"Seven Steps Up","l","Live music and event venue.","likely",2021,0,"Spring Lake","https://www.reverbnation.com/piecesofwork/events"],
 ["Grand Haven",33,"Odd Side Ales","w","Weekly shows; Friday Night Live at the downtown taproom.","likely",2024,0,"Grand Haven","https://localspins.com/west-michigan-venue-spotlight-odd-side-ales-in-grand-haven/"],
 ["Grand Haven", 33, "Grand Armory Brewing", "w", "Regular live music on a full 2025–26 calendar.", "likely", 2026, 0, "17 S 2nd St", "https://bandsintown.com/v/10059477-grand-armory-brewing-company", "Facebook: solo sets Nov 14 and Nov 19"],
@@ -439,14 +439,16 @@ document.addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!
 const FIDS=["f-q","f-type","f-status","f-piano","f-range","f-ac","f-pt","f-out","f-recent"];
 function updReset(){const n=FIDS.filter(id=>$(id).value.trim()).length+(HL?1:0);
   $("reset").disabled=!n;$("reset-note").textContent=n?`${n} active`:"";}
+const isLit=v=>HL==="act"?RECENT.has(v.name):HL==="yes"?reached(v.name):notYet(v.name);
+const HLN={yes:"reached out",no:"not yet contacted",act:"active past year"};
 function render(){
   const ra=$("f-recent").value,ou=$("f-out").value,pt=$("f-pt").value,ac=$("f-ac").value,rg=$("f-range").value,q=$("f-q").value.trim().toLowerCase(),t=$("f-type").value,s=$("f-status").value,p=$("f-piano").value;
   const rows=V.filter(v=>(!q||(v.name+" "+v.town).toLowerCase().includes(q))&&(!t||v.type===t)&&(!s||v.st===s)&&(!p||v.piano)&&(!ac||v.ac)&&(!pt||v.pt)&&(!ou||(ou==="yes"?reached(v.name):notYet(v.name)))&&(!rg||(rg==="50"?v.mi<=50:rg==="75"?v.mi<=75:rg==="w120"?v.mi<=120:rg==="north"?v.mi>120:(v.mi>75&&v.mi<=120)))&&(!ra||RECENT.has(v.name)));
-  $("count").textContent=rows.length+" of "+V.length+" venues";
+  $("count").textContent=rows.length+" of "+V.length+" venues"+(HL?` · ${rows.filter(isLit).length} ${HLN[HL]}`:"");
   const groups={};rows.forEach(v=>{(groups[v.town]=groups[v.town]||[]).push(v)});
   const towns=Object.keys(groups).sort((a,b)=>groups[a][0].mi-groups[b][0].mi||a.localeCompare(b));
   $("list").innerHTML=towns.length?towns.map(tn=>`<section class="town"><h2>${esc(tn)} <small>${groups[tn][0].mi?"~"+groups[tn][0].mi+" mi":"in town"}</small></h2>${groups[tn].map(v=>`
-    <article class="v${HL?((HL==="act"?RECENT.has(v.name):HL==="yes"?reached(v.name):notYet(v.name))?" lit":" dim"):""}" id="${slug(v.name)}"><div class="name">${esc(v.name)}</div><div class="type">${T[v.type]}</div>
+    <article class="v${HL?(isLit(v)?" lit":" dim"):""}" id="${slug(v.name)}"><div class="name">${esc(v.name)}</div><div class="type">${T[v.type]}</div>
     <div class="what">${esc(v.what)}</div>
     <div class="meta"><span class="pill p-${v.st}">${SL[v.st]}</span>${OMAP[v.name]?`<span class="op op-${OMAP[v.name].st}">${OS[OMAP[v.name].st]}</span>`:""}${v.piano?'<span class="piano">Piano history</span>':""}${v.ac?'<span class="acou">Solo / acoustic</span>':""}${v.pt?'<span class="patio">Patio / outdoor</span>':""}<span>${esc(v.addr)}</span><span>Seen <span class="year">${v.yr}</span></span>${v.ev?`<span class="ev">✓ ${esc(v.ev)}</span>`:""}<a href="${v.src}" target="_blank" rel="noopener">Source</a></div></article>`).join("")}</section>`).join(""):'<p class="empty">No venues match. Clear a filter to see more.</p>';
   updReset();
