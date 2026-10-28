@@ -216,7 +216,7 @@ const V=[
 ["Holland", 30, "Big Lake Brewing", "w", "Evening acoustic sets.", "confirm", 2027, 0, "Holland", "https://www.facebook.com/search/events/?q=Midnight%20Vinyl", "Facebook: booked Jun 2027"],
 ["Grand Haven", 33, "Porto Bello", "r", "Live music at 6 p.m. most Fridays and Saturdays, mostly solo and duo.", "likely", 2026, 0, "Grand Haven", "https://www.facebook.com/search/events/?q=Porto%20Bello%20Grand%20Haven", "Facebook: solo and duo acts weekly, Nov–Dec"],
 ["Grand Haven", 33, "Off The Chain Brewstillery", "w", "Solo and duo sets on a booked 2027 calendar.", "likely", 2027, 0, "Grand Haven", "https://www.facebook.com/search/events/?q=Midnight%20Vinyl", "Facebook: booked Jan–Jul 2027"],
-["Saugatuck / Douglas", 40, "Coral Gables", "b", "Waterfront complex with afternoon summer sets.", "likely", 2027, 0, "220 Water St", "https://www.facebook.com/search/events/?q=Midnight%20Vinyl", "Facebook: booked Jun and Aug 2027"],
+["Saugatuck / Douglas", 40, "Coral Gables", "b", "Waterfront complex with several bars, including a dedicated piano bar room; afternoon summer sets outdoors.", "likely", 2027, 1, "220 Water St", "https://www.facebook.com/search/events/?q=Midnight%20Vinyl", "Facebook: booked Jun and Aug 2027"],
 // Second Facebook pass, acoustic focus
 ["East Grand Rapids", 5, "Carolina Lowcountry Kitchen", "r", "Gaslight Village restaurant; Thursday singer-songwriter evenings, 6–9 p.m.", "likely", 2026, 0, "2213 Wealthy St SE", "https://www.facebook.com/search/events/?q=Live%20Music%20with%20Marshall%20Werner", "Facebook: solo act Dec 10; 174 past events"],
 ["Grand Rapids", 0, "Rapid River Stillhouse", "w", "Distillery hosting evening sets.", "confirm", 2026, 0, "401 Stocking Ave NW", "https://www.facebook.com/search/events/?q=singer%20songwriter%20Grand%20Rapids", "Facebook: booked Oct 30"],
@@ -291,7 +291,7 @@ Object.entries(T).forEach(([k,v])=>{const o=document.createElement("option");o.v
 function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 
 const O_ASOF="Updated Oct 28, 2026";
-const OS={backup:"On backup list",email:"Emailed",card:"Card dropped",todo:"To contact"};
+const OS={backup:"On backup list",email:"Emailed / reached out",card:"Card dropped",todo:"To contact"};
 const OUT=[
 {n:"Archival Brewing",town:"Belmont",st:"backup",note:"Didn't make their lineup; on the backup list.",dl:{m:8,txt:"August",what:"Notice for the following year's events",rem:"Reminder set for Aug 2, 2027"},v:"Archival Brewing"},
 {n:"Modales Wines",town:"Fennville",st:"email",v:"Modales Wines"},
@@ -301,6 +301,7 @@ const OUT=[
 {n:"Cogdal Vineyards",town:"South Haven",st:"email",v:"Cogdal Vineyards"},
 {n:"JT's Pizza & Spirits",town:"Grand Rapids",st:"email",v:"JT's Pizza & Spirits"},
 {n:"Horrocks Market",town:"Kentwood",st:"email",v:"Horrocks Market"},
+{n:"Coral Gables",town:"Saugatuck",st:"email",note:"Has a dedicated piano bar space.",v:"Coral Gables"},
 {n:"Rapid River Stillhouse",town:"Grand Rapids",st:"card",v:"Rapid River Stillhouse"},
 {n:"The Old Goat",town:"Grand Rapids",st:"card",v:"The Old Goat"},
 {n:"Winter Inn",town:"Greenville",st:"card"},
