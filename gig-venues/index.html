@@ -79,6 +79,8 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .dl-row{display:grid;grid-template-columns:5.5em 1fr;gap:4px 12px;align-items:baseline}
 .dl-row .mo{font-family:var(--mono);font-weight:500;color:var(--warn)}
 .dl-row small{display:block;color:var(--muted);font-size:12.5px}
+.o-sub{color:var(--muted);font-size:12.5px;margin-top:-4px}
+.op-wiser{background:var(--surface);color:var(--fg);border:1px solid var(--line)}
 .o-tip{font-size:13px;color:var(--muted);margin:0}
 .op{font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
 .op-backup{background:var(--ok-bg);color:var(--ok)}
@@ -150,7 +152,7 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
 
 <script>
 const PT=new Set(["Hop Hog Backyard Brewpub","The Score Restaurant & Sports Bar","Downtown Market (Summer Sounds Under the Shed)", "FireRock Grille", "Cellar Brewing Co.", "Bay Pointe Inn", "Old Boys' Brewhouse", "The Deck (Pere Marquette Beach)", "The Butler",  "Cogdal Vineyards", "Bostwick Lake Inn", "Grand Rapids Garage Bar & Grill", "Tanglewood Winery", "Fenn Valley Vineyards", "Coral Gables", "St. Julian Winery (Paw Paw tasting room)", "Bowerman's Farm & Market"]);
-const AC=new Set(["Horrocks Market (Lansing)","Cedar Springs Brewing Co.","Flat River Brewing","Frau Lounge (Frauenthal Center)","The Score Restaurant & Sports Bar","Downtown Market (Summer Sounds Under the Shed)","FireRock Grille","Cogdal Vineyards","The Butler","The Old Goat","Bowerman's Farm & Market","Horn Creek Pub 2","Dabney","The Lucky Wolf","St. Julian Winery (Paw Paw tasting room)","Lumber Baron Bar (Amway Grand Plaza)", "The Stray",  "Mayan Buzz Cafe", "Lightfast Coffee + Art", "Lantern Coffee Bar and Lounge", "317 Coffee", "Switchback Gear Exchange", "Tanglewood Winery", "Porto Bello", "Off The Chain Brewstillery", "Archival Brewing", "Coopersville Brewing Co.", "Bostwick Lake Inn", "Michigan Moonshine Distillery", "Garage Bar Ada", "JT's Pizza & Spirits", "Horrocks Market", "Leigh's Brewing Co.", "Big Lake Brewing", "Coral Gables", "Sporty's", "Salt of the Earth", "Fenn Valley Vineyards", "The Clover Room", "Harbor Light Brewery", "Homebrew Tabletop Game Lounge", "One North (Lansing)", "Mash Bar", "Lansing Brewing Co.", "Cleats Bar & Grille", "Dimes Brewhouse", "Dublin Square", "The Peanut Barrel", "Pins & Pints", "Blue Gill Grill", "Eaton Rapids Craft Co.", "Summerlands Brewing Co.", "Carolina Lowcountry Kitchen", "Lemonjello's", "Liquid Assets (Lumberman's Vault, Core Plaza)", "Full Moon Diner & Saloon", "Modales Wines", "Sit and Stay Winery", "O'Duffy's Pub",    "JW Marriott Grand Rapids", "Grand Armory Brewing", "Michigan Moonshine Distillery"]);
+const AC=new Set(["Brickyard Tavern","Horrocks Market (Lansing)","Cedar Springs Brewing Co.","Flat River Brewing","Frau Lounge (Frauenthal Center)","The Score Restaurant & Sports Bar","Downtown Market (Summer Sounds Under the Shed)","FireRock Grille","Cogdal Vineyards","The Butler","The Old Goat","Bowerman's Farm & Market","Horn Creek Pub 2","Dabney","The Lucky Wolf","St. Julian Winery (Paw Paw tasting room)","Lumber Baron Bar (Amway Grand Plaza)", "The Stray",  "Mayan Buzz Cafe", "Lightfast Coffee + Art", "Lantern Coffee Bar and Lounge", "317 Coffee", "Switchback Gear Exchange", "Tanglewood Winery", "Porto Bello", "Off The Chain Brewstillery", "Archival Brewing", "Coopersville Brewing Co.", "Bostwick Lake Inn", "Michigan Moonshine Distillery", "Garage Bar Ada", "JT's Pizza & Spirits", "Horrocks Market", "Leigh's Brewing Co.", "Big Lake Brewing", "Coral Gables", "Sporty's", "Salt of the Earth", "Fenn Valley Vineyards", "The Clover Room", "Harbor Light Brewery", "Homebrew Tabletop Game Lounge", "One North (Lansing)", "Mash Bar", "Lansing Brewing Co.", "Cleats Bar & Grille", "Dimes Brewhouse", "Dublin Square", "The Peanut Barrel", "Pins & Pints", "Blue Gill Grill", "Eaton Rapids Craft Co.", "Summerlands Brewing Co.", "Carolina Lowcountry Kitchen", "Lemonjello's", "Liquid Assets (Lumberman's Vault, Core Plaza)", "Full Moon Diner & Saloon", "Modales Wines", "Sit and Stay Winery", "O'Duffy's Pub",    "JW Marriott Grand Rapids", "Grand Armory Brewing", "Michigan Moonshine Distillery"]);
 const T={b:"Bar",r:"Restaurant",c:"Coffee shop",w:"Brewery / distillery",v:"Winery",l:"Listening room",h:"Hotel bar"};
 const V=[
 // Grand Rapids
@@ -252,6 +254,7 @@ const V=[
 ["Muskegon", 40, "Frau Lounge (Frauenthal Center)", "b", "Lounge inside the downtown arts center hosting intimate solo shows.", "likely", 2027, 0, "425 W Western Ave", "https://happeningnext.com/muskegon/live-music", "Solo shows Jan 8 and Jan 9, 2027"],
 ["Muskegon", 40, "Red Rooster Tavern", "b", "Tavern booking local bands on weekends.", "confirm", 2026, 0, "2298 Scenic Dr", "https://happeningnext.com/muskegon/live-music", "Band Oct 16 and Dec 11, 2026"],
 ["Lansing",65,"Horrocks Market (Lansing)","r","Market with a beer and wine bar; live music most evenings Wednesday through Sunday, including solo sets.","likely",2026,0,"7420 W Saginaw Hwy","https://lansingcitypulse.com/live-local-week-of-aug-12-2026/","Five bookings in one week, Aug 2026, including a solo act"],
+["Grand Rapids", 0, "Brickyard Tavern", "r", "Tavern booked by the Wiser production company; solo and looping acts.", "likely", 2027, 0, "Grand Rapids", "https://www.facebook.com/search/events/?q=Chris%20Clayton%20live", "Facebook: solo looping act Feb 13, 2027"],
 // Added in the 75-mile pass
 ["Hastings",35,"Walldorff Brewpub & Bistro","w","Recurring \"Walldorff Live\" evening music nights, 7–9 p.m.","confirm",2024,0,"105 E State St","https://www.hastingsmi.gov/event/waldorff-brewpub-bistro-live/2024-05-17"],
 ["Whitehall / Montague",55,"Sawyer's Brewing Co.","w","Booked a guitar duo; White Lake chamber lists it among live-music spots.","confirm",2023,0,"White Lake area","https://www.whitelake.org/event/david-martin-and-shawn-watkins-live-sawyers-brewing-company-2/"],
@@ -291,7 +294,7 @@ Object.entries(T).forEach(([k,v])=>{const o=document.createElement("option");o.v
 function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 
 const O_ASOF="Updated Oct 28, 2026";
-const OS={backup:"On backup list",email:"Emailed / reached out",card:"Card dropped",todo:"To contact"};
+const OS={wiser:"Through Wiser",backup:"On backup list",email:"Emailed / reached out",card:"Card dropped",todo:"To contact"};
 const OUT=[
 {n:"Archival Brewing",town:"Belmont",st:"backup",note:"Didn't make their lineup; on the backup list.",dl:{m:8,txt:"August",what:"Notice for the following year's events",rem:"Reminder set for Aug 2, 2027"},v:"Archival Brewing"},
 {n:"Modales Wines",town:"Fennville",st:"email",v:"Modales Wines"},
@@ -317,6 +320,13 @@ const OUT=[
 {n:"Speciation Cellars",town:"Grand Rapids",st:"todo"},
 {n:"Rendezvous (Amway Grand Plaza)",town:"Grand Rapids",st:"todo"},
 {n:"Horrocks Market (Lansing)",town:"Lansing",st:"todo",v:"Horrocks Market (Lansing)"},
+{n:"Brickyard Tavern",town:"Grand Rapids",st:"wiser",v:"Brickyard Tavern"},
+{n:"Bostwick Lake Inn",town:"Rockford",st:"wiser",note:"Gilmore Collection",v:"Bostwick Lake Inn"},
+{n:"Rose's on Reeds Lake",town:"East Grand Rapids",st:"wiser",note:"Gilmore Collection"},
+{n:"Blue Water",town:"Versluis Lake, Grand Rapids",st:"wiser",note:"Gilmore Collection"},
+{n:"Flat River Grill",town:"Lowell",st:"wiser",note:"Gilmore Collection"},
+{n:"Nick Fink's Saloon",town:"Comstock Park",st:"wiser",note:"Gilmore Collection"},
+{n:"The Kirby House",town:"Grand Haven",st:"wiser",note:"Gilmore Collection"},
 {n:"Shots",town:"Standale",st:"todo",note:"Asking a fellow musician about it first."}
 ];
 const OMAP={};OUT.forEach(o=>{if(o.v)OMAP[o.v]=o});
@@ -325,9 +335,9 @@ function renderOut(){
   $("o-asof").textContent=O_ASOF;
   const D=OUT.filter(o=>o.dl).sort((a,b)=>a.dl.m-b.dl.m);
   $("dl-box").innerHTML=`<h3>Booking deadlines</h3>`+(D.length?D.map(o=>`<div class="dl-row"><span class="mo">${esc(o.dl.txt)}</span><div><b>${esc(o.n)}</b> · ${esc(o.dl.what)}${o.dl.rem?`<small>${esc(o.dl.rem)}</small>`:""}</div></div>`).join(""):'<p class="o-tip">No deadlines recorded yet.</p>');
-  const order=["backup","email","card","todo"];
+  const order=["wiser","backup","email","card","todo"];
   $("o-sum").innerHTML=order.map(k=>`<span class="op op-${k}">${OS[k]}: ${OUT.filter(o=>o.st===k).length}</span>`).join("");
-  $("o-grid").innerHTML=order.map(k=>{const L=OUT.filter(o=>o.st===k);return `<div class="o-col"><h3>${OS[k]} <span>${L.length}</span></h3><ul>${L.map(o=>`<li>${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}${o.note?`<small>${esc(o.note)}</small>`:""}</li>`).join("")}</ul></div>`}).join("");
+  $("o-grid").innerHTML=order.map(k=>{const L=OUT.filter(o=>o.st===k);return `<div class="o-col"><h3>${OS[k]} <span>${L.length}</span></h3>${k==="wiser"?`<small class="o-sub">You're on Wiser's list. They book these rooms, so these come through Wiser.</small>`:""}<ul>${L.map(o=>`<li>${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}${o.note?`<small>${esc(o.note)}</small>`:""}</li>`).join("")}</ul></div>`}).join("");
 }
 document.addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!a)return;e.preventDefault();
   ["f-q","f-type","f-status","f-piano","f-range","f-ac","f-pt","f-out"].forEach(id=>$(id).value="");render();
