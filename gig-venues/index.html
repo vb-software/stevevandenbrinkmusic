@@ -79,19 +79,6 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .dl-row{display:grid;grid-template-columns:5.5em 1fr;gap:4px 12px;align-items:baseline}
 .dl-row .mo{font-family:var(--mono);font-weight:500;color:var(--warn)}
 .dl-row small{display:block;color:var(--muted);font-size:12.5px}
-.talk-box{background:var(--ok-bg);border:1px solid var(--ok);border-left:6px solid var(--ok);border-radius:6px;padding:14px 16px;display:grid;gap:10px}
-.talk-box h3{margin:0;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ok);display:flex;align-items:center;gap:8px}
-.talk-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
-.talk-row b{font-family:var(--display);font-size:20px;font-weight:600;color:var(--fg)}
-.talk-row a{color:inherit;cursor:pointer;text-decoration:underline;text-decoration-color:var(--ok);text-underline-offset:4px}
-.talk-row small{color:var(--muted);font-size:13px}
-.dot{width:10px;height:10px;border-radius:50%;background:var(--ok);flex:none;box-shadow:0 0 0 0 var(--ok);animation:pulse 1.8s ease-out infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 60%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
-@media (prefers-reduced-motion:reduce){.dot{animation:none}}
-.o-col li.talk{background:var(--ok-bg);border-left:3px solid var(--ok);border-radius:4px;padding:4px 8px;margin:0 -8px}
-.talk-tag{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ok)}
-.talk-tag .dot{width:8px;height:8px}
-.op-talk{background:var(--ok);color:var(--bg);font-weight:700}
 .o-sub{color:var(--muted);font-size:12.5px;margin-top:-4px}
 .op-wiser{background:var(--surface);color:var(--fg);border:1px solid var(--line)}
 .hl-bar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
@@ -146,7 +133,6 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
   <section class="outreach" aria-labelledby="o-title">
     <h2 id="o-title">Outreach <small id="o-asof"></small></h2>
     <div class="o-sum" id="o-sum"></div>
-    <div class="talk-box" id="talk-box" hidden></div>
     <div class="dl-box" id="dl-box"></div>
     <div class="o-grid" id="o-grid"></div>
     <p class="o-tip">Names that are also in the venue list below are links. Tap one to jump to it.</p>
@@ -191,32 +177,23 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
 </div>
 
 <script>
-const PT=new Set(["Hop Hog Backyard Brewpub","The Score Restaurant & Sports Bar","Downtown Market (Summer Sounds Under the Shed)", "FireRock Grille", "Cellar Brewing Co.", "Bay Pointe Inn", "Old Boys' Brewhouse", "The Deck (Pere Marquette Beach)", "The Butler",  "Cogdal Vineyards", "Bostwick Lake Inn", "Grand Rapids Garage Bar & Grill", "Tanglewood Winery", "Fenn Valley Vineyards", "Coral Gables", "St. Julian Winery (Paw Paw tasting room)", "Bowerman's Farm & Market"]);
-const AC=new Set(["Brickyard Tavern","Horrocks Market (Lansing)","Cedar Springs Brewing Co.","Flat River Brewing","Frau Lounge (Frauenthal Center)","The Score Restaurant & Sports Bar","Downtown Market (Summer Sounds Under the Shed)","FireRock Grille","Cogdal Vineyards","The Butler","The Old Goat","Bowerman's Farm & Market","Horn Creek Pub 2","Dabney","The Lucky Wolf","St. Julian Winery (Paw Paw tasting room)","Lumber Baron Bar (Amway Grand Plaza)", "The Stray",  "Mayan Buzz Cafe", "Lightfast Coffee + Art", "Lantern Coffee Bar and Lounge", "317 Coffee", "Switchback Gear Exchange", "Tanglewood Winery", "Porto Bello", "Off The Chain Brewstillery", "Archival Brewing", "Coopersville Brewing Co.", "Bostwick Lake Inn", "Michigan Moonshine Distillery", "Garage Bar Ada", "JT's Pizza & Spirits", "Horrocks Market", "Leigh's Brewing Co.", "Big Lake Brewing", "Coral Gables", "Sporty's", "Salt of the Earth", "Fenn Valley Vineyards", "The Clover Room", "Harbor Light Brewery", "Homebrew Tabletop Game Lounge", "One North (Lansing)", "Mash Bar", "Lansing Brewing Co.", "Cleats Bar & Grille", "Dimes Brewhouse", "Dublin Square", "The Peanut Barrel", "Pins & Pints", "Blue Gill Grill", "Eaton Rapids Craft Co.", "Summerlands Brewing Co.", "Carolina Lowcountry Kitchen", "Lemonjello's", "Liquid Assets (Lumberman's Vault, Core Plaza)", "Full Moon Diner & Saloon", "Modales Wines", "Sit and Stay Winery", "O'Duffy's Pub",    "JW Marriott Grand Rapids", "Grand Armory Brewing", "Michigan Moonshine Distillery"]);
+const PT=new Set(["Hop Hog Backyard Brewpub","The Score Restaurant & Sports Bar","Downtown Market (Summer Sounds Under the Shed)", "FireRock Grille",  "Bay Pointe Inn", "Old Boys' Brewhouse", "The Deck (Pere Marquette Beach)", "The Butler",  "Cogdal Vineyards", "Bostwick Lake Inn",  "Tanglewood Winery", "Fenn Valley Vineyards", "Coral Gables", "St. Julian Winery (Paw Paw tasting room)", "Bowerman's Farm & Market"]);
+const AC=new Set(["Brickyard Tavern","Horrocks Market (Lansing)","Cedar Springs Brewing Co.","Flat River Brewing","Frau Lounge (Frauenthal Center)","The Score Restaurant & Sports Bar","Downtown Market (Summer Sounds Under the Shed)","FireRock Grille","Cogdal Vineyards","The Butler","The Old Goat","Bowerman's Farm & Market","Horn Creek Pub 2","Dabney","The Lucky Wolf","St. Julian Winery (Paw Paw tasting room)","Lumber Baron Bar (Amway Grand Plaza)",   "Mayan Buzz Cafe", "Lightfast Coffee + Art", "Lantern Coffee Bar and Lounge",  "Switchback Gear Exchange", "Tanglewood Winery", "Porto Bello", "Off The Chain Brewstillery", "Archival Brewing", "Coopersville Brewing Co.", "Bostwick Lake Inn", "Michigan Moonshine Distillery",  "JT's Pizza & Spirits", "Horrocks Market", "Leigh's Brewing Co.", "Big Lake Brewing", "Coral Gables", "Sporty's", "Salt of the Earth", "Fenn Valley Vineyards", "The Clover Room", "Harbor Light Brewery", "Homebrew Tabletop Game Lounge", "One North (Lansing)", "Mash Bar", "Lansing Brewing Co.", "Cleats Bar & Grille", "Dimes Brewhouse", "Dublin Square", "The Peanut Barrel", "Pins & Pints", "Blue Gill Grill", "Eaton Rapids Craft Co.", "Summerlands Brewing Co.", "Carolina Lowcountry Kitchen", "Lemonjello's", "Liquid Assets (Lumberman's Vault, Core Plaza)", "Full Moon Diner & Saloon", "Modales Wines", "Sit and Stay Winery", "O'Duffy's Pub",    "JW Marriott Grand Rapids", "Grand Armory Brewing", "Michigan Moonshine Distillery"]);
 const T={b:"Bar",r:"Restaurant",c:"Coffee shop",w:"Brewery / distillery",v:"Winery",l:"Listening room",h:"Hotel bar"};
 const V=[
 // Grand Rapids
-["Grand Rapids", 0, "Tip Top Deluxe Bar & Grill", "b", "Concert-first West Side club; solo singer-songwriters, jazz vocalists, and a Monday piano bar night in 2021.", "likely", 2026, 1, "760 Butterworth St SW", "https://www.facebook.com/search/events/?q=Tip%20Top%20Deluxe%20Bar%20&%20Grill", "Facebook: shows booked into Jan 2027, mostly bands"],
 ["Grand Rapids", 0, "SpeakEZ Lounge", "r", "Downtown restaurant; Local Spins concert series books Michigan bands and solo artists, plus Sunday jazz.", "likely", 2026, 0, "Downtown", "https://www.facebook.com/search/events/?q=SpeakEZ%20Lounge%20Grand%20Rapids", "Facebook: Local Spins Wednesdays and weekly Sundays, Nov 2026"],
 ["Grand Rapids",0,"Lumber Baron Bar (Amway Grand Plaza)","h","Weekly solo jazz piano on a real acoustic piano (Robin Connell, Thursdays).","likely",2019,1,"187 Monroe Ave NW","https://localspins.com/pop-evil-soars-to-no-1-robin-connell-launches-first-ever-jazz-night-at-lumber-baron-bar-wlav-turns-40-with-loverboymark-farner-concert/"],
-["Grand Rapids", 0, "Billy's Lounge", "b", "Live music nightly, from open mic to jazz, folk and blues weekends.", "likely", 2026, 0, "1437 Wealthy St SE", "https://www.facebook.com/search/events/?q=Billy%27s%20Lounge%20Grand%20Rapids", "Facebook: active calendar, mostly bands and DJs"],
-["Grand Rapids", 0, "The Stray", "c", "Café, gallery and listening room; touring acoustic acts and open mics.", "likely", 2026, 0, "Grand Rapids", "https://www.facebook.com/search/events/?q=The%20Stray%20Grand%20Rapids", "Facebook: shows Oct 30 and Nov 7"],
-["Grand Rapids",0,"Founders Brewing Co.","w","Tuesday open mic plus free taproom music nights.","likely",2025,0,"235 Grandville Ave SW","https://localspins.com/open-mic-nights-in-grand-rapids-rare-creative-rambunctious/"],
 ["Grand Rapids", 0, "Ferris Coffee & Nut", "c", "No regular music. Worth pitching for corporate and community events it hosts.", "confirm", 2024, 0, "West Side", "https://localspins.com/resurgence-of-grand-rapids-west-side-spawns-new-live-music-venues-from-harmony-hall-and-long-road-distillers-to-ferris-coffee/", "No music series (your note, Oct 2026)"],
-["Grand Rapids",0,"Grand Rapids Garage Bar & Grill","b","Friday summer block-party shows.","likely",2024,0,"819 Ottawa Ave NW","https://localspins.com/summer-concert-cascade-michigan-venues-flaunt-outdoor-shows-gr-to-cadillac-to-boyne-local-spins/"],
 ["Grand Rapids",0,"Zoko 822","r","Wednesday sangria and live music.","confirm",2019,0,"822 Ottawa Ave NW","https://revuewm.com/music/complimentary-concerts-where-to-take-in-live-music-on-the-house"],
 ["Grand Rapids",0,"Metro Grand Rapids","b","Newer music bar; Tuesday open mic for musicians and comedians.","confirm",2025,0,"S. Division Ave","https://wgrd.com/new-g-r-music-venue-nightclub-opens-tonight/"],
 ["Grand Rapids",0,"Switchback Gear Exchange","b","Thursday acoustic open mic, 7–10 p.m.","confirm",2025,0,"Grand Rapids","https://peoplefirsteconomy.org/?p=10001985"],
 ["Grand Rapids",0,"Mayan Buzz Cafe","c","Thursday open mic, 8–10 p.m.","confirm",2019,0,"Grandville Ave","https://lanthorn.com/?p=72676"],
 ["Grand Rapids",0,"Lightfast Coffee + Art","c","Thursday open mic nights.","confirm",2023,0,"Grand Rapids","https://metroparent.com/?p=119381"],
-["Grand Rapids",0,"Stella's Drunken Retort","b","Long-running Monday open mic.","confirm",2016,0,"Grand Rapids","https://localspins.com/open-mic-nights-in-grand-rapids-rare-creative-rambunctious/"],
 ["Grand Rapids",0,"JW Marriott Grand Rapids","h","Solo pianist Friday evenings and Sunday brunch.","dated",2012,1,"235 Louis St NW","https://www.organissimo.org/forum/topic/69835-6-18-12"],
 // Near suburbs
-["Comstock Park",7,"The Beaver Lodge","b","Wednesday open mic.","dated",2020,0,"Comstock Park","https://localspins.com/not-so-big-list-concert-guide-west-michigan-rocks-the-tip-top-and-more-local-spins/"],
 ["Rockford", 13, "Rockford Brewing Co.", "w", "Small brewpub stage; past bills include Patrick Nolan, Eric Engblade and Hazy Past.", "likely", 2026, 0, "12 E Bridge St", "https://www.facebook.com/search/events/?q=Rockford%20Brewing%20Company", "Facebook: Thursday open mic; bands Nov 20 and Dec 12"],
 ["Rockford",13,"Rogue River Tavern","b","Live music Tuesdays.","confirm",2022,0,"Rockford","https://eastbrookhomes.com/blog/neighborhood-news/top-10-things-to-do-in-rockford/"],
-["Hudsonville",13,"Pike 51 Brewery","w","Sunday jazz session, noon to 2 p.m.","confirm",2019,0,"3768 Chicago Dr","https://revuewm.com/music/complimentary-concerts-where-to-take-in-live-music-on-the-house"],
-["Hudsonville",13,"317 Coffee","c","Coffee shop hosting ticketed solo concerts.","confirm",2025,0,"Hudsonville","https://www.eventbrite.com.au/d/mi--ada/live/"],
 ["Allendale",13,"Lantern Coffee Bar and Lounge","c","Thursday open mic and local artists.","confirm",2023,0,"10327 42nd Ave","https://metroparent.com/?p=119381"],
 // Lakeshore
 ["West Olive",28,"Pipeline Smokehouse and Bar","r","Live music and dance nights.","confirm",2020,0,"9104 US-31","https://localspins.com/big-list-concert-guide-nov-2-8-live-music-options-for-election-week-local-spins/"],
@@ -232,7 +209,6 @@ const V=[
 ["Grand Haven", 33, "Grand Armory Brewing", "w", "Regular live music on a full 2025–26 calendar.", "likely", 2026, 0, "17 S 2nd St", "https://bandsintown.com/v/10059477-grand-armory-brewing-company", "Facebook: solo sets Nov 14 and Nov 19"],
 ["Grand Haven",33,"Lucy's","r","Jazz Wednesdays.","confirm",2026,0,"Columbus Ave","https://www.eventbrite.com.au/d/mi--muskegon/jazz/"],
 ["Grand Haven", 33, "Sporty's", "b", "Books local solo artists.", "likely", 2026, 0, "Grand Haven", "https://www.facebook.com/search/events/?q=Gabrial%20James", "Facebook: solo act Nov 24"],
-["Grand Haven",33,"The Grand Seafood & Oyster Bar","r","Weekend jazz and Wednesday solo guitar.","dated",2007,0,"24 Washington St","https://www.organissimo.org/forum/topic/32058-blue-lakes-jazz-datebook"],
 ["Muskegon", 40, "The Block", "l", "Listening room for acoustic and touring acts.", "likely", 2026, 0, "Muskegon", "https://www.facebook.com/search/events/?q=The%20Block%20Muskegon", "Facebook: show Nov 6"],
 ["Muskegon", 40, "Rake Beer Project", "w", "Brewery praised by local players as a favorite room.", "likely", 2026, 0, "Muskegon", "https://www.facebook.com/search/events/?q=Rake%20Beer%20Project", "Facebook: bands most weekends; solo Sunday brunch Nov 22"],
 ["Saugatuck / Douglas",40,"Saugatuck Brewing Co. (Douglas)","w","Barrel Room has a stage for live music.","confirm",2023,0,"Douglas","https://promotemichigan.com/?p=27557"],
@@ -250,7 +226,6 @@ const V=[
 ["Kentwood", 8, "Horrocks Market", "r", "Market with a taproom; books solo and duo sets.", "confirm", 2027, 0, "Kentwood", "https://www.facebook.com/search/events/?q=Midnight%20Vinyl", "Facebook: booked Jan 2027"],
 ["Grandville", 8, "Michigan Moonshine Distillery", "w", "Evening solo sets.", "confirm", 2026, 0, "Grandville", "https://www.facebook.com/search/events/?q=Michigan%20Moonshine%20Distillery%20Grandville", "Facebook: solo act Nov 5"],
 ["Belmont", 10, "Archival Brewing", "w", "Regular solo and duo sets, often 6 p.m. weekends.", "likely", 2026, 0, "6266 West River Dr NE", "https://www.facebook.com/search/events/?q=Archival%20Brewing%20Belmont", "Facebook: solo acts Nov 6 and Dec 12"],
-["Ada", 10, "Garage Bar Ada", "b", "Trivia nights plus solo music sets.", "confirm", 2026, 0, "Ada", "https://www.facebook.com/search/events/?q=Garage%20Bar%20Grand%20Rapids", "Facebook: solo act Dec 18"],
 ["Rockford", 15, "Bostwick Lake Inn", "r", "Lake restaurant booking solo and looping acts.", "likely", 2026, 0, "Rockford", "https://www.facebook.com/search/events/?q=Chris%20Clayton%20live", "Facebook: solo acts Nov 15 and Jan 30"],
 ["Coopersville", 18, "Coopersville Brewing Co.", "w", "Solo performers on Saturday evenings, booked months ahead.", "likely", 2026, 0, "1275 W Randall St", "https://www.facebook.com/search/events/?q=Coopersville%20Brewing", "Facebook: solo acts Nov 7 and Nov 28"],
 ["Cedar Springs", 20, "Cedar Springs Brewing Co.", "w", "Brewpub that has long booked regional folk, Celtic and acoustic acts midweek and on Sundays.", "likely", 2026, 0, "Cedar Springs", "https://www.bandsintown.com/c/greenville-mi", "Solo act Sep 9, 2026 (Bandsintown); booked Dec 3 (Facebook)"],
@@ -280,7 +255,6 @@ const V=[
 // Patio and outdoor rooms
 ["Grand Rapids", 0, "Downtown Market (Summer Sounds Under the Shed)", "r", "Free outdoor series under the Market Shed on select summer Saturdays, 5–8 p.m.; outdoor bar.", "likely", 2026, 0, "435 Ionia Ave SW", "https://www.downtownmarketgr.com/public-events/summer-sounds-under-the-shed", "Singer-songwriter booked June 13, 2026"],
 ["Caledonia", 15, "FireRock Grille", "r", "Saturday patio music, 5:30–8:30 p.m.", "confirm", 2024, 0, "Caledonia", "https://peoplefirsteconomy.org/event/live-music-on-the-patio-3/2024-09-07/", "Patio series listed Sept 2024"],
-["Sparta", 15, "Cellar Brewing Co.", "w", "Downtown brewery with summer music nights.", "dated", 2017, 0, "Sparta", "https://www.wktvjournal.org/take-2-tastes-music-at-west-michigan-breweries-wineries/"],
 ["Shelbyville (Gun Lake)", 28, "Bay Pointe Inn", "r", "Lakefront pavilion; Wednesday \"Gun Lake Live\" series Memorial Day–Labor Day (mostly bands), plus a Wednesday 5–9 p.m. series through Feb 24, 2027.", "likely", 2026, 0, "Gun Lake", "https://www.baypointeinn.com/?p=707", "2027 lineup announced in March"],
 ["Spring Lake", 30, "Old Boys' Brewhouse", "w", "Brewpub with a deck and weekly live entertainment.", "confirm", 2023, 0, "Spring Lake", "https://westmichiganwoman.com/cityscene/1296-summertime-on-the-deck"],
 ["Muskegon", 40, "The Deck (Pere Marquette Beach)", "b", "Beach bar, May to mid-September, with free summer concerts by local and regional bands.", "likely", 2025, 0, "Pere Marquette Park", "https://visitmuskegon.org/blog/drink-eat-and-beach-at-the-deck-in-muskegon-michigan/"],
@@ -355,8 +329,8 @@ const OUT=[
 {n:"Ed Dunneback & Girls Farm",town:"Grand Rapids",st:"card"},
 {n:"Lou Lou's Coffee Bar",town:"Belmont",st:"card"},
 {n:"Thornapple Brewing Co.",town:"Cascade",st:"card"},
-{n:"Third Nature Brewing",town:"Plainfield Twp",st:"card",talk:"Card dropped; now in active communication."},
 {n:"Chicago Beef Joint",town:"Grand Rapids",st:"todo"},
+{n:"Third Nature Brewing",town:"Plainfield Twp",st:"todo"},
 {n:"Speciation Cellars",town:"Grand Rapids",st:"todo"},
 {n:"Rendezvous (Amway Grand Plaza)",town:"Grand Rapids",st:"todo"},
 {n:"Horrocks Market (Lansing)",town:"Lansing",st:"todo",v:"Horrocks Market (Lansing)"},
@@ -376,13 +350,11 @@ const OMAP={};OUT.forEach(o=>{if(o.v)OMAP[o.v]=o});
 function slug(x){return "v-"+x.toLowerCase().replace(/[^a-z0-9]+/g,"-")}
 function renderOut(){
   $("o-asof").textContent=O_ASOF;
-  const TK=OUT.filter(o=>o.talk),tb=$("talk-box");tb.hidden=!TK.length;
-  tb.innerHTML=`<h3><span class="dot"></span>In conversation now</h3>`+TK.map(o=>`<div class="talk-row">${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}<small>${esc(o.talk)}</small></div>`).join("");
   const D=OUT.filter(o=>o.dl).sort((a,b)=>a.dl.m-b.dl.m);
   $("dl-box").innerHTML=`<h3>Booking deadlines</h3>`+(D.length?D.map(o=>`<div class="dl-row"><span class="mo">${esc(o.dl.txt)}</span><div><b>${esc(o.n)}</b> · ${esc(o.dl.what)}${o.dl.rem?`<small>${esc(o.dl.rem)}</small>`:""}</div></div>`).join(""):'<p class="o-tip">No deadlines recorded yet.</p>');
   const order=["wiser","backup","email","card","todo"];
-  $("o-sum").innerHTML=order.map(k=>`<span class="op op-${k}">${OS[k]}: ${OUT.filter(o=>o.st===k).length}</span>`).join("")+(OUT.some(o=>o.talk)?`<span class="op op-talk">In conversation: ${OUT.filter(o=>o.talk).length}</span>`:"");
-  $("o-grid").innerHTML=order.map(k=>{const L=OUT.filter(o=>o.st===k);return `<div class="o-col"><h3>${OS[k]} <span>${L.length}</span></h3>${k==="wiser"?`<small class="o-sub">You're on Wiser's list. They book these rooms, so these come through Wiser.</small>`:""}<ul>${L.map(o=>`<li${o.talk?' class="talk"':""}>${o.talk?'<span class="talk-tag"><span class="dot"></span>In conversation</span>':""}${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}${o.note?`<small>${esc(o.note)}</small>`:""}</li>`).join("")}</ul></div>`}).join("");
+  $("o-sum").innerHTML=order.map(k=>`<span class="op op-${k}">${OS[k]}: ${OUT.filter(o=>o.st===k).length}</span>`).join("");
+  $("o-grid").innerHTML=order.map(k=>{const L=OUT.filter(o=>o.st===k);return `<div class="o-col"><h3>${OS[k]} <span>${L.length}</span></h3>${k==="wiser"?`<small class="o-sub">You're on Wiser's list. They book these rooms, so these come through Wiser.</small>`:""}<ul>${L.map(o=>`<li>${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}${o.note?`<small>${esc(o.note)}</small>`:""}</li>`).join("")}</ul></div>`}).join("");
 }
 document.addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!a)return;e.preventDefault();
   ["f-q","f-type","f-status","f-piano","f-range","f-ac","f-pt","f-out"].forEach(id=>$(id).value="");render();
