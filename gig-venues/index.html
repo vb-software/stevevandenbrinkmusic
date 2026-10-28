@@ -91,7 +91,6 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
       <option value="likely">Likely licensed</option>
       <option value="confirm">Confirm with venue</option>
       <option value="dated">Old listing, check it's still open</option>
-      <option value="sued">Named in PRO lawsuit</option>
     </select></label>
     <label for="f-range" style="flex:0 1 170px">Distance<select id="f-range"><option value="">Up to 75 mi</option><option value="50">Within 50 mi</option><option value="75">50–75 mi only</option></select></label>
     <label for="f-piano" style="flex:0 1 170px">Piano<select id="f-piano"><option value="">All</option><option value="1">Piano history only</option></select></label>
@@ -102,7 +101,6 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
     <span class="pill p-likely">Likely licensed</span>
     <span class="pill p-confirm">Confirm with venue</span>
     <span class="pill p-dated">Old listing</span>
-    <span class="pill p-sued">Named in PRO lawsuit</span>
     <span class="piano">Piano history</span>
     <span class="acou">Solo / acoustic</span>
     <span class="patio">Patio / outdoor</span>
@@ -115,7 +113,7 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
 
 <script>
 const PT=new Set(["Hop Hog Backyard Brewpub","The Score Restaurant & Sports Bar","Downtown Market (Summer Sounds Under the Shed)", "FireRock Grille", "Cellar Brewing Co.", "Bay Pointe Inn", "Old Boys' Brewhouse", "The Deck (Pere Marquette Beach)", "The Butler",  "Cogdal Vineyards", "Bostwick Lake Inn", "Grand Rapids Garage Bar & Grill", "Tanglewood Winery", "Fenn Valley Vineyards", "Coral Gables", "St. Julian Winery (Paw Paw tasting room)", "Bowerman's Farm & Market"]);
-const AC=new Set(["Cedar Springs Brewing Co.","Flat River Brewing","Frau Lounge (Frauenthal Center)","The Score Restaurant & Sports Bar","Downtown Market (Summer Sounds Under the Shed)","FireRock Grille","Cogdal Vineyards","The Butler","The Old Goat","GR Noir","The Republic","Bowerman's Farm & Market","Horn Creek Pub 2","Dabney","The Lucky Wolf","St. Julian Winery (Paw Paw tasting room)","Lumber Baron Bar (Amway Grand Plaza)", "The Stray",  "Mayan Buzz Cafe", "Lightfast Coffee + Art", "Lantern Coffee Bar and Lounge", "317 Coffee", "Switchback Gear Exchange", "Tanglewood Winery", "Porto Bello", "Off The Chain Brewstillery", "Archival Brewing", "Coopersville Brewing Co.", "Bostwick Lake Inn", "Michigan Moonshine Distillery", "Garage Bar Ada", "JT's Pizza & Spirits", "Horrocks Market", "Leigh's Brewing Co.", "Big Lake Brewing", "Coral Gables", "Sporty's", "Salt of the Earth", "Fenn Valley Vineyards", "The Clover Room", "Harbor Light Brewery", "Homebrew Tabletop Game Lounge", "One North (Lansing)", "Mash Bar", "Lansing Brewing Co.", "Cleats Bar & Grille", "Dimes Brewhouse", "Dublin Square", "The Peanut Barrel", "Pins & Pints", "Blue Gill Grill", "Eaton Rapids Craft Co.", "Summerlands Brewing Co.", "Carolina Lowcountry Kitchen", "Lemonjello's", "Liquid Assets (Lumberman's Vault, Core Plaza)", "Full Moon Diner & Saloon", "Modales Wines", "Sit and Stay Winery", "O'Duffy's Pub", "Mangiamo", "Noto's Old World Italian Dining", "Bar Divani", "JW Marriott Grand Rapids", "Grand Armory Brewing", "Michigan Moonshine Distillery"]);
+const AC=new Set(["Cedar Springs Brewing Co.","Flat River Brewing","Frau Lounge (Frauenthal Center)","The Score Restaurant & Sports Bar","Downtown Market (Summer Sounds Under the Shed)","FireRock Grille","Cogdal Vineyards","The Butler","The Old Goat","GR Noir","The Republic","Bowerman's Farm & Market","Horn Creek Pub 2","Dabney","The Lucky Wolf","St. Julian Winery (Paw Paw tasting room)","Lumber Baron Bar (Amway Grand Plaza)", "The Stray",  "Mayan Buzz Cafe", "Lightfast Coffee + Art", "Lantern Coffee Bar and Lounge", "317 Coffee", "Switchback Gear Exchange", "Tanglewood Winery", "Porto Bello", "Off The Chain Brewstillery", "Archival Brewing", "Coopersville Brewing Co.", "Bostwick Lake Inn", "Michigan Moonshine Distillery", "Garage Bar Ada", "JT's Pizza & Spirits", "Horrocks Market", "Leigh's Brewing Co.", "Big Lake Brewing", "Coral Gables", "Sporty's", "Salt of the Earth", "Fenn Valley Vineyards", "The Clover Room", "Harbor Light Brewery", "Homebrew Tabletop Game Lounge", "One North (Lansing)", "Mash Bar", "Lansing Brewing Co.", "Cleats Bar & Grille", "Dimes Brewhouse", "Dublin Square", "The Peanut Barrel", "Pins & Pints", "Blue Gill Grill", "Eaton Rapids Craft Co.", "Summerlands Brewing Co.", "Carolina Lowcountry Kitchen", "Lemonjello's", "Liquid Assets (Lumberman's Vault, Core Plaza)", "Full Moon Diner & Saloon", "Modales Wines", "Sit and Stay Winery", "O'Duffy's Pub",    "JW Marriott Grand Rapids", "Grand Armory Brewing", "Michigan Moonshine Distillery"]);
 const T={b:"Bar",r:"Restaurant",c:"Coffee shop",w:"Brewery / distillery",v:"Winery",l:"Listening room",h:"Hotel bar"};
 const V=[
 // Grand Rapids
@@ -132,15 +130,8 @@ const V=[
 ["Grand Rapids",0,"Switchback Gear Exchange","b","Thursday acoustic open mic, 7–10 p.m.","confirm",2025,0,"Grand Rapids","https://peoplefirsteconomy.org/?p=10001985"],
 ["Grand Rapids",0,"Mayan Buzz Cafe","c","Thursday open mic, 8–10 p.m.","confirm",2019,0,"Grandville Ave","https://lanthorn.com/?p=72676"],
 ["Grand Rapids",0,"Lightfast Coffee + Art","c","Thursday open mic nights.","confirm",2023,0,"Grand Rapids","https://metroparent.com/?p=119381"],
-["Grand Rapids", 0, "Mulligan's Pub", "b", "Eastown pub on local live-music lists.", "likely", 2026, 0, "1518 Wealthy St SE", "https://www.facebook.com/search/events/?q=Mulligan%27s%20Pub%20Grand%20Rapids", "Facebook: weekend bands through Nov 2026"],
 ["Grand Rapids",0,"Stella's Drunken Retort","b","Long-running Monday open mic.","confirm",2016,0,"Grand Rapids","https://localspins.com/open-mic-nights-in-grand-rapids-rare-creative-rambunctious/"],
-["Grand Rapids",0,"Quinn & Tuite's Irish Pub","b","Open mic night.","dated",2016,0,"Grand Rapids","https://localspins.com/open-mic-nights-in-grand-rapids-rare-creative-rambunctious/"],
-["Grand Rapids",0,"Mangiamo","r","Live piano jazz Wednesday through Saturday.","dated",2014,1,"1033 Lake Dr SE","https://www.organissimo.org/forum/topic/75632-5-20-14-west-mi-jazz-datebook"],
-["Grand Rapids",0,"Noto's Old World Italian Dining","r","Saturday piano trio; Wednesday vocalist with pianist.","dated",2014,1,"6600 28th St SE","https://www.organissimo.org/forum/topic/75632-5-20-14-west-mi-jazz-datebook"],
-["Grand Rapids",0,"Bar Divani","b","Tuesday vocalist-and-pianist nights.","dated",2015,1,"15 Ionia Ave","https://organissimo.org/forum/topic/77055-3-4-15-jazz-in-west-michigan"],
 ["Grand Rapids",0,"JW Marriott Grand Rapids","h","Solo pianist Friday evenings and Sunday brunch.","dated",2012,1,"235 Louis St NW","https://www.organissimo.org/forum/topic/69835-6-18-12"],
-["Grand Rapids",0,"The B.O.B. (Gilly's / H.O.M.E.)","b","Weekly piano trio; H.O.M.E. stage hosts live music.","dated",2012,1,"20 Monroe Ave NW","https://www.organissimo.org/forum/topic/69835-6-18-12"],
-["Grand Rapids",0,"Iron Well","b","West Side bar named in an ASCAP-backed federal infringement suit for refusing license offers.","sued",2025,0,"West Side","https://www.crainsgrandrapids.com/news/restaurants-1/music-publishers-target-grand-rapids-bar-in-nationwide-copyright-crackdown"],
 // Near suburbs
 ["Comstock Park",7,"The Beaver Lodge","b","Wednesday open mic.","dated",2020,0,"Comstock Park","https://localspins.com/not-so-big-list-concert-guide-west-michigan-rocks-the-tip-top-and-more-local-spins/"],
 ["Rockford", 13, "Rockford Brewing Co.", "w", "Small brewpub stage; past bills include Patrick Nolan, Eric Engblade and Hazy Past.", "likely", 2026, 0, "12 E Bridge St", "https://www.facebook.com/search/events/?q=Rockford%20Brewing%20Company", "Facebook: Thursday open mic; bands Nov 20 and Dec 12"],
