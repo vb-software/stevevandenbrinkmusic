@@ -104,7 +104,8 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .hl-label{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
 .seg button{font:inherit;font-size:14px;font-weight:500;color:var(--muted);background:transparent;border:0;padding:7px 14px;cursor:pointer;white-space:nowrap}
-@media (max-width:520px){.seg button{font-size:13px;padding:7px 10px}}
+.seg .sm{display:none}
+@media (max-width:520px){.seg button{font-size:13px;padding:7px 10px}.seg .lg{display:none}.seg .sm{display:inline}}
 .seg button+button{border-left:1px solid var(--line)}
 .seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
 .seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
@@ -190,7 +191,11 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
       <button type="button" id="hl-none" data-hl="" aria-pressed="true">None</button>
       <button type="button" id="hl-yes" data-hl="yes" aria-pressed="false">Reached out</button>
       <button type="button" id="hl-no" data-hl="no" aria-pressed="false">Not yet</button>
-      <button type="button" id="hl-act" data-hl="act" aria-pressed="false" title="Booked in the past year">Active past year</button>
+    </div>
+    <div class="seg" role="group" aria-label="Highlight by booking activity">
+      <button type="button" id="hl-act" data-hl="act" aria-pressed="false" title="Booked in the past year"><span class="lg">Active past year</span><span class="sm">Active</span></button>
+      <button type="button" id="hl-cur" data-hl="cur" aria-pressed="false"><span class="lg">Not booked into </span><span class="sm">Not into </span><span class="ny"></span></button>
+      <button type="button" id="hl-adv" data-hl="adv" aria-pressed="false"><span class="lg">Booked into </span><span class="sm">Booked </span><span class="ny"></span></button>
     </div>
     <div class="count" id="count" aria-live="polite"></div>
   </div>
@@ -432,8 +437,13 @@ document.addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!
 const FIDS=["f-q","f-type","f-status","f-piano","f-range","f-ac","f-pt","f-out","f-recent"];
 function updReset(){const n=FIDS.filter(id=>$(id).value.trim()).length+(HL?1:0);
   $("reset").disabled=!n;$("reset-note").textContent=n?`${n} active`:"";}
-const isLit=v=>HL==="act"?RECENT.has(v.name):HL==="yes"?reached(v.name):notYet(v.name);
-const HLN={yes:"reached out",no:"not yet contacted",act:"active past year"};
+const NY=new Date().getFullYear()+1;
+document.querySelectorAll(".ny").forEach(e=>e.textContent=NY);
+$("hl-cur").title=`Active past year, with nothing booked in ${NY} or later yet`;
+$("hl-adv").title=`Already booking acts for ${NY} or later`;
+const adv=v=>v.yr>=NY||(v.ev.match(/\b20\d\d\b/g)||[]).some(y=>+y>=NY);
+const isLit=v=>HL==="act"?RECENT.has(v.name):HL==="adv"?adv(v):HL==="cur"?RECENT.has(v.name)&&!adv(v):HL==="yes"?reached(v.name):notYet(v.name);
+const HLN={yes:"reached out",no:"not yet contacted",act:"active past year",cur:"active, not booked into "+NY,adv:"booked into "+NY};
 function render(){
   const ra=$("f-recent").value,ou=$("f-out").value,pt=$("f-pt").value,ac=$("f-ac").value,rg=$("f-range").value,q=$("f-q").value.trim().toLowerCase(),t=$("f-type").value,s=$("f-status").value,p=$("f-piano").value;
   const rows=V.filter(v=>(!q||(v.name+" "+v.town).toLowerCase().includes(q))&&(!t||v.type===t)&&(!s||v.st===s)&&(!p||v.piano)&&(!ac||v.ac)&&(!pt||v.pt)&&(!ou||(ou==="yes"?reached(v.name):notYet(v.name)))&&(!rg||(rg==="50"?v.mi<=50:rg==="75"?v.mi<=75:rg==="w120"?v.mi<=120:rg==="north"?v.mi>120:(v.mi>75&&v.mi<=120)))&&(!ra||RECENT.has(v.name)));
