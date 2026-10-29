@@ -411,6 +411,7 @@ const OUT=[
 {n:"Cheers",town:"Grand Rapids (Plainfield Ave)",st:"card",fu:"Strong lead. Likely seasonal and outdoor."},
 {n:"City Built Brewing",town:"Grand Rapids",st:"card"},
 {n:"Ed Dunneback & Girls Farm",town:"Grand Rapids",st:"card",fu:"Strong lead. Likely seasonal and outdoor."},
+{n:"Beer City Bread Co.",town:"Grand Rapids (E. Beltline)",st:"card",note:"Music some Wednesdays and Thursdays.",fu:"Strong lead. Music some Wednesdays and Thursdays, year-round."},
 {n:"Lou Lou's Coffee Bar",town:"Belmont",st:"card"},
 {n:"Thornapple Brewing Co.",town:"Cascade",st:"card"},
 {n:"Third Nature Brewing",town:"Plainfield Twp",st:"card",talk:"Card dropped; now in active communication."},
@@ -439,7 +440,7 @@ function renderOut(){
   const TK=OUT.filter(o=>o.talk),tb=$("talk-box");tb.hidden=!TK.length;
   tb.innerHTML=`<h3><span class="dot"></span>In conversation now</h3>`+TK.map(o=>`<div class="talk-row">${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}<small>${esc(o.talk)}</small></div>`).join("");
   const FU=OUT.filter(o=>o.fu),fb=$("fu-box");fb.hidden=!FU.length;
-  fb.innerHTML=`<h3>Follow up: strong seasonal leads</h3>`+FU.map(o=>`<div class="talk-row">${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}<small>${esc(o.fu)}</small></div>`).join("");
+  fb.innerHTML=`<h3>Follow up: strong leads</h3>`+FU.map(o=>`<div class="talk-row">${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}<small>${esc(o.fu)}</small></div>`).join("");
   const D=OUT.filter(o=>o.dl).sort((a,b)=>a.dl.m-b.dl.m);
   $("dl-box").innerHTML=`<h3>Booking deadlines</h3>`+(D.length?D.map(o=>`<div class="dl-row"><span class="mo">${esc(o.dl.txt)}</span><div><b>${esc(o.n)}</b> · ${esc(o.dl.what)}${o.dl.rem?`<small>${esc(o.dl.rem)}</small>`:""}</div></div>`).join(""):'<p class="o-tip">No deadlines recorded yet.</p>');
   const order=["wiser","backup","email","card","todo"];
