@@ -92,6 +92,13 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .talk-tag{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ok)}
 .talk-tag .dot{width:8px;height:8px}
 .op-talk{background:var(--ok);color:var(--bg);font-weight:700}
+.fu-box{background:var(--warn-bg);border:1px solid var(--warn);border-left:6px solid var(--warn);border-radius:6px;padding:14px 16px;display:grid;gap:10px}
+.fu-box h3{margin:0;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--warn)}
+.fu-box .talk-row a{text-decoration-color:var(--warn)}
+.fu-tag{display:inline-block;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--warn)}
+.o-col li.fu{background:var(--warn-bg);border-left:3px solid var(--warn);border-radius:4px;padding:4px 8px;margin:0 -8px}
+.op-fu{background:var(--warn);color:var(--bg);font-weight:700}
+.fu-chip{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--warn-bg);color:var(--warn)}
 .reset-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:-8px}
 .reset{font:inherit;font-size:14px;font-weight:600;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 16px;cursor:pointer}
 .reset:hover:not(:disabled){border-color:var(--fg)}
@@ -155,6 +162,7 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
     <h2 id="o-title">Outreach <small id="o-asof"></small></h2>
     <div class="o-sum" id="o-sum"></div>
     <div class="talk-box" id="talk-box" hidden></div>
+    <div class="fu-box" id="fu-box" hidden></div>
     <div class="dl-box" id="dl-box"></div>
     <div class="o-grid" id="o-grid"></div>
     <p class="o-tip">Names that are also in the venue list below are links. Tap one to jump to it.</p>
@@ -391,15 +399,15 @@ const OUT=[
 {n:"Coral Gables",town:"Saugatuck",st:"email",note:"Has a dedicated piano bar space.",v:"Coral Gables"},
 {n:"Rockford Brewing Co.",town:"Rockford",st:"email",v:"Rockford Brewing Co."},
 {n:"Coopersville Brewing Co.",town:"Coopersville",st:"email",v:"Coopersville Brewing Co."},
-{n:"Cedar Springs Brewing Co.",town:"Cedar Springs",st:"email",note:"Reached out via web form.",v:"Cedar Springs Brewing Co."},
+{n:"Cedar Springs Brewing Co.",town:"Cedar Springs",st:"email",note:"Reached out via web form.",fu:"Strong lead. Likely seasonal and outdoor.",v:"Cedar Springs Brewing Co."},
 {n:"Rapid River Stillhouse",town:"Grand Rapids",st:"card",v:"Rapid River Stillhouse"},
 {n:"The Old Goat",town:"Grand Rapids",st:"card",v:"The Old Goat"},
 {n:"Winter Inn",town:"Greenville",st:"card"},
-{n:"Eastern Kille Distillery",town:"Grand Rapids area",st:"card"},
+{n:"Eastern Kille Distillery",town:"Grand Rapids area",st:"card",fu:"Strong lead. Likely seasonal and outdoor."},
 {n:"Turk Lake",town:"Greenville",st:"card"},
-{n:"Cheers",town:"Grand Rapids (Plainfield Ave)",st:"card"},
+{n:"Cheers",town:"Grand Rapids (Plainfield Ave)",st:"card",fu:"Strong lead. Likely seasonal and outdoor."},
 {n:"City Built Brewing",town:"Grand Rapids",st:"card"},
-{n:"Ed Dunneback & Girls Farm",town:"Grand Rapids",st:"card"},
+{n:"Ed Dunneback & Girls Farm",town:"Grand Rapids",st:"card",fu:"Strong lead. Likely seasonal and outdoor."},
 {n:"Lou Lou's Coffee Bar",town:"Belmont",st:"card"},
 {n:"Thornapple Brewing Co.",town:"Cascade",st:"card"},
 {n:"Third Nature Brewing",town:"Plainfield Twp",st:"card",talk:"Card dropped; now in active communication."},
@@ -427,11 +435,13 @@ function renderOut(){
   $("o-asof").textContent=O_ASOF;
   const TK=OUT.filter(o=>o.talk),tb=$("talk-box");tb.hidden=!TK.length;
   tb.innerHTML=`<h3><span class="dot"></span>In conversation now</h3>`+TK.map(o=>`<div class="talk-row">${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}<small>${esc(o.talk)}</small></div>`).join("");
+  const FU=OUT.filter(o=>o.fu),fb=$("fu-box");fb.hidden=!FU.length;
+  fb.innerHTML=`<h3>Follow up: strong seasonal leads</h3>`+FU.map(o=>`<div class="talk-row">${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}<small>${esc(o.fu)}</small></div>`).join("");
   const D=OUT.filter(o=>o.dl).sort((a,b)=>a.dl.m-b.dl.m);
   $("dl-box").innerHTML=`<h3>Booking deadlines</h3>`+(D.length?D.map(o=>`<div class="dl-row"><span class="mo">${esc(o.dl.txt)}</span><div><b>${esc(o.n)}</b> · ${esc(o.dl.what)}${o.dl.rem?`<small>${esc(o.dl.rem)}</small>`:""}</div></div>`).join(""):'<p class="o-tip">No deadlines recorded yet.</p>');
   const order=["wiser","backup","email","card","todo"];
-  $("o-sum").innerHTML=order.map(k=>`<span class="op op-${k}">${OS[k]}: ${OUT.filter(o=>o.st===k).length}</span>`).join("")+(OUT.some(o=>o.talk)?`<span class="op op-talk">In conversation: ${OUT.filter(o=>o.talk).length}</span>`:"");
-  $("o-grid").innerHTML=order.map(k=>{const L=OUT.filter(o=>o.st===k);return `<div class="o-col"><h3>${OS[k]} <span>${L.length}</span></h3>${k==="wiser"?`<small class="o-sub">You're on Wiser's list. They book these rooms, so these come through Wiser.</small>`:""}<ul>${L.map(o=>`<li${o.talk?' class="talk"':""}>${o.talk?'<span class="talk-tag"><span class="dot"></span>In conversation</span>':""}${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}${o.note?`<small>${esc(o.note)}</small>`:""}</li>`).join("")}</ul></div>`}).join("");
+  $("o-sum").innerHTML=order.map(k=>`<span class="op op-${k}">${OS[k]}: ${OUT.filter(o=>o.st===k).length}</span>`).join("")+(OUT.some(o=>o.talk)?`<span class="op op-talk">In conversation: ${OUT.filter(o=>o.talk).length}</span>`:"")+(OUT.some(o=>o.fu)?`<span class="op op-fu">Follow up: ${OUT.filter(o=>o.fu).length}</span>`:"");
+  $("o-grid").innerHTML=order.map(k=>{const L=OUT.filter(o=>o.st===k);return `<div class="o-col"><h3>${OS[k]} <span>${L.length}</span></h3>${k==="wiser"?`<small class="o-sub">You're on Wiser's list. They book these rooms, so these come through Wiser.</small>`:""}<ul>${L.map(o=>`<li${o.talk?' class="talk"':o.fu?' class="fu"':""}>${o.talk?'<span class="talk-tag"><span class="dot"></span>In conversation</span>':""}${o.fu?'<span class="fu-tag">Follow up</span>':""}${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}${o.note?`<small>${esc(o.note)}</small>`:""}</li>`).join("")}</ul></div>`}).join("");
 }
 document.addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!a)return;e.preventDefault();
   FIDS.forEach(id=>$(id).value="");render();
@@ -456,7 +466,7 @@ function render(){
   $("list").innerHTML=towns.length?towns.map(tn=>`<section class="town"><h2>${esc(tn)} <small>${groups[tn][0].mi?"~"+groups[tn][0].mi+" mi":"in town"}</small></h2>${groups[tn].map(v=>`
     <article class="v${HL?(isLit(v)?" lit":" dim"):""}" id="${slug(v.name)}"><div class="name">${esc(v.name)}</div><div class="type">${T[v.type]}</div>
     <div class="what">${esc(v.what)}</div>
-    <div class="meta"><span class="pill p-${v.st}">${SL[v.st]}</span>${OMAP[v.name]?`<span class="op op-${OMAP[v.name].st}">${OS[OMAP[v.name].st]}</span>`:""}${v.piano?'<span class="piano">Piano history</span>':""}${v.ac?'<span class="acou">Solo / acoustic</span>':""}${v.pt?'<span class="patio">Patio / outdoor</span>':""}<span>${esc(v.addr)}</span><span>Seen <span class="year">${v.yr}</span></span>${v.ev?`<span class="ev">✓ ${esc(v.ev)}</span>`:""}<a href="${v.src}" target="_blank" rel="noopener">Source</a></div></article>`).join("")}</section>`).join(""):'<p class="empty">No venues match. Clear a filter to see more.</p>';
+    <div class="meta"><span class="pill p-${v.st}">${SL[v.st]}</span>${OMAP[v.name]?`<span class="op op-${OMAP[v.name].st}">${OS[OMAP[v.name].st]}</span>`:""}${OMAP[v.name]&&OMAP[v.name].fu?'<span class="fu-chip">Follow up</span>':""}${v.piano?'<span class="piano">Piano history</span>':""}${v.ac?'<span class="acou">Solo / acoustic</span>':""}${v.pt?'<span class="patio">Patio / outdoor</span>':""}<span>${esc(v.addr)}</span><span>Seen <span class="year">${v.yr}</span></span>${v.ev?`<span class="ev">✓ ${esc(v.ev)}</span>`:""}<a href="${v.src}" target="_blank" rel="noopener">Source</a></div></article>`).join("")}</section>`).join(""):'<p class="empty">No venues match. Clear a filter to see more.</p>';
   updReset();
 }
 FIDS.forEach(id=>$(id).addEventListener("input",render));
