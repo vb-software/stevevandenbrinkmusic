@@ -177,7 +177,7 @@ footer{color:var(--muted);font-size:13px;max-width:72ch}
       <option value="confirm">Confirm with venue</option>
       <option value="dated">Old listing, check it's still open</option>
     </select></label>
-    <label for="f-range" style="flex:0 1 170px">Distance<select id="f-range"><option value="">All, incl. Up North</option><option value="50">Within 50 mi</option><option value="75">Within 75 mi</option><option value="w120">Within 120 mi</option><option value="120">75–120 mi only</option><option value="north">Up North wineries</option></select></label>
+    <label for="f-range" style="flex:0 1 170px">Distance<select id="f-range"><option value="">All, incl. Up North</option><optgroup label="Within"><option value="w:25">Within 25 mi</option><option value="w:50">Within 50 mi</option><option value="w:75">Within 75 mi</option><option value="w:100">Within 100 mi</option><option value="w:120">Within 120 mi</option></optgroup><optgroup label="Band only"><option value="b:0:25">0–25 mi</option><option value="b:25:50">25–50 mi</option><option value="b:50:75">50–75 mi</option><option value="b:75:100">75–100 mi</option><option value="b:100:120">100–120 mi</option></optgroup><option value="north">Up North wineries (120+ mi)</option></select></label>
     <label for="f-piano" style="flex:0 1 170px">Piano<select id="f-piano"><option value="">All</option><option value="1">Piano history only</option></select></label>
     <label for="f-ac" style="flex:0 1 190px">Booking style<select id="f-ac"><option value="">Any</option><option value="1">Mostly solo / acoustic</option></select></label>
     <label for="f-pt" style="flex:0 1 170px">Setting<select id="f-pt"><option value="">Indoor or outdoor</option><option value="1">Patio / outdoor music</option></select></label>
@@ -452,6 +452,7 @@ document.addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!
   FIDS.forEach(id=>$(id).value="");render();
   const el=document.getElementById(a.dataset.go);if(!el)return;el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"});
   el.classList.add("hl");setTimeout(()=>el.classList.remove("hl"),2400);});
+function inRange(mi,rg){if(!rg)return true;if(rg==="north")return mi>120;const s=rg.split(":").map(Number);return rg[0]==="w"?mi<=s[1]:(s[1]===0?mi>=0:mi>s[1])&&mi<=s[2];}
 const FIDS=["f-q","f-type","f-status","f-piano","f-range","f-ac","f-pt","f-out","f-recent"];
 function updReset(){const n=FIDS.filter(id=>$(id).value.trim()).length+(HL?1:0);
   $("reset").disabled=!n;$("reset-note").textContent=n?`${n} active`:"";}
@@ -464,7 +465,7 @@ const isLit=v=>HL==="act"?RECENT.has(v.name):HL==="adv"?adv(v):HL==="cur"?RECENT
 const HLN={yes:"reached out",no:"not yet contacted",act:"active past year",cur:"active, not booked into "+NY,adv:"booked into "+NY};
 function render(){
   const ra=$("f-recent").value,ou=$("f-out").value,pt=$("f-pt").value,ac=$("f-ac").value,rg=$("f-range").value,q=$("f-q").value.trim().toLowerCase(),t=$("f-type").value,s=$("f-status").value,p=$("f-piano").value;
-  const rows=V.filter(v=>(!q||(v.name+" "+v.town).toLowerCase().includes(q))&&(!t||v.type===t)&&(!s||v.st===s)&&(!p||v.piano)&&(!ac||v.ac)&&(!pt||v.pt)&&(!ou||(ou==="yes"?reached(v.name):notYet(v.name)))&&(!rg||(rg==="50"?v.mi<=50:rg==="75"?v.mi<=75:rg==="w120"?v.mi<=120:rg==="north"?v.mi>120:(v.mi>75&&v.mi<=120)))&&(!ra||RECENT.has(v.name)));
+  const rows=V.filter(v=>(!q||(v.name+" "+v.town).toLowerCase().includes(q))&&(!t||v.type===t)&&(!s||v.st===s)&&(!p||v.piano)&&(!ac||v.ac)&&(!pt||v.pt)&&(!ou||(ou==="yes"?reached(v.name):notYet(v.name)))&&inRange(v.mi,rg)&&(!ra||RECENT.has(v.name)));
   $("count").textContent=rows.length+" of "+V.length+" venues"+(HL?` · ${rows.filter(isLit).length} ${HLN[HL]}`:"");
   const groups={};rows.forEach(v=>{(groups[v.town]=groups[v.town]||[]).push(v)});
   const towns=Object.keys(groups).sort((a,b)=>groups[a][0].mi-groups[b][0].mi||a.localeCompare(b));
