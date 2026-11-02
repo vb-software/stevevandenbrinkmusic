@@ -72,6 +72,7 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .o-col li{display:grid;gap:1px;min-width:0}
 .o-col li b{font-weight:600}
 .o-col li small{color:var(--muted);font-size:12.5px}
+.o-col li small.ago{font-family:var(--mono,ui-monospace,monospace);font-size:11.5px;letter-spacing:.01em}
 .o-col li a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;cursor:pointer}
 .o-col li a:hover{text-decoration-color:var(--accent)}
 .dl-box{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:6px;padding:12px 14px;display:grid;gap:8px}
@@ -384,37 +385,37 @@ function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;
 const O_ASOF="Updated Oct 28, 2026";
 const OS={wiser:"Through Wiser",backup:"On backup list",email:"Emailed / reached out",card:"Card dropped",todo:"To contact"};
 const OUT=[
-{n:"Archival Brewing",town:"Belmont",st:"backup",note:"Didn't make their lineup; on the backup list.",dl:{m:8,txt:"August",what:"Notice for the following year's events",rem:"Reminder set for Aug 2, 2027"},v:"Archival Brewing"},
-{n:"Modales Wines",town:"Fennville",st:"email",v:"Modales Wines"},
-{n:"Fenn Valley Vineyards",town:"Fennville",st:"email",v:"Fenn Valley Vineyards"},
-{n:"Salt of the Earth",town:"Fennville",st:"email",v:"Salt of the Earth"},
-{n:"Tanglewood Winery",town:"Holland",st:"email",v:"Tanglewood Winery"},
-{n:"Cogdal Vineyards",town:"South Haven",st:"email",v:"Cogdal Vineyards"},
-{n:"JT's Pizza & Spirits",town:"Grand Rapids",st:"email",v:"JT's Pizza & Spirits"},
-{n:"Horrocks Market",town:"Kentwood",st:"email",talk:"Emailed; now in active communication.",v:"Horrocks Market"},
-{n:"Michigan Moonshine Distillery",town:"Grandville",st:"email",v:"Michigan Moonshine Distillery"},
-{n:"Sit and Stay Winery",town:"Kalamazoo",st:"email",v:"Sit and Stay Winery"},
-{n:"Coral Gables",town:"Saugatuck",st:"email",note:"Has a dedicated piano bar space.",v:"Coral Gables"},
-{n:"Rockford Brewing Co.",town:"Rockford",st:"email",v:"Rockford Brewing Co."},
-{n:"Coopersville Brewing Co.",town:"Coopersville",st:"email",v:"Coopersville Brewing Co."},
-{n:"Cedar Springs Brewing Co.",town:"Cedar Springs",st:"email",note:"Reached out via web form.",fu:"Strong lead. Likely seasonal and outdoor.",v:"Cedar Springs Brewing Co."},
-{n:"Uncle John's Cider Mill",town:"St. Johns",st:"email",note:"Reached out via web form.",v:"Uncle John's Cider Mill"},
-{n:"Black Star Farms",town:"Suttons Bay",st:"email",v:"Black Star Farms"},
-{n:"The Score",town:"Grand Rapids (Northland Dr)",st:"email",note:"Reached out via web form. Sundays feature smaller, sometimes solo acts.",v:"The Score Restaurant & Sports Bar"},
-{n:"River Saint Joe",town:"Buchanan",st:"email",v:"River Saint Joe"},
-{n:"118 Proof",town:"Portland",st:"email",v:"118 Proof"},
-{n:"Rapid River Stillhouse",town:"Grand Rapids",st:"card",v:"Rapid River Stillhouse"},
-{n:"The Old Goat",town:"Grand Rapids",st:"card",v:"The Old Goat"},
-{n:"Winter Inn",town:"Greenville",st:"card"},
-{n:"Eastern Kille Distillery",town:"Grand Rapids area",st:"card",fu:"Strong lead. Likely seasonal and outdoor."},
-{n:"Turk Lake",town:"Greenville",st:"card"},
-{n:"Cheers",town:"Grand Rapids (Plainfield Ave)",st:"card",fu:"Strong lead. Likely seasonal and outdoor."},
-{n:"City Built Brewing",town:"Grand Rapids",st:"card"},
-{n:"Ed Dunneback & Girls Farm",town:"Grand Rapids",st:"card",fu:"Strong lead. Likely seasonal and outdoor."},
-{n:"Beer City Bread Co.",town:"Grand Rapids (E. Beltline)",st:"card",note:"Music some Wednesdays and Thursdays.",fu:"Strong lead. Music some Wednesdays and Thursdays, year-round.",v:"Beer City Bread Co."},
-{n:"Lou Lou's Coffee Bar",town:"Belmont",st:"card"},
-{n:"Thornapple Brewing Co.",town:"Cascade",st:"card"},
-{n:"Third Nature Brewing",town:"Plainfield Twp",st:"card",note:"Unlikely: they asked whether you sing."},
+{n:"Archival Brewing",town:"Belmont",st:"backup",d:"2026-10-15",da:1,note:"Didn't make their lineup; on the backup list.",dl:{m:8,txt:"August",what:"Notice for the following year's events",rem:"Reminder set for Aug 2, 2027"},v:"Archival Brewing"},
+{n:"Modales Wines",town:"Fennville",st:"email",d:"2026-10-15",da:1,v:"Modales Wines"},
+{n:"Fenn Valley Vineyards",town:"Fennville",st:"email",d:"2026-10-15",da:1,v:"Fenn Valley Vineyards"},
+{n:"Salt of the Earth",town:"Fennville",st:"email",d:"2026-10-15",da:1,v:"Salt of the Earth"},
+{n:"Tanglewood Winery",town:"Holland",st:"email",d:"2026-10-15",da:1,v:"Tanglewood Winery"},
+{n:"Cogdal Vineyards",town:"South Haven",st:"email",d:"2026-10-15",da:1,v:"Cogdal Vineyards"},
+{n:"JT's Pizza & Spirits",town:"Grand Rapids",st:"email",d:"2026-10-15",da:1,v:"JT's Pizza & Spirits"},
+{n:"Horrocks Market",town:"Kentwood",st:"email",d:"2026-10-15",da:1,talk:"Emailed; now in active communication.",v:"Horrocks Market"},
+{n:"Michigan Moonshine Distillery",town:"Grandville",st:"email",d:"2026-10-15",da:1,v:"Michigan Moonshine Distillery"},
+{n:"Sit and Stay Winery",town:"Kalamazoo",st:"email",d:"2026-10-15",da:1,v:"Sit and Stay Winery"},
+{n:"Coral Gables",town:"Saugatuck",st:"email",d:"2026-10-15",da:1,note:"Has a dedicated piano bar space.",v:"Coral Gables"},
+{n:"Rockford Brewing Co.",town:"Rockford",st:"email",d:"2026-10-28",v:"Rockford Brewing Co."},
+{n:"Coopersville Brewing Co.",town:"Coopersville",st:"email",d:"2026-10-28",v:"Coopersville Brewing Co."},
+{n:"Cedar Springs Brewing Co.",town:"Cedar Springs",st:"email",d:"2026-10-28",note:"Reached out via web form.",fu:"Strong lead. Likely seasonal and outdoor.",v:"Cedar Springs Brewing Co."},
+{n:"Uncle John's Cider Mill",town:"St. Johns",st:"email",d:"2026-10-28",note:"Reached out via web form.",v:"Uncle John's Cider Mill"},
+{n:"Black Star Farms",town:"Suttons Bay",st:"email",d:"2026-10-28",v:"Black Star Farms"},
+{n:"The Score",town:"Grand Rapids (Northland Dr)",st:"email",d:"2026-10-28",note:"Reached out via web form. Sundays feature smaller, sometimes solo acts.",v:"The Score Restaurant & Sports Bar"},
+{n:"River Saint Joe",town:"Buchanan",st:"email",d:"2026-10-29",v:"River Saint Joe"},
+{n:"118 Proof",town:"Portland",st:"email",d:"2026-11-02",v:"118 Proof"},
+{n:"Rapid River Stillhouse",town:"Grand Rapids",st:"card",d:"2026-10-15",da:1,v:"Rapid River Stillhouse"},
+{n:"The Old Goat",town:"Grand Rapids",st:"card",d:"2026-10-15",da:1,v:"The Old Goat"},
+{n:"Winter Inn",town:"Greenville",st:"card",d:"2026-10-15",da:1},
+{n:"Eastern Kille Distillery",town:"Grand Rapids area",st:"card",d:"2026-10-15",da:1,fu:"Strong lead. Likely seasonal and outdoor."},
+{n:"Turk Lake",town:"Greenville",st:"card",d:"2026-10-15",da:1},
+{n:"Cheers",town:"Grand Rapids (Plainfield Ave)",st:"card",d:"2026-10-15",da:1,fu:"Strong lead. Likely seasonal and outdoor."},
+{n:"City Built Brewing",town:"Grand Rapids",st:"card",d:"2026-10-15",da:1},
+{n:"Ed Dunneback & Girls Farm",town:"Grand Rapids",st:"card",d:"2026-10-15",da:1,fu:"Strong lead. Likely seasonal and outdoor."},
+{n:"Beer City Bread Co.",town:"Grand Rapids (E. Beltline)",st:"card",d:"2026-10-29",note:"Music some Wednesdays and Thursdays.",fu:"Strong lead. Music some Wednesdays and Thursdays, year-round.",v:"Beer City Bread Co."},
+{n:"Lou Lou's Coffee Bar",town:"Belmont",st:"card",d:"2026-10-15",da:1},
+{n:"Thornapple Brewing Co.",town:"Cascade",st:"card",d:"2026-10-15",da:1},
+{n:"Third Nature Brewing",town:"Plainfield Twp",st:"card",d:"2026-10-15",da:1,note:"Unlikely: they asked whether you sing."},
 {n:"Chicago Beef Joint",town:"Grand Rapids",st:"todo"},
 {n:"Speciation Cellars",town:"Grand Rapids",st:"todo"},
 {n:"Rendezvous (Amway Grand Plaza)",town:"Grand Rapids",st:"todo"},
@@ -427,13 +428,17 @@ const OUT=[
 {n:"Nick Fink's Saloon",town:"Comstock Park",st:"wiser",note:"Gilmore Collection"},
 {n:"The Kirby House",town:"Grand Haven",st:"wiser",note:"Gilmore Collection"},
 {n:"Shots",town:"Standale",st:"todo",note:"Asking a fellow musician about it first."},
-{n:"Carolina Lowcountry Kitchen",town:"East Grand Rapids",st:"card",v:"Carolina Lowcountry Kitchen"}
+{n:"Carolina Lowcountry Kitchen",town:"East Grand Rapids",st:"card",d:"2026-10-29",v:"Carolina Lowcountry Kitchen"}
 ];
 const REACHED=new Set(["backup","email","card"]);
 const reached=n=>!!(OMAP[n]&&REACHED.has(OMAP[n].st));
 const viaWiser=n=>!!(OMAP[n]&&OMAP[n].st==="wiser");
 const notYet=n=>!reached(n)&&!viaWiser(n);
 let HL="";try{HL=localStorage.getItem("gv-hl")||""}catch(e){}
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function since(o){if(!o.d)return "";const [y,m,dd]=o.d.split("-").map(Number);const then=new Date(y,m-1,dd),now=new Date();now.setHours(0,0,0,0);
+  const n=Math.round((now-then)/864e5);const ago=n<=0?"today":n===1?"1 day ago":n+" days ago";
+  return o.da?`Est. mid-${MON[m-1]} · ~${ago}`:`${MON[m-1]} ${dd} · ${ago}`;}
 const OMAP={};OUT.forEach(o=>{if(o.v)OMAP[o.v]=o});
 function slug(x){return "v-"+x.toLowerCase().replace(/[^a-z0-9]+/g,"-")}
 function renderOut(){
@@ -446,7 +451,7 @@ function renderOut(){
   $("dl-box").innerHTML=`<h3>Booking deadlines</h3>`+(D.length?D.map(o=>`<div class="dl-row"><span class="mo">${esc(o.dl.txt)}</span><div><b>${esc(o.n)}</b> · ${esc(o.dl.what)}${o.dl.rem?`<small>${esc(o.dl.rem)}</small>`:""}</div></div>`).join(""):'<p class="o-tip">No deadlines recorded yet.</p>');
   const order=["wiser","backup","email","card","todo"];
   $("o-sum").innerHTML=order.map(k=>`<span class="op op-${k}">${OS[k]}: ${OUT.filter(o=>o.st===k).length}</span>`).join("")+(OUT.some(o=>o.talk)?`<span class="op op-talk">In conversation: ${OUT.filter(o=>o.talk).length}</span>`:"")+(OUT.some(o=>o.fu)?`<span class="op op-fu">Follow up: ${OUT.filter(o=>o.fu).length}</span>`:"");
-  $("o-grid").innerHTML=order.map(k=>{const L=OUT.filter(o=>o.st===k);return `<div class="o-col"><h3>${OS[k]} <span>${L.length}</span></h3>${k==="wiser"?`<small class="o-sub">You're on Wiser's list. They book these rooms, so these come through Wiser.</small>`:""}<ul>${L.map(o=>`<li${o.talk?' class="talk"':o.fu?' class="fu"':""}>${o.talk?'<span class="talk-tag"><span class="dot"></span>In conversation</span>':""}${o.fu?'<span class="fu-tag">Follow up</span>':""}${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}${o.note?`<small>${esc(o.note)}</small>`:""}</li>`).join("")}</ul></div>`}).join("");
+  $("o-grid").innerHTML=order.map(k=>{const L=OUT.filter(o=>o.st===k);return `<div class="o-col"><h3>${OS[k]} <span>${L.length}</span></h3>${k==="wiser"?`<small class="o-sub">You're on Wiser's list. They book these rooms, so these come through Wiser.</small>`:""}<ul>${L.map(o=>`<li${o.talk?' class="talk"':o.fu?' class="fu"':""}>${o.talk?'<span class="talk-tag"><span class="dot"></span>In conversation</span>':""}${o.fu?'<span class="fu-tag">Follow up</span>':""}${o.v?`<a data-go="${slug(o.v)}"><b>${esc(o.n)}</b></a>`:`<b>${esc(o.n)}</b>`}${o.town?`<small>${esc(o.town)}</small>`:""}${o.note?`<small>${esc(o.note)}</small>`:""}${o.d?`<small class="ago">${since(o)}</small>`:""}</li>`).join("")}</ul></div>`}).join("");
 }
 document.addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!a)return;e.preventDefault();
   FIDS.forEach(id=>$(id).value="");render();
